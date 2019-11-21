@@ -10,6 +10,11 @@ class Block {
 
 public:
   Block();
+  Block(const Block& other);
+  Block(Block&& other)
+
+  Block& operator=(const Block& rhs);
+  Block& operator=(Block&& rhs); //Use squares.swap() (?)
 
   void addSquares(Block b);
   void removeRow(int index); //Row index is relative to the squares vector not absolute coordinates

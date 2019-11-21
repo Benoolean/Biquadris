@@ -1,12 +1,11 @@
 #ifndef GRID_H
 #define GRID_H
 
-class Block {
+struct Grid {
+  Grid();
+
   Block active;
   Block dead;
-  
-public:
-
 };
 
 #endif
