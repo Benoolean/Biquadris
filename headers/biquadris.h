@@ -1,9 +1,9 @@
 #ifndef BIQUADRIS_H
 #define BIQUADRIS_H
 
-class Block;
-
 #include <map>
+
+class Block;
 
 namespace Biquadris {
   std::map<char, Block> defaults;
