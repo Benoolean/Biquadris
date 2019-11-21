@@ -1,18 +1,22 @@
 #include "biquadris.h"
 #include "block.h"
 
-void Biquadris::init() {
-  defaults['I'] = new Block({ Square(0, 14), Square(1, 14), Square(2, 14), Square(3, 14) });
+namespace Biquadris {
+  std::map<char, Block*> defaults;
 
-  defaults['J'] = new Block();
+  void init() {
+    defaults['I'] = new Block({ Square(0, 14), Square(1, 14), Square(2, 14), Square(3, 14) });
 
-  defaults['L'] = new Block();
+    defaults['J'] = new Block();
 
-  defaults['O'] = new Block();
+    defaults['L'] = new Block();
 
-  defaults['S'] = new Block();
+    defaults['O'] = new Block();
 
-  defaults['Z'] = new Block();
+    defaults['S'] = new Block();
 
-  defaults['T'] = new Block();
+    defaults['Z'] = new Block();
+
+    defaults['T'] = new Block();
+  }
 }
