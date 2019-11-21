@@ -26,6 +26,9 @@ class Level {
 
   void togglePlayer();
 
+  bool isOver;
+  unsigned int winner; // Undefined behabiour unless isOver flag is set
+
 public:
   Level(int level = 0, bool window = nullptr, std::string source1, std::string source2);
   ~Level();
@@ -33,9 +36,21 @@ public:
   void increaseLevel(); //Increases level by 1 up to 4
   void lowerLevel(); //Decreases level by 1 down to 0
 
-  void changeActive(Block* newActive); //Will be used for force and after each drop
+  bool changeActive(Block* newActive); //Will be used for force and after each drop
 
-  bool validMove(Block);
+  void rotateClockwise();
+  void rotateCClockwise();
+
+  void shiftX(int shift);
+  void shiftY(unsigned int shift);
+
+  void drop();
+
+  void setRandom();
+  void setNotRandom(std::string source);
+
+  bool isOver() const;
+  int winner() const; //Returns -1 if isOver flag is not set
 };
 
 #endif

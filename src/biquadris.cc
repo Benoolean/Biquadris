@@ -3,8 +3,11 @@
 
 namespace Biquadris {
   std::map<char, Block*> defaults;
+  int seed = 0;
 
-  void init() {
+  void init(int seed) {
+    Biquadris::seed = seed;
+    
     defaults['I'] = new Block({ Square(0, 14), Square(1, 14), Square(2, 14), Square(3, 14) });
 
     defaults['J'] = new Block();

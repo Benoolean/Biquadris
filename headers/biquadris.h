@@ -7,6 +7,7 @@ class Block;
 
 namespace Biquadris {
   extern std::map<char, Block*> defaults;
+  extern int seed;
 
   /*
    * Alternatively a file defining blocks could be created.
@@ -15,7 +16,7 @@ namespace Biquadris {
    *
    * These defaults are simply copied whenever they are needed.
    */
-  void init();
+  void init(int seed = 0);
 };
 
 #endif

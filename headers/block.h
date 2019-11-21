@@ -1,14 +1,12 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include "square.h"
-
 #include <vector>
+
+#include "square.h"
 
 class Block {
   std::vector<std::vector<Square>> squares;
-
-  static bool touching(const Block&, const Block&);
 
 public:
   Block();
@@ -19,7 +17,7 @@ public:
   Block& operator=(const Block& rhs);
   Block& operator=(Block&& rhs); //Use squares.swap() (?)
 
-  void addSquares(Block b);
+  void addSquares(const Block& b);
 
   void addSquare(int x, int y); //Absolute coordinates
   void addSquare(const Square& s);
@@ -31,6 +29,9 @@ public:
 
   void shiftY(int squares); //Moves 'squares' on the y axis
   void shiftX(int squares); //Moves 'squares' on the x axis
+
+  const std::vector<std::vector<Square>>& getSquares();
+  friend bool touching(const Block& b1, const Block& b2); //Check if the given block is touching another
 };
 
 #endif

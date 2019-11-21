@@ -13,7 +13,7 @@ public:
   virtual void draw(std::ostream* out, Xwindow* window) = 0;
 
   bool isActive(); // Returns true if there is an active block, false otherwise
-  void setActive(Block* newActive);
+  bool setActive(Block* newActive); // Returns false if illegal placement (contacts dead)
 
   /*
    * Each movement function checks if the move is legal or if the block will contact
