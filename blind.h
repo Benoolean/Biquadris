@@ -14,8 +14,6 @@ public:
   Blind(Grid* component);
 
   void draw(std::ostream* out, Xwindow* out) override; // Standard draw but overlays the blinded position
-  void shiftX() override; //Just calls component shiftX
-  void shiftY() override; //Just calls component shiftY
 };
 
 #endif
