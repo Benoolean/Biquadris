@@ -1,5 +1,5 @@
 #include "biquadris.h"
-#include "square.h"
+#include "block.h"
 
 void Biquadris::init() {
   defaults['I'] = new Block({ Square(0, 14), Square(1, 14), Square(2, 14), Square(3, 14) });

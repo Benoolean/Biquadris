@@ -8,11 +8,13 @@
 class Block {
   std::vector<std::vector<Square>> squares;
 
+  static bool touching(const Block&, const Block&);
+
 public:
   Block();
-  Block(Square (&&squares)[]);
+  Block(std::vector<Square> &&squares);
   Block(const Block& other);
-  Block(Block&& other)
+  Block(Block&& other);
 
   Block& operator=(const Block& rhs);
   Block& operator=(Block&& rhs); //Use squares.swap() (?)

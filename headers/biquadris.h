@@ -6,7 +6,7 @@
 class Block;
 
 namespace Biquadris {
-  std::map<char, Block> defaults;
+  std::map<char, Block*> defaults;
 
   /*
    * Alternatively a file defining blocks could be created.
