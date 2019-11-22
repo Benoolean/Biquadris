@@ -18,6 +18,7 @@ class Level {
   Grid* activeGrid;
   Grid grid1, grid2;
 
+  std::string source1, source2; //This allows a new stream to be opened once the end of either hase been reached
   std::vector<std::string> sequence1, sequence2; // Pushed from specified fstream, and stack popped every drop
   std::vector<std::string>* currentSequence;
 
