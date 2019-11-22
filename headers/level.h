@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 
+#include <map>
+
 class Xwindow;
 
 class Level {
@@ -15,12 +17,17 @@ class Level {
   Xwindow* window;
   bool enableGraphics;
 
-  Grid* activeGrid;
-  Grid grid1, grid2;
+  struct Player {
+    Grid grid;
 
-  std::string source1, source2; //This allows a new stream to be opened once the end of either hase been reached
-  std::vector<std::string> sequence1, sequence2; // Pushed from specified fstream, and stack popped every drop
-  std::vector<std::string>* currentSequence;
+    std::string source1; //This allows a new stream to be opened once the end of either hase been reached
+    std::vector<std::string> sequence1; // Pushed from specified fstream, and stack popped every drop
+
+    int points;
+  } player1, player2;
+  Player* currentPlayer;
+
+  static int highScore;
 
   std::vector<Effect*> effects;
   Effect* currentEffect; // The topmost effect, default is grid if no effect was created last turn
@@ -29,6 +36,8 @@ class Level {
 
   bool isOver;
   unsigned int winner; // Undefined behabiour unless isOver flag is set
+
+  void checkFullLine(); //Used to determine if there is a full line (also updates players' score)
 
 public:
   Level(int level = 0, bool window = nullptr, std::string source1, std::string source2);
@@ -51,6 +60,7 @@ public:
   void setNotRandom(std::string source);
 
   bool isOver() const;
+
   int winner() const; //Returns -1 if isOver flag is not set
 };
 
