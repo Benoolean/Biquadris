@@ -41,13 +41,14 @@ int Block::getHeight() const {
 vector<Square> createRow(int x, int y, int height) {
   vector<Square> r;
   for(int i = 0; i < height; i++) {
-    r.emplace_back(Square(x, y + i));
+    r.emplace_back(Square(x, y + i, false));
   }
   return r;
 }
 
 void Block::addSquares(const Block& b) {
-  if(squares.size()) {
+  //The second test is necessary in the case that an empty vector is placed
+  if(squares.size() && squares[0].size()) {
     Square thisTL = squares[0][0];
     const vector<vector<Square>>& s = b.getSquares();
     Square bTL = s[0][0];
@@ -75,12 +76,12 @@ void Block::addSquares(const Block& b) {
     }
     for(int i = 1; i <= tPadding; i++) {
       for(int j = 0; j < getWidth(); j++) {
-        squares[j].insert(squares[j].begin(), Square(squares[0][0].x + j, squares[0][0].y - i));
+        squares[j].insert(squares[j].begin(), Square(squares[0][0].x + j, squares[0][0].y - i, false));
       }
     }
     for(int i = 1; i <= bPadding; i++) {
       for(int j = 0; j < getWidth(); j++) {
-        squares[j].emplace_back(Square(squares[0][0].x + j, squares[0][0].y + getHeight() - 1 + i));
+        squares[j].emplace_back(Square(squares[0][0].x + j, squares[0][0].y + getHeight() - 1 + i, false));
       }
     }
 
@@ -97,11 +98,34 @@ void Block::addSquares(const Block& b) {
 }
 
 void Block::addSquare(int x, int y) {
-
+  addSquare(Square(x, y, true));
 }
 
 void Block::addSquare(const Square& s) {
+  if(squares.size() && squares[0].size()) {
+    if(s.x < squares[0][0].x) {
+      squares.insert(squares.begin(), createRow(squares[0][0].x - 1, squares[0][0].y, getHeight()));
+    }
+    else if(s.x > (squares[0][0].x + getWidth() - 1)) {
+      squares.emplace_back(createRow(squares[0][0].x + getWidth(), squares[0][0].y, getHeight()));
+    }
 
+    if(s.y < squares[0][0].y) {
+      for(int j = 0; j < getWidth(); j++) {
+        squares[j].insert(squares[j].begin(), Square(squares[0][0].x + j, squares[0][0].y - 1, false));
+      }
+    }
+    else if(s.y > (squares[0][0].y + getHeight() - 1)) {
+      for(int j = 0; j < getWidth(); j++) {
+        squares[j].emplace_back(Square(squares[0][0].x + j, squares[0][0].y + getHeight(), false));
+      }
+    }
+
+    squares[squares[0][0].x - s.x][squares[0][0].y - s.y].active = s.active;
+  }
+  else {
+    squares.emplace_back(vector<Square>({ s }));
+  }
 }
 
 void Block::removeRow(int index) {
