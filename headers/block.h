@@ -25,13 +25,13 @@ public:
   void addSquare(int x, int y); //Absolute coordinates
   void addSquare(const Square& s);
 
-  void removeRow(int index); //Row index is relative to the squares vector not absolute coordinates
+  void removeRow(int index); //Row index is relative to absolute coordinates
 
   void rotateClockwise();
   void rotateCClockwise();
 
-  void shiftY(int squares); //Moves 'squares' on the y axis
-  void shiftX(int squares); //Moves 'squares' on the x axis
+  void shiftY(int shift); //Moves 'squares' on the y axis
+  void shiftX(int shift); //Moves 'squares' on the x axis
 
   bool touching(const Block& other) const; //Check if the given block is touching another
 

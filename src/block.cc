@@ -129,29 +129,79 @@ void Block::addSquare(const Square& s) {
 }
 
 void Block::removeRow(int index) {
-
+  if(index >= squares[0][0].y && index <= (squares[0][0].y + getHeight() - 1)) {
+    int ry = index - squares[0][0].y;
+    for(int i = 0; i < getWidth(); i++) {
+      squares[i].erase(squares[i].begin() + ry, squares[i].begin() + ry + 1);
+      for(int j = 0; j < ry; j++) { //Shift any cells on top down
+        squares[i][j].y -= 1;
+      }
+    }
+  }
 }
 
+//This algorithm keeps the bottom left coordinate constant
 void Block::rotateClockwise() {
+  vector<vector<Square>> newSquares;
+  int nX = squares[0][0].x;
+  int nY = squares[0][0].y - (getHeight() - getWidth());
 
+  for(int i = 0; i < getHeight(); i++) {
+    for(int j = 0; j < getWidth(); j++) {
+      newSquares[i][j] = squares[j][getHeight() - i - 1];
+      newSquares[i][j].x = i + nX;
+      newSquares[i][j].y = j + nY;
+    }
+  }
+  squares.swap(newSquares);
 }
 
 void Block::rotateCClockwise() {
+  vector<vector<Square>> newSquares;
+  int nX = squares[0][0].x;
+  int nY = squares[0][0].y - (getHeight() - getWidth());
 
+  for(int i = 0; i < getHeight(); i++) {
+    for(int j = 0; j < getWidth(); j++) {
+      newSquares[i][j] = squares[getWidth() - j - 1][i];
+      newSquares[i][j].x = i + nX;
+      newSquares[i][j].y = j + nY;
+    }
+  }
+  squares.swap(newSquares);
 }
 
-void Block::shiftY(int squares) {
-
+void Block::shiftY(int shift) {
+  for(int i = 0; i < getWidth(); i++) {
+    for(int j = 0; j < getHeight(); j++) {
+      squares[i][j].y += shift;
+    }
+  }
 }
 
-void Block::shiftX(int squares) {
+void Block::shiftX(int shift) {
+  for(int i = 0; i < getWidth(); i++) {
+    for(int j = 0; j < getHeight(); j++) {
+      squares[i][j].x += shift;
+    }
+  }
+}
 
+bool Block::touching(const Block& other) const {
+  const vector<vector<Square>>& otherSquares = other.getSquares();
+
+  if((otherSquares[0][0].x + other.getWidth()) < squares[0][0].x
+  || otherSquares[0][0].x > (squares[0][0].x + getWidth())) {
+    return false;
+  }
+  if((otherSquares[0][0].y + other.getHeight()) < squares[0][0].y
+  || otherSquares[0][0].y > (squares[0][0].y + getHeight())) {
+    return false;
+  }
+
+  return true;
 }
 
 const std::vector<std::vector<Square>>& Block::getSquares() const {
   return squares;
-}
-
-bool Block::touching(const Block& other) const {
-  return false;
 }
