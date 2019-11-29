@@ -2,6 +2,7 @@
 #define BLOCK_H
 
 #include <vector>
+#include <iostream>
 
 #include "square.h"
 
@@ -20,6 +21,8 @@ public:
   int getWidth() const;
   int getHeight() const;
 
+  char getCharacter() const;
+
   void addSquares(const Block& b);
 
   void addSquare(int x, int y); //Absolute coordinates
@@ -36,6 +39,8 @@ public:
   bool touching(const Block& other) const; //Check if the given block is touching another
 
   const std::vector<std::vector<Square>>& getSquares() const;
+
+  friend std::ostream& operator<<(std::ostream& out, const Block& b);
 };
 
 #endif

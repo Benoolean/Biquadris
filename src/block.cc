@@ -1,9 +1,7 @@
 #include "block.h"
 using namespace std;
 
-Block::Block() {
-
-}
+Block::Block() { }
 
 Block::Block(std::vector<std::vector<Square>> &&squares) {
   this->squares.swap(squares);
@@ -41,7 +39,7 @@ int Block::getHeight() const {
 vector<Square> createRow(int x, int y, int height) {
   vector<Square> r;
   for(int i = 0; i < height; i++) {
-    r.emplace_back(Square(x, y + i, false));
+    r.emplace_back(Square(x, y + i));
   }
   return r;
 }
@@ -76,12 +74,12 @@ void Block::addSquares(const Block& b) {
     }
     for(int i = 1; i <= tPadding; i++) {
       for(int j = 0; j < getWidth(); j++) {
-        squares[j].insert(squares[j].begin(), Square(squares[0][0].x + j, squares[0][0].y - i, false));
+        squares[j].insert(squares[j].begin(), Square(squares[0][0].x + j, squares[0][0].y - i));
       }
     }
     for(int i = 1; i <= bPadding; i++) {
       for(int j = 0; j < getWidth(); j++) {
-        squares[j].emplace_back(Square(squares[0][0].x + j, squares[0][0].y + getHeight() - 1 + i, false));
+        squares[j].emplace_back(Square(squares[0][0].x + j, squares[0][0].y + getHeight() - 1 + i));
       }
     }
 
@@ -112,12 +110,12 @@ void Block::addSquare(const Square& s) {
 
     if(s.y < squares[0][0].y) {
       for(int j = 0; j < getWidth(); j++) {
-        squares[j].insert(squares[j].begin(), Square(squares[0][0].x + j, squares[0][0].y - 1, false));
+        squares[j].insert(squares[j].begin(), Square(squares[0][0].x + j, squares[0][0].y - 1));
       }
     }
     else if(s.y > (squares[0][0].y + getHeight() - 1)) {
       for(int j = 0; j < getWidth(); j++) {
-        squares[j].emplace_back(Square(squares[0][0].x + j, squares[0][0].y + getHeight(), false));
+        squares[j].emplace_back(Square(squares[0][0].x + j, squares[0][0].y + getHeight()));
       }
     }
 
@@ -204,4 +202,15 @@ bool Block::touching(const Block& other) const {
 
 const std::vector<std::vector<Square>>& Block::getSquares() const {
   return squares;
+}
+
+ostream& operator<<(ostream& out, const Block& b) {
+  const vector<vector<Square>> squares = b.getSquares();
+  for(int j = 0; j < b.getHeight(); j++) {
+    for(int i = 0; i < b.getWidth(); i++) {
+      out << squares[i][j].symbol;
+    }
+    out << endl;
+  }
+  return out;
 }

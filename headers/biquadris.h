@@ -3,7 +3,7 @@
 
 #include <map>
 
-class Block;
+#include "block.h"
 
 namespace Biquadris {
   extern std::map<char, Block*> defaults;

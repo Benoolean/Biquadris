@@ -8,7 +8,7 @@ namespace Biquadris {
   void init(int seed) {
     Biquadris::seed = seed;
 
-    defaults['I'] = new Block({ { Square(0, 3) }, { Square(1, 3) }, { Square(2, 3) }, { Square(3, 3) } });
+    defaults['I'] = new Block({ { Square(0, 3, 'I', true) }, { Square(1, 3, 'I', true) }, { Square(2, 3, 'I', true) }, { Square(3, 3, 'I', true) } });
 
     defaults['J'] = new Block();
 

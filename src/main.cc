@@ -8,6 +8,8 @@ int main() {
 
 	Biquadris::init();
 
+	cout << *Biquadris::defaults['I'];
+
 	int level;
 	cin >> level;
 
