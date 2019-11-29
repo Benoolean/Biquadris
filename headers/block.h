@@ -6,16 +6,19 @@
 #include "square.h"
 
 class Block {
-  std::vector<std::vector<Square>> squares;
+  std::vector<std::vector<Square>> squares; //Column by row
 
 public:
   Block();
-  Block(std::vector<Square> &&squares);
-  Block(const Block& other);
-  Block(Block&& other);
+  Block(std::vector<std::vector<Square>> &&squares);
+  Block(const Block& other) noexcept;
+  Block(Block&& other) noexcept;
 
-  Block& operator=(const Block& rhs);
-  Block& operator=(Block&& rhs); //Use squares.swap() (?)
+  Block& operator=(const Block& rhs) noexcept;
+  Block& operator=(Block&& rhs) noexcept; //Use squares.swap() (?)
+
+  int getWidth() const;
+  int getHeight() const;
 
   void addSquares(const Block& b);
 
@@ -30,8 +33,9 @@ public:
   void shiftY(int squares); //Moves 'squares' on the y axis
   void shiftX(int squares); //Moves 'squares' on the x axis
 
-  const std::vector<std::vector<Square>>& getSquares();
-  friend bool touching(const Block& b1, const Block& b2); //Check if the given block is touching another
+  bool touching(const Block& other) const; //Check if the given block is touching another
+
+  const std::vector<std::vector<Square>>& getSquares() const;
 };
 
 #endif

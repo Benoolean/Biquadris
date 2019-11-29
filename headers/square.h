@@ -2,9 +2,9 @@
 #define SQUARE_H
 
 struct Square {
-  Square(int x, int y, bool active = true);
+  Square(int x, int y, bool active = false);
 
-  int coords[2]; //(0: x, 1: y)
+  int x, y; //(0: x, 1: y)
   bool active;
 };
 
