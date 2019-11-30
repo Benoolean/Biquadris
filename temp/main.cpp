@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "Level.h"
+#include "Square.h"
 
 using namespace std;
 
@@ -25,7 +26,11 @@ int main(int argc, char* argv[])
 	{
 		if (cmd == "left")
 		{
-
+			level.move(Direction{ DirectionValue::LEFT });
+		}
+		else if(cmd == "right")
+		{
+			level.move(Direction{ DirectionValue::RIGHT });
 		}
 	}
 

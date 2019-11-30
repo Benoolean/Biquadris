@@ -1,11 +1,13 @@
 #pragma once
 #include <string>
 #include "Grid.h"
+#include "Square.h"
 
 // enums
 enum class LevelInfo { MAX_PLAYERS = 2 };
 
-class Level {
+class Level 
+{
 	bool isPlayerOneTurn = true;
 	int level = 0;
 	int seed = 0;
@@ -20,4 +22,5 @@ public:
 	void printGrid();
 
 	void SpawnBlock();
+	void move(Direction direction);
 };

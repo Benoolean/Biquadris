@@ -14,9 +14,9 @@ public:
 	Grid();
 	~Grid();
 	std::vector<Square>& getRow(int rowNum);
-	void move();
-	void drop();
+	void move(Direction direction);
+	//void drop();
 
-	void UpdateSquare(Coordinate position, Square& square);
-	void ActiveBlockUpdate();
+	void UpdateSquare(Coordinate position, Square& square, SquareStatus newSquareStatus);
+	void ActiveBlockUpdate(SquareStatus squareStatus);
 };

@@ -1,9 +1,11 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <iostream>
 #include "Square.h"
 
 enum class BlockType { S, T, I };
+const int BLOCK_SQUARE_COUNT = 2;
 
 // Generic Block:
 
@@ -12,7 +14,7 @@ class Block
 protected:
 	std::string blockSymbol;
 	BlockType blockType;
-	std::vector<Square> blockSquares;
+	std::vector<Square *> blockSquares;
 
 public:
 	// return the symbol that represent the block
@@ -22,7 +24,7 @@ public:
 	}
 	 
 	// return the squares that make up this block 
-	std::vector<Square>& getBlockSquares()
+	std::vector<Square*> getBlockSquares()
 	{
 		return this->blockSquares;
 	}
@@ -32,15 +34,21 @@ public:
 	{
 		bool isValidMove = true;
 
-		for (auto& square : this->blockSquares)
+		for (int squarecount = 0; squarecount < BLOCK_SQUARE_COUNT; squarecount++)
 		{
-			isValidMove = isValidMove && square.moveSquareAndValidatePosition(direction.getDirection());
+			Square* square = this->blockSquares.at(squarecount);
+			bool moveSquareStatus = square->moveSquareAndValidatePosition(direction.getDirection());
+			isValidMove = isValidMove && moveSquareStatus;
 		}
 
 		// if the move is invalid, we shift it the opposite direction
-		for (auto& square : this->blockSquares)
+		if (!isValidMove)
 		{
-			isValidMove = isValidMove && square.moveSquareAndValidatePosition(direction.getOppositeDirection());
+			for (int squarecount = 0; squarecount < BLOCK_SQUARE_COUNT; squarecount++)
+			{
+				Square* square = this->blockSquares.at(squarecount);
+				square->moveSquareAndValidatePosition(direction.getOppositeDirection());
+			}
 		}
 	}
 };
@@ -58,16 +66,16 @@ public:
 		this->blockType = BlockType::S;
 
 		// spawn coords : (4,0) (4,1) (4,2) (5,1)
-		Square square = Square{ Coordinate{ 5, 0 }, SquareStatus::ACTIVE, this->blockSymbol };
-		this->blockSquares.push_back(square);
+		Square * square1 = new Square{ Coordinate{ 0, 4 }, SquareStatus::ACTIVE, this->blockSymbol };
+		this->blockSquares.push_back(square1);
 
-		square.position = Coordinate{ 5, 1 };
-		this->blockSquares.push_back(square);
+		Square* square2 = new Square{ Coordinate{ 1, 4 }, SquareStatus::ACTIVE, this->blockSymbol };
+		this->blockSquares.push_back(square2);
 
-		square.position = Coordinate{ 4, 1 };
-		this->blockSquares.push_back(square);
+		/*Square* square3 = new Square{ Coordinate{ 1, 3 }, SquareStatus::ACTIVE, this->blockSymbol };
+		this->blockSquares.push_back(square3);
 
-		square.position = Coordinate{ 4, 2 };
-		this->blockSquares.push_back(square);
+		Square* square4 = new Square{ Coordinate{ 2, 3 }, SquareStatus::ACTIVE, this->blockSymbol };
+		this->blockSquares.push_back(square4);*/
 	}
 };

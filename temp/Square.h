@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 enum class SquareStatus { ACTIVE, DEAD };
 enum class DirectionValue { LEFT, RIGHT, DOWN };
@@ -38,25 +39,25 @@ struct Coordinate
 struct Square
 {
 	Coordinate position;
-
+	
 	SquareStatus squareStatus;
 
 	std::string squareSymbol;
 
 	bool moveSquareAndValidatePosition(DirectionValue direction)
 	{
-		Coordinate old_position = this->position;
-
+		std::cout << "old : (" << this->position.x << "," << this->position.y << ")" << std::endl;
 		// shift the coords of the square
 		if (direction == DirectionValue::LEFT)
 		{
 			this->position.x--;
 		}
-		else if (direction == DirectionValue::LEFT)
+		else if (direction == DirectionValue::RIGHT)
 		{
 			this->position.x++;
 		}
 
+		std::cout << "new : (" << this->position.x << "," << this->position.y << ")" << std::endl;
 		// return false if the move is invalid
 		return this->position.isValidCoord();
 	}

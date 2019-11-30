@@ -22,11 +22,10 @@ Grid::Grid()
 	{
 		for (int colcount = 0; colcount < (int) GridInfo::GRID_WIDTH; colcount++)
 		{
-			Square square = Square{ Coordinate{ x, y }, SquareStatus::DEAD, " " };
+			Square square = Square{ Coordinate{ colcount, rowcount }, SquareStatus::DEAD, " " };
+
 			this->squares.at(rowcount).push_back(square);
-			x++;
 		}
-		y++;
 	}
 }
 
@@ -41,18 +40,48 @@ vector<Square>& Grid::getRow(int rowNum)
 	return this->squares.at(rowNum);
 }
 
-void Grid::UpdateSquare(Coordinate position, Square& square)
+void Grid::UpdateSquare(Coordinate position, Square& square, SquareStatus newSquareStatus)
 {
-	this->squares.at(position.x).at(position.y).squareStatus = square.squareStatus;
-	this->squares.at(position.x).at(position.y).squareSymbol = square.squareSymbol;
+	// y is the row number and x is the col number
+	this->squares.at(position.y).at(position.x).squareStatus = newSquareStatus;
+	
+	if (newSquareStatus == SquareStatus::ACTIVE)
+	{
+		this->squares.at(position.y).at(position.x).squareSymbol = square.squareSymbol;
+	}
+	else
+	{
+		this->squares.at(position.y).at(position.x).squareSymbol = " ";
+	}
 }
 
-void Grid::ActiveBlockUpdate()
+void Grid::ActiveBlockUpdate(SquareStatus squareStatus)
 {
-	vector<Square> squares = this->activeBlock->getBlockSquares();
+	vector<Square*> squares = this->activeBlock->getBlockSquares();
 
 	for (auto square : squares)
 	{
-		this->UpdateSquare(Coordinate{ square.position.x, square.position.y }, square);
+		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, *square, squareStatus);
+	}
+}
+
+void Grid::move(Direction direction)
+{
+	// todo check if the move will contact anything
+	// set the old position on the grid to dead squares
+	vector<Square*> oldActiveBlockSquares = this->activeBlock->getBlockSquares();
+
+	for (auto square : oldActiveBlockSquares)
+	{
+		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, *square, SquareStatus::DEAD);
+	}
+
+	// renew the current position
+	this->activeBlock->moveBlock(direction);
+
+	vector<Square*> currActiveBlockSquares = this->activeBlock->getBlockSquares();
+	for (auto square : currActiveBlockSquares)
+	{
+		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, *square, SquareStatus::ACTIVE);
 	}
 }

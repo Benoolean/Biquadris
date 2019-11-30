@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Level.h"
 #include "Block.h"
+#include "Square.h"
 #include "Grid.h"
 
 using namespace std;
@@ -54,7 +55,13 @@ void Level::SpawnBlock()
 	Block * block = new SBlock{};
 	this->playerOneGrid->activeBlock = block;
 
-	this->playerOneGrid->ActiveBlockUpdate();
+	this->playerOneGrid->ActiveBlockUpdate(SquareStatus::ACTIVE);
 
+	this->printGrid();
+}
+
+void Level::move(Direction direction)
+{
+	this->playerOneGrid->move(direction);
 	this->printGrid();
 }
