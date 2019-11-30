@@ -46,7 +46,6 @@ struct Square
 
 	bool moveSquareAndValidatePosition(DirectionValue direction)
 	{
-		std::cout << "old : (" << this->position.x << "," << this->position.y << ")" << std::endl;
 		// shift the coords of the square
 		if (direction == DirectionValue::LEFT)
 		{
@@ -57,7 +56,6 @@ struct Square
 			this->position.x++;
 		}
 
-		std::cout << "new : (" << this->position.x << "," << this->position.y << ")" << std::endl;
 		// return false if the move is invalid
 		return this->position.isValidCoord();
 	}

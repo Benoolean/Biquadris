@@ -1,4 +1,6 @@
 #pragma once
+#ifndef LEVEL_H
+#define LEVEL_H
 #include <string>
 #include "Grid.h"
 #include "Square.h"
@@ -24,3 +26,5 @@ public:
 	void SpawnBlock();
 	void move(Direction direction);
 };
+
+#endif

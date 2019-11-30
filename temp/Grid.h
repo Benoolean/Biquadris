@@ -1,4 +1,6 @@
 #pragma once
+#ifndef GRID_H
+#define GRID_H
 #include <vector>
 #include "Block.h"
 #include "Square.h"
@@ -20,3 +22,5 @@ public:
 	void UpdateSquare(Coordinate position, Square& square, SquareStatus newSquareStatus);
 	void ActiveBlockUpdate(SquareStatus squareStatus);
 };
+
+#endif
