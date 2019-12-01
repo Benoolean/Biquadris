@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -std=c++14 -Wall -MMD
-objects = square.o block.o grid.o blockgrid.o effect.o blind.o heavy.o level.o biquadris.o main.o
+objects = square.o block.o grid.o blockgrid.o effect.o blind.o heavy.o level.o biquadris.o window.o main.o
 objectPaths := $(objects:%.o=./libs/%.o)
 depends := $(objects:%.o=%.d);
 

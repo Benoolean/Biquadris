@@ -2,7 +2,9 @@
 #define LEVEL_H
 
 #include "block.h"
-#include "grid.h"
+#include "blockgrid.h"
+#include "effect.h"
+#include "window.h"
 
 #include <vector>
 #include <string>
@@ -18,14 +20,15 @@ class Level {
   bool enableGraphics;
 
   struct Player {
-    Grid grid;
+    BlockGrid grid;
 
-    std::string source1; //This allows a new stream to be opened once the end of either hase been reached
-    std::vector<std::string> sequence1; // Pushed from specified fstream, and stack popped every drop
+    std::string source; //This allows a new stream to be opened once the end of either hase been reached
+    std::vector<std::string> sequence; // Pushed from specified fstream, and stack popped every drop
 
     int points;
-  } player1, player2;
-  Player* currentPlayer;
+  };
+  std::vector<Player*> players;
+  int currentPlayer;
 
   static int highScore;
 
@@ -34,13 +37,13 @@ class Level {
 
   void togglePlayer();
 
-  bool isOver;
-  unsigned int winner; // Undefined behabiour unless isOver flag is set
+  bool over; //True for over, false for not over
+  unsigned int winner; // Undefined behaviour unless isOver flag is set
 
   void checkFullLine(); //Used to determine if there is a full line (also updates players' score)
 
 public:
-  Level(int level = 0, bool window = nullptr, std::string source1, std::string source2);
+  Level(const int level = 0, const int numPlayers = 2, const std::string* const source = nullptr, Xwindow* window = nullptr);
   ~Level();
 
   void increaseLevel(); //Increases level by 1 up to 4
@@ -61,7 +64,9 @@ public:
 
   bool isOver() const;
 
-  int winner() const; //Returns -1 if isOver flag is not set
+  int getWinner() const; //Returns -1 if isOver flag is not set
+
+  static int getHighScore();
 };
 
 #endif
