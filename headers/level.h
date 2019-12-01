@@ -27,6 +27,10 @@ class Level {
 
   static int highScore;
 
+  //These effects stack for each turn
+  //When a user applies an effect, it is stacked on top of the next
+  //grid. The current effect is set to the topmost effect, otherwise nullptr.
+  //After every turn the effects are deleted.
   std::vector<Effect*> effects;
   Effect* currentEffect; // The topmost effect, default is grid if no effect was created last turn
 
@@ -61,6 +65,8 @@ public:
 
   void setRandom();
   void setNotRandom(std::string source);
+
+  void blind();  
 
   bool isOver() const;
 
