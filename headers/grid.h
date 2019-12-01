@@ -11,6 +11,8 @@ class Grid {
   Block* active;
   Block* dead;
 
+  bool over;
+
   const int width, height;
 
 public:
