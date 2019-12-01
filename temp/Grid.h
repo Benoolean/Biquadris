@@ -13,14 +13,17 @@ class Grid
 
 public:
 	Block* activeBlock;
+	DeadBlock* deadBlock;
 	Grid();
 	~Grid();
 	std::vector<Square>& getRow(int rowNum);
 	void move(Direction direction);
 	//void drop();
 
-	void UpdateSquare(Coordinate position, Square& square, SquareStatus newSquareStatus);
+	Square* getNeighbouringSquare(Square* square, Direction direction);
+	void UpdateSquare(Coordinate position, Square* square, SquareStatus newSquareStatus);
 	void ActiveBlockUpdate(SquareStatus squareStatus);
+	void AddToDeadBlock();
 };
 
 #endif

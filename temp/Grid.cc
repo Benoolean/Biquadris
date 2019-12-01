@@ -16,13 +16,14 @@ Grid::Grid()
 	int x = 0;
 	int y = 0;
 
+	this->deadBlock = new DeadBlock;
 	this->squares = vector<vector<Square>>(165);
 
 	for (int rowcount = 0; rowcount < (int) GridInfo::GRID_HEIGHT; rowcount++)
 	{
 		for (int colcount = 0; colcount < (int) GridInfo::GRID_WIDTH; colcount++)
 		{
-			Square square = Square{ Coordinate{ colcount, rowcount }, SquareStatus::DEAD, " " };
+			Square square = Square{ Coordinate{ colcount, rowcount }, SquareStatus::INACTIVE, " " };
 
 			this->squares.at(rowcount).push_back(square);
 		}
@@ -40,14 +41,40 @@ vector<Square>& Grid::getRow(int rowNum)
 	return this->squares.at(rowNum);
 }
 
-void Grid::UpdateSquare(Coordinate position, Square& square, SquareStatus newSquareStatus)
+Square* Grid::getNeighbouringSquare(Square* square, Direction direction)
+{
+	int posx = square->position.x;
+	int posy = square->position.y;
+
+	Coordinate neighbouringCoord = Coordinate{ posx, posy }.getNeighbouringCoordinate(direction);
+
+	if (neighbouringCoord.isValidCoord())
+	{
+		if (direction.getDirection() == DirectionValue::LEFT)
+		{
+			return &this->getRow(square->position.y).at(square->position.x - 1);
+		}
+		else if (direction.getDirection() == DirectionValue::RIGHT)
+		{
+			return &this->getRow(square->position.y).at(square->position.x + 1);
+		}
+		else
+		{
+			return &this->getRow(square->position.y + 1).at(square->position.x);
+		}
+	}
+
+	return new Square{neighbouringCoord, square->squareStatus, square->squareSymbol};
+}
+
+void Grid::UpdateSquare(Coordinate position, Square* square, SquareStatus newSquareStatus)
 {
 	// y is the row number and x is the col number
 	this->squares.at(position.y).at(position.x).squareStatus = newSquareStatus;
 	
 	if (newSquareStatus == SquareStatus::ACTIVE)
 	{
-		this->squares.at(position.y).at(position.x).squareSymbol = square.squareSymbol;
+		this->squares.at(position.y).at(position.x).squareSymbol = square->squareSymbol;
 	}
 	else
 	{
@@ -61,27 +88,71 @@ void Grid::ActiveBlockUpdate(SquareStatus squareStatus)
 
 	for (auto square : squares)
 	{
-		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, *square, squareStatus);
+		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, square, squareStatus);
 	}
 }
 
 void Grid::move(Direction direction)
 {
-	// todo check if the move will contact anything
-	// set the old position on the grid to dead squares
 	vector<Square*> oldActiveBlockSquares = this->activeBlock->getBlockSquares();
 
+	// check if the move will contact anything
 	for (auto square : oldActiveBlockSquares)
 	{
-		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, *square, SquareStatus::DEAD);
+		int posx = square->position.x;
+		int posy = square->position.y;
+
+		Square* neighbouringSquare = this->getNeighbouringSquare(square, direction);
+
+		// cancel the movement if it will hit a dead square
+		if (neighbouringSquare->squareStatus == SquareStatus::DEAD)
+		{
+			return;
+		}
+
+		// cancel the movement if the next move will be an invalid square.
+		// with the exception that the square is on the bottom. because we need to add it to the
+		// deadblocks if the current position is on the bottom and the direction is down 
+		if ((!neighbouringSquare->isValidSquare()) && square->position.y < 14)
+		{
+			return;
+		}
+
+		// block has hit the bottom
+		if (square->position.y == 14)
+		{
+			this->AddToDeadBlock();
+			return;
+		}
 	}
 
-	// renew the current position
+	// set the old position of active on the grid to inactive squares
+	for (auto square : oldActiveBlockSquares)
+	{
+		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, square, SquareStatus::INACTIVE);
+	}
+
+	// move the block
 	this->activeBlock->moveBlock(direction);
 
+	// renew the grid for the active squares
 	vector<Square*> currActiveBlockSquares = this->activeBlock->getBlockSquares();
 	for (auto square : currActiveBlockSquares)
 	{
-		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, *square, SquareStatus::ACTIVE);
+		this->UpdateSquare(Coordinate{ square->position.x, square->position.y }, square, SquareStatus::ACTIVE);
+	}
+}
+
+void Grid::AddToDeadBlock()
+{
+	this->deadBlock->AddBlockToDeadBlock(this->activeBlock);
+
+	// remove the current active block
+	this->activeBlock = nullptr;
+
+	// update the grid
+	for (auto square : this->deadBlock->getBlockSquares())
+	{
+		this->UpdateSquare(square->position, square, SquareStatus::DEAD);
 	}
 }

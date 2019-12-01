@@ -27,17 +27,23 @@ void Level::printGrid()
 	{
 		for (int playerNum = 1; playerNum <= (int)LevelInfo::MAX_PLAYERS; playerNum++)
 		{
-			vector<Square> row = this->playerOneGrid->getRow(rowcount);
+			vector<Square> row = (playerNum == 1) ? this->playerOneGrid->getRow(rowcount) : this->playerTwoGrid->getRow(rowcount);
 
 			for (auto col : row)
 			{
-				if (col.squareStatus == SquareStatus::DEAD)
+				if (col.squareStatus == SquareStatus::INACTIVE)
 				{
 					cout << " ";
 				}
 				else if (col.squareStatus == SquareStatus::ACTIVE)
 				{
-					cout << col.squareSymbol;
+					char c = (int) LevelBlockSymbol::ACTIVE_BLOCK_SYMBOL;
+					cout << c;
+				}
+				else if (col.squareStatus == SquareStatus::DEAD)
+				{
+					char c = (int)LevelBlockSymbol::DEAD_BLOCK_SYMBOL;;
+					cout << c;
 				}
 			}
 			cout << GRID_SEPERATION_SPACE;
@@ -49,19 +55,28 @@ void Level::printGrid()
 	cout << GRID_BAR_SEPERATOR << endl;
 }
 
-void Level::SpawnBlock()
+void Level::SpawnBlock(Grid* playerGrid)
 {
+	
 	// hardcoded for now
 	Block * block = new SBlock{};
-	this->playerOneGrid->activeBlock = block;
+	playerGrid->activeBlock = block;
 
-	this->playerOneGrid->ActiveBlockUpdate(SquareStatus::ACTIVE);
+	playerGrid->ActiveBlockUpdate(SquareStatus::ACTIVE);
 
 	this->printGrid();
 }
 
 void Level::move(Direction direction)
 {
-	this->playerOneGrid->move(direction);
+	if (this->isPlayerOneTurn)
+	{
+		this->playerOneGrid->move(direction);
+	}
+	else
+	{
+		this->playerTwoGrid->move(direction);
+	}
+
 	this->printGrid();
 }

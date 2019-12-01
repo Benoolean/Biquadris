@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-enum class SquareStatus { ACTIVE, DEAD };
+enum class SquareStatus { ACTIVE, INACTIVE,DEAD };
 enum class DirectionValue { LEFT, RIGHT, DOWN };
 
 class Direction
@@ -34,6 +34,22 @@ struct Coordinate
 	{
 		return (x >= 0 && x <= 10 && y >= 0 && y <= 14);
 	}
+
+	Coordinate getNeighbouringCoordinate(Direction direction)
+	{
+		if (direction.getDirection() == DirectionValue::LEFT)
+		{
+			return Coordinate{ x - 1, y };
+		}
+		else if (direction.getDirection() == DirectionValue::RIGHT)
+		{
+			return Coordinate{ x + 1, y };
+		}
+		else
+		{
+			return Coordinate{ x, y + 1 };
+		}
+	}
 };
 
 struct Square
@@ -55,8 +71,17 @@ struct Square
 		{
 			this->position.x++;
 		}
+		else if (direction == DirectionValue::DOWN)
+		{
+			this->position.y++;
+		}
 
 		// return false if the move is invalid
+		return this->position.isValidCoord();
+	}
+
+	bool isValidSquare()
+	{
 		return this->position.isValidCoord();
 	}
 };

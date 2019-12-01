@@ -32,6 +32,10 @@ int main(int argc, char* argv[])
 		{
 			level.move(Direction{ DirectionValue::RIGHT });
 		}
+		else if (cmd == "down")
+		{
+			level.move(Direction{ DirectionValue::DOWN });
+		}
 	}
 
 	return 0;

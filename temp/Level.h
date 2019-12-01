@@ -7,6 +7,7 @@
 
 // enums
 enum class LevelInfo { MAX_PLAYERS = 2 };
+enum class LevelBlockSymbol { ACTIVE_BLOCK_SYMBOL = 176, DEAD_BLOCK_SYMBOL = 219 };
 
 class Level 
 {
@@ -23,7 +24,7 @@ public:
 	void StartGame();
 	void printGrid();
 
-	void SpawnBlock();
+	void SpawnBlock(Grid* playerGrid);
 	void move(Direction direction);
 };
 

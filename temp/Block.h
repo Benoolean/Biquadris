@@ -35,23 +35,9 @@ public:
 	// reposition each square in the block
 	void moveBlock(Direction direction)
 	{
-		bool isValidMove = true;
-
-		for (int squarecount = 0; squarecount < BLOCK_SQUARE_COUNT; squarecount++)
+		for (auto square : this->getBlockSquares())
 		{
-			Square* square = this->blockSquares.at(squarecount);
-			bool moveSquareStatus = square->moveSquareAndValidatePosition(direction.getDirection());
-			isValidMove = isValidMove && moveSquareStatus;
-		}
-
-		// if the move is invalid, we shift it the opposite direction
-		if (!isValidMove)
-		{
-			for (int squarecount = 0; squarecount < BLOCK_SQUARE_COUNT; squarecount++)
-			{
-				Square* square = this->blockSquares.at(squarecount);
-				square->moveSquareAndValidatePosition(direction.getOppositeDirection());
-			}
+			square->moveSquareAndValidatePosition(direction.getDirection());
 		}
 	}
 };
@@ -80,6 +66,31 @@ public:
 
 		Square* square4 = new Square{ Coordinate{ 2, 3 }, SquareStatus::ACTIVE, this->blockSymbol };
 		this->blockSquares.push_back(square4);
+	}
+};
+
+// dead block
+
+class DeadBlock
+{
+	std::vector<Square*> deadSquares;
+
+public:
+	//DeadBlock() {};
+
+	// add squares to the deadblock
+	void AddBlockToDeadBlock(Block* block)
+	{
+		for (auto& square : block->getBlockSquares())
+		{
+			square->squareStatus = SquareStatus::DEAD;
+			this->deadSquares.push_back(square);
+		}
+	}
+
+	std::vector<Square*> getBlockSquares()
+	{
+		return this->deadSquares;
 	}
 };
 
