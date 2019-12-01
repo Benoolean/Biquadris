@@ -8,7 +8,12 @@ namespace Biquadris {
   void init(int seed) {
     Biquadris::seed = seed;
 
-    defaults['I'] = new Block({ { Square(0, 3, 'I', true) }, { Square(1, 3, 'I', true) }, { Square(2, 3, 'I', true) }, { Square(3, 3, 'I', true) } });
+    defaults['I'] = new Block({
+      { Square(0, 3, 'I', true) },
+      { Square(1, 3, 'I', true) },
+      { Square(2, 3, 'I', true) },
+      { Square(3, 3, 'I', true) }
+    });
 
     defaults['J'] = new Block();
 
@@ -23,6 +28,3 @@ namespace Biquadris {
     defaults['T'] = new Block();
   }
 }
-
-// Current biquadris.h
-
