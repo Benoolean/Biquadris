@@ -1,15 +1,44 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
 #include "biquadris.h"
 #include "level.h"
+#include "window.h"
 
 using namespace std;
 
-int main(int argc, string argv[]) {
+int main(int argc, char* argv[]) {
+	//Initialization
 	Biquadris::init();
 
-	cout << *Biquadris::defaults['I'];
+	bool showWindow = true;
+
+	for(int i = 1; i < argc; i++) {
+		string arg(argv[i]);
+		if(arg == "text") {
+			showWindow = false;
+		}
+		else if(arg == "seed") {
+			//Ensure there are still enough paramaters to satsisfy seed option
+			if((i+1) < argc) {
+				int tempSeed;
+				stringstream ss(argv[i]);
+
+				if(ss >> tempSeed) {
+					Biquadris::seed = tempSeed;
+				}
+				else {
+					cout << "Warning: invalid seed provided, must be an integer" << endl;
+				}
+			}
+			else {
+				cout << "Warning: no seed provided" << endl;
+			}
+		}
+	}
+
+	Xwindow* window = ((showWindow) ? new Xwindow(1280, 720) : nullptr);
 
 	string command;
 	while(cin >> command) {
@@ -18,5 +47,6 @@ int main(int argc, string argv[]) {
 	}
 	// ^ Are we getting input for level?
 
+	delete window;
 	return 0;
 }

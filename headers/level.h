@@ -6,9 +6,9 @@
 #include "effect.h"
 #include "window.h"
 
+#include <iostream>
 #include <vector>
 #include <string>
-
 #include <map>
 
 class Xwindow;
@@ -18,6 +18,8 @@ class Level {
 
   Xwindow* window;
   bool enableGraphics;
+
+  std::ostream* out;
 
   struct Player {
     BlockGrid grid;
@@ -42,8 +44,13 @@ class Level {
 
   void checkFullLine(); //Used to determine if there is a full line (also updates players' score)
 
+  void print(std::string s);
+
 public:
-  Level(const int level = 0, const int numPlayers = 2, const std::string* const source = nullptr, Xwindow* window = nullptr);
+  Level(const int level = 0,
+        const int numPlayers = 2,
+        const std::string* const source = nullptr,
+        std::ostream* out = nullptr, Xwindow* window = nullptr);
   ~Level();
 
   void increaseLevel(); //Increases level by 1 up to 4
