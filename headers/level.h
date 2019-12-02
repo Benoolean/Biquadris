@@ -15,8 +15,6 @@
 class Xwindow;
 
 class Level {
-  int level;
-
   Xwindow* window;
 
   std::vector<Player*> players;
@@ -43,7 +41,7 @@ class Level {
   Grid* currentGrid();
 
 public:
-  Level(const int level = 0,
+  Level(int level = 0,
         const int numPlayers = 2,
         bool withGraphics = true,
         std::vector<std::string> source = std::vector<std::string>());

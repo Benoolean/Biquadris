@@ -3,6 +3,10 @@
 
 #include "biquadris.h"
 
+#include <iostream>
+
+#include <iostream>
+
 using namespace std;
 
 Chunk::Chunk() {

@@ -3,27 +3,27 @@
 using namespace std;
 using namespace Biquadris;
 
-Level::Level(const int level,
+Level::Level(int level,
   const int numPlayers,
   bool withGraphics,
   std::vector<std::string> source)
-    : level(level), currentPlayer(0),
+    : currentPlayer(0),
       over(false), winner(-1),
       currentEffect(nullptr) {
 
-  if(this->level > 4) {
+  if(level > 4) {
     print("Warning: level too high, 4 is the highest level.");
     print("Setting level to 4.");
-    this->level = 4;
+    level = 4;
   }
-  else if(this->level < 0) {
+  else if(level < 0) {
     print("Warning: level too low, 0 is the lowest level.");
     print("Setting level to 0.");
-    this->level = 0;
+    level = 0;
   }
 
   for(int i = 0; i < numPlayers; i++) {
-    players.push_back(new Player(source[i])); //Default initialize to "" src
+    players.push_back(new Player(((source.size() > i) ? source[i] : ""), level)); //Default initialize to "" src
   }
 }
 
@@ -43,7 +43,7 @@ void Level::print(string s) {
 
 Grid* Level::currentGrid() {
   if(currentEffect) return currentEffect;
-  else return &(players[currentPlayer]->grid);
+  else return players[currentPlayer]->grid;
 }
 
 // constants
@@ -84,7 +84,7 @@ void Level::draw() {
   vector<vector<Square>> playerSquares;
 
   for(int i = 0; i < this->players.size(); i++) {
-    playerSquares.push_back(players[i]->grid.getGrid());
+    playerSquares.push_back(this->players[i]->grid->getGrid());
   }
 
 	// print each row by player count

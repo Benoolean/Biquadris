@@ -2,4 +2,10 @@
 using namespace std;
 
 Player::Player(string source, int level)
-  : grid(BlockGrid()), source(source), level(level), points(0) { }
+  : grid(new BlockGrid()), source(source), level(level), points(0) {
+  // Get sequence!!!
+}
+
+Player::~Player() {
+  delete grid;
+}
