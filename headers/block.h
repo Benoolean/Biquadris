@@ -5,42 +5,34 @@
 #include <iostream>
 
 #include "square.h"
+#include "biquadris.h"
+
+class Chunk;
 
 class Block {
   std::vector<Square*> squares; //Column by row
 
 public:
   Block();
-  Block(std::vector<std::vector<Square>> &&squares);
-  Block(const Block& other) noexcept;
-  Block(Block&& other) noexcept;
+  Block(std::vector<Square*> &&squares);
 
   ~Block();
 
-  Block& operator=(const Block& rhs) noexcept;
-  Block& operator=(Block&& rhs) noexcept; //Use squares.swap() (?)
 
-  int getWidth() const;
-  int getHeight() const;
+  /*
+   * Any movement functions that returns a boolean
+   * indicates whether they contact the provided Chunk
+   * (returns false in case of contact).
+   * Furthermore, any movement requested that is invalid
+   * is not performed.
+   */
 
-  void addSquares(const Block& b);
+  void rotateClockwise(Chunk* chunk = nullptr);
+  void rotateCClockwise(Chunk* chunk = nullptr);
 
-  void addSquare(int x, int y); //Absolute coordinates
-  void addSquare(const Square& s);
-
-  void removeRow(int index); //Row index is relative to absolute coordinates
-
-  void rotateClockwise();
-  void rotateCClockwise();
-
-  void shiftY(int shift); //Moves 'squares' on the y axis
-  void shiftX(int shift); //Moves 'squares' on the x axis
-
-  bool touching(const Block& other) const; //Check if the given block is touching another
+  bool move(Biquadris::Direction direction, unsigned int shift = 1, Chunk* chunk = nullptr);
 
   const std::vector<Square*>& getSquares() const;
-
-  friend std::ostream& operator<<(std::ostream& out, const Block& b);
 };
 
 #endif

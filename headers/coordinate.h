@@ -1,3 +1,6 @@
+#ifndef COORDINATE_H
+#define COORDINATE_H
+
 struct Coordinate {
 	int x;
 	int y;
@@ -5,3 +8,5 @@ struct Coordinate {
 	bool isValidCoord();
 	Coordinate getNeighbouringCoordinate(Direction direction);
 };
+
+#endif

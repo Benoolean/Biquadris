@@ -1,8 +1,8 @@
 #include "square.h"
 using namespace Biquadris;
 
-Square::Square(int x, int y, char symbol, bool active)
-  : x(x), y(y), symbol(symbol), active(active) { }
+Square::Square(int x, int y, char symbol, int colour, bool active)
+  : x(x), y(y), symbol(symbol), color(colour), active(active) { }
 
 bool Square::validPosition() {
   return position.isValidCoord();
@@ -30,4 +30,10 @@ bool Square::move(Coordinate newPosition) {
 void Square::deactivate() {
   symbol = emptySymbol;
   active = false;
+}
+
+void Square::mimic(const Square& s) {
+  this->symbol = s.symbol;
+  this->colour = s.colour;
+  this->active = s.active;
 }
