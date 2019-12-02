@@ -1,0 +1,1 @@
+ren *.cc *.cpp
