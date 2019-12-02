@@ -4,7 +4,6 @@
 
 #include "biquadris.h"
 #include "level.h"
-#include "window.h"
 
 using namespace std;
 
@@ -38,8 +37,6 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	Xwindow* window = ((showWindow) ? new Xwindow(1280, 720) : nullptr);
-
 	string command;
 	while(cin >> command) {
 		int level;
@@ -47,6 +44,5 @@ int main(int argc, char* argv[]) {
 	}
 	// ^ Are we getting input for level?
 
-	delete window;
 	return 0;
 }

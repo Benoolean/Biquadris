@@ -3,9 +3,9 @@ using namespace std;
 
 Level::Level(const int level,
   const int numPlayers,
-  std::vector<std::string> source,
-  std::ostream* out, Xwindow* window)
-    : level(level), out(out), window(window), currentPlayer(0),
+  bool withGraphics,
+  std::vector<std::string> source)
+    : level(level), currentPlayer(0),
       over(false), winner(-1) {
 
   if(this->level > 4) {
@@ -35,9 +35,7 @@ Level::~Level() {
 }
 
 void Level::print(string s) {
-  if(out) {
-    (*out) << s << endl;
-  }
+  cout << s << endl;
 }
 
 Grid* Level::currentGrid() {
@@ -46,5 +44,4 @@ Grid* Level::currentGrid() {
 }
 
 void Level::draw() {
-  currentGrid()->draw(out, window);
 }

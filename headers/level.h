@@ -6,7 +6,6 @@
 #include "player.h"
 #include "blockgrid.h"
 #include "effect.h"
-#include "window.h"
 
 #include <iostream>
 #include <vector>
@@ -19,7 +18,6 @@ class Level {
   int level;
 
   Xwindow* window;
-  std::ostream* out;
 
   std::vector<Player*> players;
   int currentPlayer;
@@ -47,8 +45,8 @@ class Level {
 public:
   Level(const int level = 0,
         const int numPlayers = 2,
-        std::vector<std::string> source = std::vector<std::string>(),
-        std::ostream* out = nullptr, Xwindow* window = nullptr);
+        bool withGraphics = true,
+        std::vector<std::string> source = std::vector<std::string>());
   ~Level();
 
   void increaseLevel(); //Increases level by 1 up to 4
@@ -59,8 +57,7 @@ public:
   void rotateClockwise();
   void rotateCClockwise();
 
-  void shiftX(int shift);
-  void shiftY(unsigned int shift);
+  void move(Biquadris::Direction direction);
 
   void drop();
 
