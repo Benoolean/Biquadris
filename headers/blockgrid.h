@@ -7,7 +7,6 @@ class BlockGrid : public Grid {
 public:
   BlockGrid();
   ~BlockGrid();
-  void draw(std::ostream* out, Xwindow* window) override;
 };
 
 #endif

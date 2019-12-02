@@ -12,8 +12,6 @@ class Xwindow;
 class Blind : public Effect {
 public:
   Blind(Grid* component);
-
-  void draw(std::ostream* out, Xwindow* out) override; // Standard draw but overlays the blinded position
 };
 
 #endif

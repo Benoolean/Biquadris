@@ -13,9 +13,6 @@ class Xwindow;
 class Heavy : public Effect {
 public:
   Blind(Grid* component);
-
-  void draw(std::ostream* out, Xwindow* out) override; // Just calls component draw
-  void shiftX(int shift) override; //Shifts down twice as well
 };
 
 #endif
