@@ -1,5 +1,5 @@
-#include "level.h"
-#include "square.h"
+#include "../headers/level.h"
+#include "../headers/square.h"
 using namespace std;
 using namespace Biquadris;
 

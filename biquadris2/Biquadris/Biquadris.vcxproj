@@ -19,33 +19,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="biquadris.h" />
-    <ClInclude Include="blind.h" />
-    <ClInclude Include="block.h" />
-    <ClInclude Include="blockgrid.h" />
-    <ClInclude Include="Chunk.h" />
-    <ClInclude Include="coordinate.h" />
-    <ClInclude Include="effect.h" />
-    <ClInclude Include="grid.h" />
-    <ClInclude Include="heavy.h" />
-    <ClInclude Include="level.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="square.h" />
+    <ClInclude Include="headers\biquadris.h" />
+    <ClInclude Include="headers\blind.h" />
+    <ClInclude Include="headers\block.h" />
+    <ClInclude Include="headers\blockgrid.h" />
+    <ClInclude Include="headers\Chunk.h" />
+    <ClInclude Include="headers\coordinate.h" />
+    <ClInclude Include="headers\effect.h" />
+    <ClInclude Include="headers\grid.h" />
+    <ClInclude Include="headers\heavy.h" />
+    <ClInclude Include="headers\level.h" />
+    <ClInclude Include="headers\player.h" />
+    <ClInclude Include="headers\square.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="biquadris.cpp" />
-    <ClCompile Include="blind.cpp" />
-    <ClCompile Include="block.cpp" />
-    <ClCompile Include="blockgrid.cpp" />
-    <ClCompile Include="Chunk.cpp" />
-    <ClCompile Include="coordinate.cpp" />
-    <ClCompile Include="effect.cpp" />
-    <ClCompile Include="grid.cpp" />
-    <ClCompile Include="heavy.cpp" />
-    <ClCompile Include="level.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="square.cpp" />
+    <None Include="src\anticonversion.bat" />
+    <None Include="src\conversion.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\biquadris.cc" />
+    <ClCompile Include="src\blind.cc" />
+    <ClCompile Include="src\block.cc" />
+    <ClCompile Include="src\blockgrid.cc" />
+    <ClCompile Include="src\Chunk.cc" />
+    <ClCompile Include="src\coordinate.cc" />
+    <ClCompile Include="src\effect.cc" />
+    <ClCompile Include="src\grid.cc" />
+    <ClCompile Include="src\heavy.cc" />
+    <ClCompile Include="src\level.cc" />
+    <ClCompile Include="src\main.cc" />
+    <ClCompile Include="src\player.cc" />
+    <ClCompile Include="src\square.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

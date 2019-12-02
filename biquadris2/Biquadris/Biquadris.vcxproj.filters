@@ -15,81 +15,89 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="square.h">
+    <ClInclude Include="headers\biquadris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
+    <ClInclude Include="headers\blind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="level.h">
+    <ClInclude Include="headers\block.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="heavy.h">
+    <ClInclude Include="headers\blockgrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="grid.h">
+    <ClInclude Include="headers\Chunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="effect.h">
+    <ClInclude Include="headers\coordinate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="coordinate.h">
+    <ClInclude Include="headers\effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Chunk.h">
+    <ClInclude Include="headers\grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="blockgrid.h">
+    <ClInclude Include="headers\heavy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="block.h">
+    <ClInclude Include="headers\level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="blind.h">
+    <ClInclude Include="headers\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="biquadris.h">
+    <ClInclude Include="headers\square.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="square.cpp">
+    <None Include="src\anticonversion.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\conversion.bat">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\biquadris.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
+    <ClCompile Include="src\blind.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\block.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="level.cpp">
+    <ClCompile Include="src\blockgrid.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="heavy.cpp">
+    <ClCompile Include="src\Chunk.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="grid.cpp">
+    <ClCompile Include="src\coordinate.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="effect.cpp">
+    <ClCompile Include="src\effect.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="coordinate.cpp">
+    <ClCompile Include="src\grid.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Chunk.cpp">
+    <ClCompile Include="src\heavy.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="blockgrid.cpp">
+    <ClCompile Include="src\level.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="block.cpp">
+    <ClCompile Include="src\main.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="blind.cpp">
+    <ClCompile Include="src\player.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="biquadris.cpp">
+    <ClCompile Include="src\square.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,6 @@
-#include "biquadris.h"
-#include "block.h"
-#include "square.h"
+#include "../headers/biquadris.h"
+#include "../headers/block.h"
+#include "../headers/square.h"
 
 namespace Biquadris {
   std::map<char, Block*> defaults;
