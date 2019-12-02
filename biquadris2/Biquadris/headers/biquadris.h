@@ -10,7 +10,7 @@ namespace Biquadris {
   extern std::map<std::string, Block*> defaults;
   extern int seed;
 
-  enum GridInfo { GRID_HEIGHT = 15, GRID_WIDTH = 11 };
+  enum GridInfo { GRID_HEIGHT = 18, GRID_WIDTH = 11 }; //Height = 15 + 3 safety rows
   enum class Direction { LEFT, RIGHT, DOWN };
 
   enum class Effect {

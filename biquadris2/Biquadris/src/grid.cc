@@ -28,9 +28,7 @@ bool Grid::setActive(Block* newActive)
 	for (auto square : blockSquare)
 	{
 		//Check if the new square contacts any of the existing squares
-		SquareStatus squareStatus = square->status;
-
-		if (this->chunk->getSquares().at(square->position.y).at(square->position.x)->status == squareStatus)
+		if (this->chunk->getSquares().at(square->position.y).at(square->position.x)->status == SquareStatus::DEAD)
 		{
 			this->gridcomplete = true;
 			return false;
@@ -57,9 +55,9 @@ bool Grid::move(Direction direction)
 	return true;
 }
 
-void Grid::checkRowCompleteness()
+int Grid::checkRowCompleteness()
 {
-
+	return chunk->clearFullRows();
 }
 
 vector<vector<Square>> Grid::getPlayerChunk()

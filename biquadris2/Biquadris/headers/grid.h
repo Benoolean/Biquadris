@@ -28,7 +28,8 @@ public:
    */
   virtual bool move(Biquadris::Direction direction);
 
-  void checkRowCompleteness();
+  int checkRowCompleteness();
+  int deadBlocksRemoved();
 
   virtual std::vector<std::vector<Square>> getPlayerChunk();
 };

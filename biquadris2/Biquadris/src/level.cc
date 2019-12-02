@@ -40,6 +40,17 @@ Level::~Level()
 	}
 }
 
+//Helper function that returns x to the power of y
+int power(int x, unsigned int y) {
+	int current = ((y == 0) ? 1 : x);
+
+	for(int i = 0; i < (int)y; i++) {
+		current *= x;
+	}
+
+	return current;
+}
+
 void Level::StartGame()
 {
 	string cmd = "";
@@ -65,7 +76,15 @@ void Level::StartGame()
 		else if(cmd == "down")
 		{
 			if(!this->move(Direction::DOWN)) { //Block died
+				Player* current = this->getCurrentPlayer();
+				int rowsRemoved = current->grid->checkRowCompleteness();
+				if(rowsRemoved) { //If any rows were cleared update players score
+					current->score += power(current->level + rowsRemoved, 2);
+					//When an entire block is removed, score += (levelatcreation + 1)^2
+				}
+
 				if(this->spawnBlock()) {
+						//Switch player
 				}
 				else { //Player 1 is out!
 					cout << "Player 1 is out!" << endl;
@@ -121,7 +140,7 @@ void Level::draw()
 	for (int i = 0; i < (int) this->players.size(); i++)
 	{
 		cout << "Score:"
-			<< "   " << players[i]->points;
+			<< "   " << players[i]->score;
 		if (i + 1 != (int) this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;

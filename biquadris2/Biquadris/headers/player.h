@@ -12,7 +12,7 @@ class Player
 	int currentBlock;
 
 	int level;
-	int points;
+	int score;
 
 public:
 	Player(std::string source, int level = 0);

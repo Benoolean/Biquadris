@@ -21,6 +21,8 @@ public:
   void addSquare(const Square& s);
   void deactivateSquare(const Square& s);
 
+  int clearFullRows(); //Returns the number of full rows cleared and shifts upper dead content down
+
   const std::vector<std::vector<Square*>>& getSquares() const;
 };
 

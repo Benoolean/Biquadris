@@ -9,7 +9,7 @@ using namespace std;
 using namespace Biquadris;
 
 Chunk::Chunk()
-	: squares{vector<vector<Square*>>((int) GridInfo::GRID_HEIGHT * (int)GridInfo::GRID_WIDTH)}
+	: squares{vector<vector<Square*>>((int) GridInfo::GRID_HEIGHT)}
 {
 	for (int rowcount = 0; rowcount < (int)GridInfo::GRID_HEIGHT; rowcount++)
 	{
@@ -68,6 +68,45 @@ void Chunk::addSquare(const Square& square)
 void Chunk::deactivateSquare(const Square& square)
 {
 	this->squares.at(square.position.y).at(square.position.x)->deactivate();
+}
+
+int Chunk::clearFullRows() {
+	int rowsCleared = 0;
+
+	int rowIndex = 0;
+	for(auto row : this->squares) {
+		bool fullRow = (squares.size() > 0);
+		for(auto square : row) {
+			if(square->status != SquareStatus::DEAD) {
+				fullRow = false;
+				break;
+			}
+		}
+
+		if(fullRow) {
+			vector<Square> lastRow;
+			for(int i = 0; i < rowIndex; i++) {
+				vector<Square> tempRow;
+				for(auto square : squares[i]) {
+					 tempRow.push_back(*square);
+					 square->deactivate();
+				}
+
+				if(i) { //If not the first row
+					for(auto square : squares[i]) {
+						square->mimic(*square);
+					}
+				}
+
+				//Swap the data, to avoid unneccessary copying
+				lastRow.swap(tempRow);
+ 			}
+		}
+
+		++rowIndex;
+	}
+
+	return rowsCleared;
 }
 
 const vector<vector<Square*>>& Chunk::getSquares() const
