@@ -2,11 +2,12 @@
 #define BIQUADRIS_H
 
 #include <map>
+#include <string>
 
 class Block;
 
 namespace Biquadris {
-  extern std::map<char, Block*> defaults;
+  extern std::map<std::string, Block*> defaults;
   extern int seed;
 
   enum GridInfo { GRID_HEIGHT = 15, GRID_WIDTH = 11 };
