@@ -26,7 +26,8 @@ bool Player::spawnNewBlock()
 {
 	Block* block = new Block(*Biquadris::defaults[this->sequence[this->currentBlock]]);
 	bool valid = this->grid->setActive(block);
-	this->currentBlock++;
+
+	this->currentBlock = ((this->currentBlock + 1 >= (int)this->sequence.size()) ? 0 : this->currentBlock + 1);
 
 	return valid;
 }
