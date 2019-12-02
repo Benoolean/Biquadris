@@ -5,7 +5,7 @@ using namespace std;
 using namespace Biquadris;
 
 Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std::string> source)
-	: currentPlayer(0), over(false), winner(-1), currentEffect(nullptr)
+	: currentPlayer(0), over(false), currentEffect(nullptr), winner(-1)
 {
 	if (level > 4)
 	{
