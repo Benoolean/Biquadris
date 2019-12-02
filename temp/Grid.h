@@ -21,6 +21,7 @@ public:
 	//void drop();
 
 	Square* getNeighbouringSquare(Square* square, Direction direction);
+	void SpawnNewBlock();
 	void UpdateSquare(Coordinate position, Square* square, SquareStatus newSquareStatus);
 	void ActiveBlockUpdate(SquareStatus squareStatus);
 	void AddToDeadBlock();

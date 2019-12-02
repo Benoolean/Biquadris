@@ -17,26 +17,5 @@ int main(int argc, char* argv[])
 	Level level;
 	level.StartGame();
 
-	level.SpawnBlock();
-
-	// read in the command inputs
-	string cmd = "";
-
-	while (cin >> cmd)
-	{
-		if (cmd == "left")
-		{
-			level.move(Direction{ DirectionValue::LEFT });
-		}
-		else if(cmd == "right")
-		{
-			level.move(Direction{ DirectionValue::RIGHT });
-		}
-		else if (cmd == "down")
-		{
-			level.move(Direction{ DirectionValue::DOWN });
-		}
-	}
-
 	return 0;
 }

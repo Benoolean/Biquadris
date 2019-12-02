@@ -15,11 +15,42 @@ void Level::StartGame()
 	this->playerOneGrid = new Grid();
 	this->playerTwoGrid = new Grid();
 
+	this->playerOneGrid->SpawnNewBlock();
+	this->playerTwoGrid->SpawnNewBlock();
+
 	this->printGrid();
+
+	// read in the command inputs
+	string cmd = "";
+
+	while (cin >> cmd)
+	{
+		if (cmd == "left")
+		{
+			this->move(Direction{ DirectionValue::LEFT });
+		}
+		else if (cmd == "right")
+		{
+			this->move(Direction{ DirectionValue::RIGHT });
+		}
+		else if (cmd == "down")
+		{
+			this->move(Direction{ DirectionValue::DOWN });
+		}
+	}
 }
 
 void Level::printGrid()
-{
+{ 
+	/*========= print level and score =========*/
+
+	// todo dynanmic spacing based on score
+
+	cout << "Level:" << "    " << "1" << GRID_SEPERATION_SPACE <<"Level:" << "    " << "1" << endl;
+	cout << "Score:" << "    " << "1" << GRID_SEPERATION_SPACE << "Score:" << "    " << "1" << endl;
+
+	/*========= print grid =========*/
+
 	cout << GRID_BAR_SEPERATOR << endl;
 
 	// print each row by player count
@@ -53,18 +84,10 @@ void Level::printGrid()
 	}
 
 	cout << GRID_BAR_SEPERATOR << endl;
-}
 
-void Level::SpawnBlock(Grid* playerGrid)
-{
+	/*========= print next=========*/
 	
-	// hardcoded for now
-	Block * block = new SBlock{};
-	playerGrid->activeBlock = block;
-
-	playerGrid->ActiveBlockUpdate(SquareStatus::ACTIVE);
-
-	this->printGrid();
+	cout << "Next:" << endl;
 }
 
 void Level::move(Direction direction)
@@ -77,6 +100,8 @@ void Level::move(Direction direction)
 	{
 		this->playerTwoGrid->move(direction);
 	}
+
+	this->isPlayerOneTurn = !this->isPlayerOneTurn;
 
 	this->printGrid();
 }

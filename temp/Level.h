@@ -24,7 +24,6 @@ public:
 	void StartGame();
 	void printGrid();
 
-	void SpawnBlock(Grid* playerGrid);
 	void move(Direction direction);
 };
 

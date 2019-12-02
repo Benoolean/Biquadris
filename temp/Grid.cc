@@ -67,6 +67,13 @@ Square* Grid::getNeighbouringSquare(Square* square, Direction direction)
 	return new Square{neighbouringCoord, square->squareStatus, square->squareSymbol};
 }
 
+void Grid::SpawnNewBlock()
+{
+	Block* block = new SBlock{};
+	this->activeBlock = block;
+	this->ActiveBlockUpdate(SquareStatus::ACTIVE);
+}
+
 void Grid::UpdateSquare(Coordinate position, Square* square, SquareStatus newSquareStatus)
 {
 	// y is the row number and x is the col number
@@ -104,9 +111,10 @@ void Grid::move(Direction direction)
 
 		Square* neighbouringSquare = this->getNeighbouringSquare(square, direction);
 
-		// cancel the movement if it will hit a dead square
+		// cancel the movement if it will hit a dead square and add to dead block
 		if (neighbouringSquare->squareStatus == SquareStatus::DEAD)
 		{
+			this->AddToDeadBlock();
 			return;
 		}
 
@@ -155,4 +163,7 @@ void Grid::AddToDeadBlock()
 	{
 		this->UpdateSquare(square->position, square, SquareStatus::DEAD);
 	}
+
+	// spawn new block
+	this->SpawnNewBlock();
 }
