@@ -17,13 +17,13 @@ Grid::Grid()
 	int y = 0;
 
 	this->deadBlock = new DeadBlock;
-	this->squares = vector<vector<Square>>(165);
+	this->squares = vector<vector<Square*>>(165);
 
 	for (int rowcount = 0; rowcount < (int) GridInfo::GRID_HEIGHT; rowcount++)
 	{
 		for (int colcount = 0; colcount < (int) GridInfo::GRID_WIDTH; colcount++)
 		{
-			Square square = Square{ Coordinate{ colcount, rowcount }, SquareStatus::INACTIVE, " " };
+			Square* square = new Square{ Coordinate{ colcount, rowcount }, SquareStatus::INACTIVE, " " };
 
 			this->squares.at(rowcount).push_back(square);
 		}
@@ -35,7 +35,7 @@ Grid::~Grid()
 	delete this->activeBlock;
 }
 
-vector<Square>& Grid::getRow(int rowNum)
+vector<Square*> Grid::getRow(int rowNum)
 {
 	// where 0 row is row 1
 	return this->squares.at(rowNum);
@@ -52,15 +52,15 @@ Square* Grid::getNeighbouringSquare(Square* square, Direction direction)
 	{
 		if (direction.getDirection() == DirectionValue::LEFT)
 		{
-			return &this->getRow(square->position.y).at(square->position.x - 1);
+			return this->getRow(square->position.y).at(square->position.x - 1);
 		}
 		else if (direction.getDirection() == DirectionValue::RIGHT)
 		{
-			return &this->getRow(square->position.y).at(square->position.x + 1);
+			return this->getRow(square->position.y).at(square->position.x + 1);
 		}
 		else
 		{
-			return &this->getRow(square->position.y + 1).at(square->position.x);
+			return this->getRow(square->position.y + 1).at(square->position.x);
 		}
 	}
 
@@ -77,15 +77,15 @@ void Grid::SpawnNewBlock()
 void Grid::UpdateSquare(Coordinate position, Square* square, SquareStatus newSquareStatus)
 {
 	// y is the row number and x is the col number
-	this->squares.at(position.y).at(position.x).squareStatus = newSquareStatus;
+	this->squares.at(position.y).at(position.x)->squareStatus = newSquareStatus;
 	
 	if (newSquareStatus == SquareStatus::ACTIVE)
 	{
-		this->squares.at(position.y).at(position.x).squareSymbol = square->squareSymbol;
+		this->squares.at(position.y).at(position.x)->squareSymbol = square->squareSymbol;
 	}
 	else
 	{
-		this->squares.at(position.y).at(position.x).squareSymbol = " ";
+		this->squares.at(position.y).at(position.x)->squareSymbol = " ";
 	}
 }
 
@@ -127,7 +127,7 @@ void Grid::move(Direction direction)
 		}
 
 		// block has hit the bottom
-		if (square->position.y == 14)
+		if (square->position.y == 14 && direction.getDirection() == DirectionValue::DOWN)
 		{
 			this->AddToDeadBlock();
 			return;
@@ -166,4 +166,38 @@ void Grid::AddToDeadBlock()
 
 	// spawn new block
 	this->SpawnNewBlock();
+
+	// todo: test for any complete rows
+}
+
+void Grid::RowCompletenessCheck()
+{
+	// for each row, we check if the colums are filled
+	for (int rowcount = 0; rowcount < (int) GridInfo::GRID_HEIGHT; rowcount++)
+	{
+		vector<Square*> row = this->getRow(rowcount);
+
+		bool isFilled = true;
+		for (auto col : row)
+		{
+			isFilled = isFilled && (col->squareStatus == SquareStatus::DEAD);
+		}
+
+		// remove the row if it is filled
+		// and shift everything down (gravity shift)
+		if (isFilled)
+		{
+			DeadBlockGravityShift(rowcount);
+		}
+	}
+}
+
+void Grid::DeadBlockGravityShift(int rowNum)
+{
+	// get all rows above row n
+	for (int rowcount = rowNum; rowcount >= 0; rowcount--)
+	{
+		// todo get each col (square) and gravity shift it
+
+	}
 }

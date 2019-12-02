@@ -58,20 +58,20 @@ void Level::printGrid()
 	{
 		for (int playerNum = 1; playerNum <= (int)LevelInfo::MAX_PLAYERS; playerNum++)
 		{
-			vector<Square> row = (playerNum == 1) ? this->playerOneGrid->getRow(rowcount) : this->playerTwoGrid->getRow(rowcount);
+			vector<Square*> row = (playerNum == 1) ? this->playerOneGrid->getRow(rowcount) : this->playerTwoGrid->getRow(rowcount);
 
 			for (auto col : row)
 			{
-				if (col.squareStatus == SquareStatus::INACTIVE)
+				if (col->squareStatus == SquareStatus::INACTIVE)
 				{
 					cout << " ";
 				}
-				else if (col.squareStatus == SquareStatus::ACTIVE)
+				else if (col->squareStatus == SquareStatus::ACTIVE)
 				{
 					char c = (int) LevelBlockSymbol::ACTIVE_BLOCK_SYMBOL;
 					cout << c;
 				}
-				else if (col.squareStatus == SquareStatus::DEAD)
+				else if (col->squareStatus == SquareStatus::DEAD)
 				{
 					char c = (int)LevelBlockSymbol::DEAD_BLOCK_SYMBOL;;
 					cout << c;

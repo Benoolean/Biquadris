@@ -60,6 +60,8 @@ struct Square
 
 	std::string squareSymbol;
 
+	// todo add effect on square
+
 	bool moveSquareAndValidatePosition(DirectionValue direction)
 	{
 		// shift the coords of the square

@@ -9,14 +9,15 @@ enum class GridInfo { GRID_HEIGHT = 15, GRID_WIDTH = 11 };
 
 class Grid
 {
-	std::vector<std::vector<Square>> squares;
+	std::vector<std::vector<Square*>> squares;
+	std::vector<Block*> blockAssembly;
 
 public:
 	Block* activeBlock;
 	DeadBlock* deadBlock;
 	Grid();
 	~Grid();
-	std::vector<Square>& getRow(int rowNum);
+	std::vector<Square*> getRow(int rowNum);
 	void move(Direction direction);
 	//void drop();
 
@@ -25,6 +26,9 @@ public:
 	void UpdateSquare(Coordinate position, Square* square, SquareStatus newSquareStatus);
 	void ActiveBlockUpdate(SquareStatus squareStatus);
 	void AddToDeadBlock();
+
+	void RowCompletenessCheck();
+	void DeadBlockGravityShift(int rowNum);
 };
 
 #endif
