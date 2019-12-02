@@ -20,11 +20,6 @@ Chunk::Chunk()
 			this->squares.at(rowcount).push_back(square);
 		}
 	}
-
-	/*for (int i = 0; i < Biquadris::GridInfo::GRID_WIDTH * Biquadris::GridInfo::GRID_HEIGHT; i++)
-	{
-		squares.push_back(new Square(i % Biquadris::GridInfo::GRID_WIDTH, i / Biquadris::GridInfo::GRID_WIDTH));
-	}*/
 }
 
 Chunk::~Chunk()

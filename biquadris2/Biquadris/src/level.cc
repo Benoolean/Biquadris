@@ -130,6 +130,7 @@ void Level::draw()
 	cout << endl;
 
 	// print each row by player count
+
 	for (int rowcount = 0; rowcount < (int) GridInfo::GRID_HEIGHT; rowcount++)
 	{
 		for (auto player : this->players)
