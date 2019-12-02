@@ -1,6 +1,7 @@
 #include "../headers/grid.h"
 #include "../headers/square.h"
 #include "../headers/Chunk.h"
+
 using namespace std;
 using namespace Biquadris;
 
@@ -23,16 +24,20 @@ bool Grid::isActive()
 
 bool Grid::setActive(Block* newActive)
 {
-	const vector<Square*>& bSquares = newActive->getSquares();
-	for (int i = 0; i < bSquares.size(); i++)
+	const vector<Square*>& blockSquare = newActive->getSquares();
+
+	for (auto square : blockSquare)
 	{
 		//Check if the new square contacts any of the existing squares
-		/*if (chunk->getSquares()[bSquares[i]->position.x + (bSquares[i]->position.y * Biquadris::GridInfo::GRID_WIDTH)]->status == SquareStatus::ACTIVE)
+		SquareStatus squareStatus = square->status;
+		
+		if (this->chunk->getSquares().at(square->position.y).at(square->position.x)->status == squareStatus)
 		{
-			gridcomplete = true;
+			this->gridcomplete = true;
 			return false;
-		}*/
+		}
 	}
+
 	active = newActive;
 	chunk->addBlock(*active);
 
@@ -57,15 +62,21 @@ void Grid::checkRowCompleteness()
 
 }
 
-vector<Square> Grid::getGrid()
+vector<vector<Square>> Grid::getPlayerChunk()
 {
-	vector<Square> grid;
+	vector<vector<Square>> gridcpy = vector<vector<Square>>(Biquadris::GRID_WIDTH * Biquadris::GRID_HEIGHT);
+
+
 	const vector<vector<Square*>>& chunkSquares = chunk->getSquares();
 
-	/*for (int i = 0; i < chunkSquares.size(); i++)
+	for (int rowcount = 0; rowcount < Biquadris::GRID_HEIGHT; rowcount++)
 	{
-		grid.push_back(*chunkSquares[i]);
+		for (int colcount = 0; colcount < Biquadris::GRID_WIDTH; colcount++)
+		{
+			Square chunkSquare = *chunkSquares.at(rowcount).at(colcount);
+			gridcpy.at(rowcount).push_back(chunkSquare);
+		}
 	}
-*/
-	return grid;
+
+	return gridcpy;
 }

@@ -30,7 +30,7 @@ public:
 
   void checkRowCompleteness();
 
-  virtual std::vector<Square> getGrid();
+  virtual std::vector<std::vector<Square>> getPlayerChunk();
 };
 
 #endif

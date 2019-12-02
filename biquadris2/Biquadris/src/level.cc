@@ -118,6 +118,7 @@ void Level::draw()
 
 	/*========= print grid =========*/
 
+	// grid bar
 	for (int i = 0; i < this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
@@ -128,29 +129,26 @@ void Level::draw()
 	}
 	cout << endl;
 
-	vector<vector<Square>> playerSquares;
-
-	for (int i = 0; i < this->players.size(); i++)
-	{
-		playerSquares.push_back(this->players[i]->grid->getGrid());
-	}
-
 	// print each row by player count
-	for (int rowcount = 0; rowcount < (int)GridInfo::GRID_HEIGHT; rowcount++)
+	for (int rowcount = 0; rowcount < (int) GridInfo::GRID_HEIGHT; rowcount++)
 	{
-		for (int playerNum = 0; playerNum < players.size(); playerNum++)
+		for (auto player : this->players)
 		{
-			for (int i = 0; i < GridInfo::GRID_WIDTH; i++)
+			for (int colcount = 0; colcount < GridInfo::GRID_WIDTH; colcount++)
 			{
-				cout << playerSquares[playerNum][(rowcount * GridInfo::GRID_WIDTH) + i]
-					.symbol;
+				cout << player->grid->getPlayerChunk().at(rowcount).at(colcount).symbol;
+
+				/*cout << playerSquares[playerNum][(rowcount * GridInfo::GRID_WIDTH) + i]
+					.symbol;*/
 			}
+
 			cout << GRID_SEPERATION_SPACE;
 		}
 
 		cout << endl;
 	}
 
+	// grid bar
 	for (int i = 0; i < this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
