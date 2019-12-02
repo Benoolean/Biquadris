@@ -5,7 +5,7 @@ using namespace std;
 using namespace Biquadris;
 
 Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std::string> source)
-	: currentPlayer(0), over(false), currentEffect(nullptr), winner(-1)
+	: currentPlayer(0), currentEffect(nullptr), over(false), winner(-1)
 {
 	if (level > 4)
 	{
@@ -64,7 +64,13 @@ void Level::StartGame()
 		}
 		else if(cmd == "down")
 		{
-			this->move(Direction::DOWN);
+			if(!this->move(Direction::DOWN)) { //Block died
+				if(this->spawnBlock()) {
+				}
+				else { //Player 1 is out!
+					cout << "Player 1 is out!" << endl;
+				}
+			}
 		}
 		this->draw();
 	}
@@ -77,11 +83,10 @@ Player* Level::getCurrentPlayer()
 	return this->players.at(this->currentPlayer);
 }
 
-void Level::spawnBlock()
+bool Level::spawnBlock()
 {
 	Player* currentPlayer = this->getCurrentPlayer();
-
-	currentPlayer->spawnNewBlock();
+	return currentPlayer->spawnNewBlock();
 }
 
 Grid* Level::currentGrid()
@@ -179,9 +184,8 @@ void Level::draw()
 	cout << "Next: " << endl;
 }
 
-void Level::move(Biquadris::Direction direction)
+bool Level::move(Biquadris::Direction direction)
 {
 	Player* player = this->getCurrentPlayer();
-
-	player->grid->move(direction);
+	return player->grid->move(direction);
 }

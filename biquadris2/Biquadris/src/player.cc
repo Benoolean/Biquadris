@@ -22,10 +22,11 @@ Player::~Player()
 	delete this->grid;
 }
 
-void Player::spawnNewBlock()
+bool Player::spawnNewBlock()
 {
 	Block* block = new Block(*Biquadris::defaults[this->sequence[this->currentBlock]]);
-	this->grid->setActive(block);
-
+	bool valid = this->grid->setActive(block);
 	this->currentBlock++;
+
+	return valid;
 }

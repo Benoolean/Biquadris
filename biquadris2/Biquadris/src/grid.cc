@@ -29,7 +29,7 @@ bool Grid::setActive(Block* newActive)
 	{
 		//Check if the new square contacts any of the existing squares
 		SquareStatus squareStatus = square->status;
-		
+
 		if (this->chunk->getSquares().at(square->position.y).at(square->position.x)->status == squareStatus)
 		{
 			this->gridcomplete = true;
@@ -37,6 +37,7 @@ bool Grid::setActive(Block* newActive)
 		}
 	}
 
+	delete active;
 	active = newActive;
 	chunk->addBlock(*active);
 

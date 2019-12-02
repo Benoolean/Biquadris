@@ -50,7 +50,7 @@ public:
 	void StartGame();
 
 	Player* getCurrentPlayer();
-	void spawnBlock();
+	bool spawnBlock();
 
 	void increaseLevel(); //Increases level by 1 up to 4
 	void lowerLevel(); //Decreases level by 1 down to 0
@@ -60,7 +60,7 @@ public:
 	void rotateClockwise();
 	void rotateCClockwise();
 
-	void move(Biquadris::Direction direction);
+	bool move(Biquadris::Direction direction);
 
 	void drop();
 
