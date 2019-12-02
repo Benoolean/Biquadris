@@ -3,12 +3,13 @@
 
 #include <vector>
 
-#include "block.h"
+#include "../headers/block.h"
+#include "../headers/biquadris.h"
 
 class Square;
 
 class Chunk {
-  std::vector<Square*> squares; // One dimensional array for improved efficiency
+  std::vector<std::vector<Square*>> squares; // One dimensional array for improved efficiency
 public:
   Chunk();
   ~Chunk();
@@ -19,7 +20,7 @@ public:
   void addSquare(const Square& s);
   void deactivateSquare(const Square& s);
 
-  const std::vector<Square*>& getSquares() const;
+  const std::vector<std::vector<Square*>>& getSquares() const;
 };
 
 #endif

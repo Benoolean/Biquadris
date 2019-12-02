@@ -6,41 +6,67 @@
 #include <iostream>
 
 using namespace std;
+using namespace Biquadris;
 
-Chunk::Chunk() {
-  for(int i = 0; i < Biquadris::GridInfo::GRID_WIDTH * Biquadris::GridInfo::GRID_HEIGHT; i++) {
-    squares.push_back(new Square(i % Biquadris::GridInfo::GRID_WIDTH, i / Biquadris::GridInfo::GRID_WIDTH));
-  }
+Chunk::Chunk()
+	: squares{vector<vector<Square*>>((int) GridInfo::GRID_HEIGHT * (int)GridInfo::GRID_WIDTH)}
+{
+	for (int rowcount = 0; rowcount < (int)GridInfo::GRID_HEIGHT; rowcount++)
+	{
+		for (int colcount = 0; colcount < (int)GridInfo::GRID_WIDTH; colcount++)
+		{
+			Square* square = new Square{ colcount, rowcount, " ", 0, SquareStatus::INACTIVE };
+
+			this->squares.at(rowcount).push_back(square);
+		}
+	}
+
+	/*for (int i = 0; i < Biquadris::GridInfo::GRID_WIDTH * Biquadris::GridInfo::GRID_HEIGHT; i++)
+	{
+		squares.push_back(new Square(i % Biquadris::GridInfo::GRID_WIDTH, i / Biquadris::GridInfo::GRID_WIDTH));
+	}*/
 }
 
-Chunk::~Chunk() {
-  for(auto square : squares) {
-    delete square;
-  }
+Chunk::~Chunk()
+{
+	for (auto row : squares)
+	{
+		for (auto col : row)
+		{
+			delete col;
+		}
+	}
 }
 
-void Chunk::addBlock(const Block& b) {
-  const vector<Square*>& bSquares = b.getSquares();
-  for(int i = 0; i < bSquares.size(); i++) {
-    squares[bSquares[i]->position.x + (bSquares[i]->position.y * Biquadris::GridInfo::GRID_WIDTH)]->mimic(*bSquares[i]);
-  }
+void Chunk::addBlock(const Block& block)
+{
+	const vector<Square*>& blockSquares = block.getSquares();
+	for (auto square : blockSquares)
+	{
+		this->squares.at(square->position.y).at(square->position.x)->mimic(*square);
+	}
 }
 
-void Chunk::deactivateBlock(const Block& b) {
-  const vector<Square*>& bSquares = b.getSquares();
-  for(int i = 0; i < bSquares.size(); i++) {
-    squares[bSquares[i]->position.x + (bSquares[i]->position.y * Biquadris::GridInfo::GRID_WIDTH)]->deactivate();
-  }
+void Chunk::deactivateBlock(const Block& b)
+{
+	const vector<Square*>& blockSquares = b.getSquares();
+	for (auto square : blockSquares)
+	{
+		this->squares.at(square->position.y).at(square->position.x)->deactivate();
+	}
 }
 
-void Chunk::addSquare(const Square& s) {
-  squares[s.position.x + (s.position.y * Biquadris::GridInfo::GRID_WIDTH)]->mimic(s);
+void Chunk::addSquare(const Square& square)
+{
+	this->squares.at(square.position.y).at(square.position.x)->mimic(square);
 }
 
-void Chunk::deactivateSquare(const Square& s) {
-  squares[s.position.x + (s.position.y * Biquadris::GridInfo::GRID_WIDTH)]->deactivate();
+void Chunk::deactivateSquare(const Square& square)
+{
+	this->squares.at(square.position.y).at(square.position.x)->deactivate();
 }
 
-const std::vector<Square*>& Chunk::getSquares() const {
-  return squares;
+const vector<vector<Square*>>& Chunk::getSquares() const
+{
+	return squares;
 }

@@ -5,15 +5,17 @@
 #include "coordinate.h"
 #include "biquadris.h"
 
+enum class SquareStatus { ACTIVE, INACTIVE, DEAD };
+
 struct Square {
   static const std::string emptySymbol;
 
-  Square(int x, int y, std::string symbol = emptySymbol, int colour = 0, bool active = false);
+  Square(int x, int y, std::string symbol = emptySymbol, int colour = 0, SquareStatus status = SquareStatus::INACTIVE);
 
   Coordinate position;
   std::string symbol; //String to represent the block on output
   int colour;
-  bool active;
+  SquareStatus status;
 
   bool validPosition();
 
