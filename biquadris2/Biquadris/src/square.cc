@@ -33,11 +33,6 @@ bool Square::move(Direction direction, unsigned int shift)
 	return validPosition();
 }
 
-bool Square::move(Coordinate newPosition)
-{
-	return validPosition();
-}
-
 void Square::kill()
 {
 	this->status = SquareStatus::DEAD;
