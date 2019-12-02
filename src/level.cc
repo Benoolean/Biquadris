@@ -90,10 +90,10 @@ void Level::draw() {
 	// print each row by player count
 	for (int rowcount = 0; rowcount < (int) GridInfo::GRID_HEIGHT; rowcount++)
 	{
-		for (int playerNum = 1; playerNum <= players.size(); playerNum++)
+		for (int playerNum = 0; playerNum < players.size(); playerNum++)
 		{
       for(int i = 0; i < GridInfo::GRID_WIDTH; i++) {
-        cout << playerSquares[i][(rowcount * GridInfo::GRID_WIDTH) + i].symbol;
+        cout << playerSquares[playerNum][(rowcount * GridInfo::GRID_WIDTH) + i].symbol;
       }
 			cout << GRID_SEPERATION_SPACE;
 		}
