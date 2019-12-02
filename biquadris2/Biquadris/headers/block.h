@@ -31,7 +31,7 @@ public:
   void rotateClockwise(Chunk* chunk = nullptr);
   void rotateCClockwise(Chunk* chunk = nullptr);
 
-  bool move(Biquadris::Direction direction, unsigned int shift = 1, Chunk* chunk = nullptr);
+  bool move(Biquadris::Direction direction, int shift = 1, Chunk* chunk = nullptr);
 
   const std::vector<Square*>& getSquares() const;
 };

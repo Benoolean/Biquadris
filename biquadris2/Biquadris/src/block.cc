@@ -39,13 +39,13 @@ void Block::rotateCClockwise(Chunk* chunk)
 
 }
 
-bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chunk)
+bool Block::move(Biquadris::Direction direction, int shift, Chunk* chunk)
 {
 	int shiftX = 0, shiftY = 0;
 
 	if (direction == Direction::LEFT)
 	{
-		shiftX = -(int)shift;
+		shiftX = -shift;
 	}
 	else if (direction == Direction::RIGHT)
 	{
@@ -65,7 +65,10 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
 		{
 			if (chunk)
 			{
-				if (chunk->getSquares()[square->position.y + shiftY][square->position.x + shiftX]->status == SquareStatus::DEAD)
+				int posx = square->position.x + shiftX;
+				int posy = square->position.y + shiftY;
+
+				if (chunk->getSquares().at(posy).at(posx)->status == SquareStatus::DEAD)
 				{
 					contacts = true;
 					break;
@@ -89,7 +92,8 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
 		return false;
 	}
 	else
-	{ //If there is no contact, then move the Block
+	{ 
+		//If there is no contact, then move the Block
 		if(chunk) {
 			chunk->deactivateBlock(*this);
 		}
