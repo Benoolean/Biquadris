@@ -51,12 +51,14 @@ void Level::StartGame()
 	}
 
 	this->draw();
+
 	while (cin >> cmd)
 	{
 		if (cmd == "right")
 		{
-			this->move(Direction::LEFT);
+			this->move(Direction::RIGHT);
 		}
+		this->draw();
 	}
 }
 
@@ -161,7 +163,7 @@ void Level::draw()
 
 	/*========= print next=========*/
 
-	cout << "Next: ";
+	cout << "Next: " << endl;
 }
 
 void Level::move(Biquadris::Direction direction)
