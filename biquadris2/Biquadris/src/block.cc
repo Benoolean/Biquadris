@@ -50,7 +50,13 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
         }
       }
     }
-    else return true;
+    else {
+      if(newPosition.x >= GridInfo::GRID_HEIGHT) {
+        contacts = true;
+        break;
+      }
+      else return true;
+    }
   }
 
   if(contacts && direction == Direction::DOWN) { //The blocks should die

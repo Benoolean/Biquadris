@@ -111,5 +111,5 @@ void Level::draw() {
 
 	/*========= print next=========*/
 
-	cout << "Next:" << endl;
+	cout << "Next: ";
 }

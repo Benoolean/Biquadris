@@ -12,13 +12,15 @@ int main(int argc, char* argv[]) {
 	Biquadris::init();
 
 	bool showWindow = true;
+	int startlevel = 0;
+	vector<string> sourcefiles {"media/sequence1.txt", "media/sequence2.txt"};
 
 	for(int i = 1; i < argc; i++) {
 		string arg(argv[i]);
-		if(arg == "text") {
+		if(arg == "-text") {
 			showWindow = false;
 		}
-		else if(arg == "seed") {
+		else if(arg == "-seed") {
 			//Ensure there are still enough paramaters to satsisfy seed option
 			if((i+1) < argc) {
 				int tempSeed;
@@ -35,9 +37,46 @@ int main(int argc, char* argv[]) {
 				cout << "Warning: no seed provided" << endl;
 			}
 		}
+		else if(arg == "-startlevel") {
+			//Ensure there are still enough paramaters to satsisfy seed option
+			if((i+1) < argc) {
+				int tempLevel;
+				stringstream ss(argv[i]);
+
+				if(ss >> tempLevel) {
+					startlevel = tempLevel;
+				}
+				else {
+					cout << "Warning: invalid level provided, must be an integer" << endl;
+				}
+			}
+			else {
+				cout << "Warning: no level provided" << endl;
+			}
+		}
+		else if(arg == "-scriptfile1") {
+			string source;
+			if((i+1) < argc) {
+				cin >> source;
+				sourcefiles[0] = source;
+			}
+			else {
+				cout << "Warning: no source provided" << endl;
+			}
+		}
+		else if(arg == "-scriptfile2") {
+			string source;
+			if((i+1) < argc) {
+				cin >> source;
+				sourcefiles[1] = source;
+			}
+			else {
+				cout << "Warning: no source provided" << endl;
+			}
+		}
 	}
 
-	Level level;
+	Level level (startlevel, 2, showWindow, sourcefiles);
 	level.draw();
 
 	string command;
