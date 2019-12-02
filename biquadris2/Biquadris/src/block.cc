@@ -65,11 +65,11 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
 		{
 			if (chunk)
 			{
-				/*if (chunk->getSquares()[(square->position.x + shiftX) + ((square->position.y + shiftY) * GridInfo::GRID_WIDTH)]->status == SquareStatus::ACTIVE)
+				if (chunk->getSquares()[square->position.y + shiftY][square->position.x + shiftX]->status == SquareStatus::DEAD)
 				{
 					contacts = true;
 					break;
-				}*/
+				}
 			}
 		}
 		else
@@ -85,10 +85,15 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
 
 	if (contacts && direction == Direction::DOWN)
 	{ //The blocks should die
+		chunk->killBlock(*this);
 		return false;
 	}
 	else
 	{ //If there is no contact, then move the Block
+		if(chunk) {
+			chunk->deactivateBlock(*this);
+		}
+
 		for (auto s : this->squares)
 		{
 			s->position.x += shiftX;
@@ -97,7 +102,6 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
 
 		if (chunk)
 		{
-			chunk->deactivateBlock(*this);
 			chunk->addBlock(*this);
 		}
 	}

@@ -38,6 +38,11 @@ bool Square::move(Coordinate newPosition)
 	return validPosition();
 }
 
+void Square::kill()
+{
+	this->status = SquareStatus::DEAD;
+}
+
 void Square::deactivate()
 {
 	symbol = emptySymbol;
