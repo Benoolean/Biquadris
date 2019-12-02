@@ -3,12 +3,14 @@
 
 #include <map>
 
-#include "block.h"
-#include "square.h"
+class Block;
 
 namespace Biquadris {
   extern std::map<char, Block*> defaults;
   extern int seed;
+
+  enum GridInfo { GRID_HEIGHT = 15, GRID_WIDTH = 11 };
+  enum class Direction { LEFT, RIGHT, DOWN };
 
   enum class Effect {
     HEAVY, BLIND

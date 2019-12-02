@@ -1,8 +1,11 @@
 #include "square.h"
 using namespace Biquadris;
+using namespace std;
 
-Square::Square(int x, int y, char symbol, int colour, bool active)
-  : x(x), y(y), symbol(symbol), color(colour), active(active) { }
+const string Square::emptySymbol = " ";
+
+Square::Square(int x, int y, string symbol, int colour, bool active)
+  : position({ x, y }), symbol(symbol), colour(colour), active(active) { }
 
 bool Square::validPosition() {
   return position.isValidCoord();

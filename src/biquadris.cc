@@ -1,22 +1,19 @@
 #include "biquadris.h"
 #include "block.h"
+#include "square.h"
 
 namespace Biquadris {
   std::map<char, Block*> defaults;
   int seed = 0;
 
-  enum class GridInfo { GRID_HEIGHT = 15, GRID_WIDTH = 11 };
-
-  enum class Direction { LEFT, RIGHT, DOWN };
-
   void init(int seed) {
     Biquadris::seed = seed;
 
     defaults['I'] = new Block({
-      { Square(0, 3, 'I', true) },
-      { Square(1, 3, 'I', true) },
-      { Square(2, 3, 'I', true) },
-      { Square(3, 3, 'I', true) }
+      new Square(0, 3, "I", 1, true),
+      new Square(1, 3, "I", 1, true),
+      new Square(2, 3, "I", 1, true),
+      new Square(3, 3, "I", 1, true)
     });
 
     defaults['J'] = new Block();

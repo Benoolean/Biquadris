@@ -6,9 +6,9 @@
 #include "biquadris.h"
 
 struct Square {
-  const static emptySymbol = " ";
+  static const std::string emptySymbol;
 
-  Square(int x, int y, string symbol = emptySymbol, int colour = 0, bool active = false);
+  Square(int x, int y, std::string symbol = emptySymbol, int colour = 0, bool active = false);
 
   Coordinate position;
   std::string symbol; //String to represent the block on output

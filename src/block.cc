@@ -1,6 +1,9 @@
-#include "block.h"
 #include "coordinate.h"
+#include "block.h"
+#include "square.h"
+#include "Chunk.h"
 using namespace std;
+using namespace Biquadris;
 
 Block::Block() { }
 
@@ -14,11 +17,11 @@ Block::~Block() {
   }
 }
 
-void Block::rotateClockwise() {
+void Block::rotateClockwise(Chunk* chunk) {
 
 }
 
-void Block::rotateCClockwise() {
+void Block::rotateCClockwise(Chunk* chunk) {
 
 }
 
@@ -41,7 +44,7 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
     Coordinate newPosition { s->position.x + shiftX, s->position.y + shiftY };
     if(newPosition.isValidCoord()) {
       if(chunk) {
-        if(chunk->getSquares()[(s->position.x + shiftX) + ((s->position.y + shiftY) * Biquadris::GridInfo::GRID_WIDTH)].active) {
+        if(chunk->getSquares()[(s->position.x + shiftX) + ((s->position.y + shiftY) * GridInfo::GRID_WIDTH)]->active) {
           contacts = true;
           break;
         }
@@ -68,6 +71,6 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
   return true;
 }
 
-const std::vector<Square>& Block::getSquares() const {
+const std::vector<Square*>& Block::getSquares() const {
   return squares;
 }

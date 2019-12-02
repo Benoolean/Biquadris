@@ -4,9 +4,9 @@
 #include <vector>
 #include <iostream>
 
-#include "square.h"
 #include "biquadris.h"
 
+class Square;
 class Chunk;
 
 class Block {

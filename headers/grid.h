@@ -4,13 +4,12 @@
 #include <iostream>
 
 #include "block.h"
-#include "direction.h"
 #include "biquadris.h"
 
 class Xwindow;
 
 class Grid {
-  Chunk chunk;
+  Chunk* chunk;
   bool gridcomplete;
   const int width, height;
 
