@@ -15,6 +15,7 @@ class Block {
 public:
   Block();
   Block(std::vector<Square*> &&squares);
+  Block(const Block& other);
 
   ~Block();
 
