@@ -1,4 +1,4 @@
-#include "../headers/player.h"
+#include "player.h"
 using namespace std;
 
 Player::Player(string source, int level)

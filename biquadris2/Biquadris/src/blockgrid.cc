@@ -1,4 +1,4 @@
-#include "../headers/blockgrid.h"
+#include "blockgrid.h"
 using namespace std;
 
 BlockGrid::BlockGrid() : Grid() { }

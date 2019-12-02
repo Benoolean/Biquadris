@@ -1,9 +1,7 @@
-#include "../headers/Chunk.h"
-#include "../headers/square.h"
+#include "Chunk.h"
+#include "square.h"
 
-#include "../headers/biquadris.h"
-
-#include <iostream>
+#include "biquadris.h"
 
 #include <iostream>
 

@@ -1,6 +1,6 @@
-#include "../headers/grid.h"
-#include "../headers/square.h"
-#include "../headers/Chunk.h"
+#include "grid.h"
+#include "square.h"
+#include "Chunk.h"
 using namespace std;
 using namespace Biquadris;
 

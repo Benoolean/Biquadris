@@ -1,4 +1,4 @@
-#include "../headers/coordinate.h"
+#include "coordinate.h"
 using namespace Biquadris;
 
 bool Coordinate::isValidCoord()	{

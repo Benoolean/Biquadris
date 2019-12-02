@@ -1,7 +1,7 @@
-#include "../headers/coordinate.h"
-#include "../headers/block.h"
-#include "../headers/square.h"
-#include "../headers/Chunk.h"
+#include "coordinate.h"
+#include "block.h"
+#include "square.h"
+#include "Chunk.h"
 using namespace std;
 using namespace Biquadris;
 
