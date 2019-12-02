@@ -58,6 +58,14 @@ void Level::StartGame()
 		{
 			this->move(Direction::RIGHT);
 		}
+		else if(cmd == "left")
+		{
+			this->move(Direction::LEFT);
+		}
+		else if(cmd == "down")
+		{
+			this->move(Direction::DOWN);
+		}
 		this->draw();
 	}
 }
