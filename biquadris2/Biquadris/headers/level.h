@@ -15,60 +15,63 @@
 class Xwindow;
 
 class Level {
-  Xwindow* window;
+	Xwindow* window;
 
-  std::vector<Player*> players;
-  int currentPlayer;
+	std::vector<Player*> players;
+	int currentPlayer;
 
-  static int highScore;
+	static int highScore;
 
-  //These effects stack for each turn
-  //When a user applies an effect, it is stacked on top of the next
-  //grid. The current effect is set to the topmost effect, otherwise nullptr.
-  //After every turn the effects are deleted.
-  std::vector<Effect*> effects;
-  Effect* currentEffect; // The topmost effect, default is grid if no effect was created last turn
+	//These effects stack for each turn
+	//When a user applies an effect, it is stacked on top of the next
+	//grid. The current effect is set to the topmost effect, otherwise nullptr.
+	//After every turn the effects are deleted.
+	std::vector<Effect*> effects;
+	Effect* currentEffect; // The topmost effect, default is grid if no effect was created last turn
 
-  bool over; //True for over, false for not over
-  unsigned int winner; // Undefined behaviour unless isOver flag is set
+	bool over; //True for over, false for not over
+	unsigned int winner; // Undefined behaviour unless isOver flag is set
 
-  void changePlayer(int player);
+	void changePlayer(int player);
 
-  void checkFullLine(); //Used to determine if there is a full line (also updates players' score)
+	void checkFullLine(); //Used to determine if there is a full line (also updates players' score)
 
-  void print(std::string s);
+	void print(std::string s);
 
-  Grid* currentGrid();
+	Grid* currentGrid();
 
 public:
-  Level(int level = 0,
-        const int numPlayers = 2,
-        bool withGraphics = true,
-        std::vector<std::string> source = std::vector<std::string>());
-  ~Level();
+	Level(int level = 0,
+		const int numPlayers = 2,
+		bool withGraphics = true,
+		std::vector<std::string> source = std::vector<std::string>());
+	~Level();
 
-  void increaseLevel(); //Increases level by 1 up to 4
-  void lowerLevel(); //Decreases level by 1 down to 0
+	Player* getCurrentPlayer();
+	void spawnBlock();
 
-  bool changeActive(Block* newActive); //Will be used for force and after each drop
+	void increaseLevel(); //Increases level by 1 up to 4
+	void lowerLevel(); //Decreases level by 1 down to 0
 
-  void rotateClockwise();
-  void rotateCClockwise();
+	bool changeActive(Block* newActive); //Will be used for force and after each drop
 
-  void move(Biquadris::Direction direction);
+	void rotateClockwise();
+	void rotateCClockwise();
 
-  void drop();
+	void move(Biquadris::Direction direction);
 
-  void setRandom();
-  void setNotRandom(std::string source);
+	void drop();
 
-  void addEffect(Biquadris::Effect effect);
+	void setRandom();
+	void setNotRandom(std::string source);
 
-  bool isOver() const;
-  int getWinner() const; //Returns -1 if isOver flag is not set
-  static int getHighScore();
+	void addEffect(Biquadris::Effect effect);
 
-  void draw();
+	bool isOver() const;
+	int getWinner() const; //Returns -1 if isOver flag is not set
+	static int getHighScore();
+
+	void draw();
 };
 
 #endif

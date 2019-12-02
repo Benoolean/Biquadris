@@ -3,69 +3,91 @@
 using namespace std;
 using namespace Biquadris;
 
-Level::Level(int level,
-	const int numPlayers,
-	bool withGraphics,
-	std::vector<std::string> source)
-	: currentPlayer(0),
-	over(false), winner(-1),
-	currentEffect(nullptr) {
-
-	if (level > 4) {
+Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std::string> source)
+	: currentPlayer(0), over(false), winner(-1), currentEffect(nullptr)
+{
+	if (level > 4)
+	{
 		print("Warning: level too high, 4 is the highest level.");
 		print("Setting level to 4.");
 		level = 4;
 	}
-	else if (level < 0) {
+	else if (level < 0)
+	{
 		print("Warning: level too low, 0 is the lowest level.");
 		print("Setting level to 0.");
 		level = 0;
 	}
 
-	for (int i = 0; i < numPlayers; i++) {
-		players.push_back(new Player(((source.size() > i) ? source[i] : ""), level)); //Default initialize to "" src
+	for (int i = 0; i < numPlayers; i++)
+	{
+		players.push_back(new Player(((source.size() > i) ? source[i] : ""),
+			level));  // Default initialize to "" src
 	}
 }
 
-Level::~Level() {
-	for (auto effect : effects) {
+Level::~Level()
+{
+	for (auto effect : effects)
+	{
 		delete effect;
 	}
 
-	for (auto player : players) {
+	for (auto player : players)
+	{
 		delete player;
 	}
 }
 
-void Level::print(string s) {
-	cout << s << endl;
+void Level::print(string s) { cout << s << endl; }
+
+Player* Level::getCurrentPlayer()
+{
+	return this->players.at(this->currentPlayer);
 }
 
-Grid* Level::currentGrid() {
-	if (currentEffect) return currentEffect;
-	else return players[currentPlayer]->grid;
+void Level::spawnBlock()
+{
+	Player* currentPlayer = this->getCurrentPlayer();
+
+	//currentPlayer->spawnNewBlock();
+}
+
+Grid* Level::currentGrid()
+{
+	if (currentEffect)
+		return currentEffect;
+	else
+		return players[currentPlayer]->grid;
 }
 
 // constants
 string GRID_SEPERATION_SPACE = "    ";
 string GRID_BAR_SEPERATOR = "-----------";
 
-void Level::draw() {
+void Level::draw()
+{
 	/*========= print level and score =========*/
 
-	  // todo dynanmic spacing based on score
+	// todo dynanmic spacing based on score
 
-	for (int i = 0; i < this->players.size(); i++) {
-		cout << "Level:" << "   " << players[i]->level;
-		if (i + 1 != this->players.size()) {
+	for (int i = 0; i < this->players.size(); i++)
+	{
+		cout << "Level:"
+			<< "   " << players[i]->level;
+		if (i + 1 != this->players.size())
+		{
 			cout << GRID_SEPERATION_SPACE;
 		}
 	}
 	cout << endl;
 
-	for (int i = 0; i < this->players.size(); i++) {
-		cout << "Score:" << "   " << players[i]->points;
-		if (i + 1 != this->players.size()) {
+	for (int i = 0; i < this->players.size(); i++)
+	{
+		cout << "Score:"
+			<< "   " << players[i]->points;
+		if (i + 1 != this->players.size())
+		{
 			cout << GRID_SEPERATION_SPACE;
 		}
 	}
@@ -73,9 +95,11 @@ void Level::draw() {
 
 	/*========= print grid =========*/
 
-	for (int i = 0; i < this->players.size(); i++) {
+	for (int i = 0; i < this->players.size(); i++)
+	{
 		cout << GRID_BAR_SEPERATOR;
-		if (i + 1 != this->players.size()) {
+		if (i + 1 != this->players.size())
+		{
 			cout << GRID_SEPERATION_SPACE;
 		}
 	}
@@ -83,7 +107,8 @@ void Level::draw() {
 
 	vector<vector<Square>> playerSquares;
 
-	for (int i = 0; i < this->players.size(); i++) {
+	for (int i = 0; i < this->players.size(); i++)
+	{
 		playerSquares.push_back(this->players[i]->grid->getGrid());
 	}
 
@@ -92,8 +117,10 @@ void Level::draw() {
 	{
 		for (int playerNum = 0; playerNum < players.size(); playerNum++)
 		{
-			for (int i = 0; i < GridInfo::GRID_WIDTH; i++) {
-				cout << playerSquares[playerNum][(rowcount * GridInfo::GRID_WIDTH) + i].symbol;
+			for (int i = 0; i < GridInfo::GRID_WIDTH; i++)
+			{
+				cout << playerSquares[playerNum][(rowcount * GridInfo::GRID_WIDTH) + i]
+					.symbol;
 			}
 			cout << GRID_SEPERATION_SPACE;
 		}
@@ -101,9 +128,11 @@ void Level::draw() {
 		cout << endl;
 	}
 
-	for (int i = 0; i < this->players.size(); i++) {
+	for (int i = 0; i < this->players.size(); i++)
+	{
 		cout << GRID_BAR_SEPERATOR;
-		if (i + 1 != this->players.size()) {
+		if (i + 1 != this->players.size())
+		{
 			cout << GRID_SEPERATION_SPACE;
 		}
 	}
