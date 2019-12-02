@@ -101,7 +101,13 @@ void Level::draw() {
 		cout << endl;
 	}
 
-	cout << GRID_BAR_SEPERATOR << endl;
+	for (int i = 0; i < this->players.size(); i++) {
+		cout << GRID_BAR_SEPERATOR;
+		if (i + 1 != this->players.size()) {
+			cout << GRID_SEPERATION_SPACE;
+		}
+	}
+	cout << endl;
 
 	/*========= print next=========*/
 
