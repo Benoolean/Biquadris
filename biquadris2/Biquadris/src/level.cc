@@ -1,5 +1,6 @@
 #include "../headers/level.h"
 #include "../headers/square.h"
+
 using namespace std;
 using namespace Biquadris;
 
@@ -39,6 +40,26 @@ Level::~Level()
 	}
 }
 
+void Level::StartGame()
+{
+	string cmd = "";
+
+	// spawn block for all players
+	for (auto player : this->players)
+	{
+		player->spawnNewBlock();
+	}
+
+	this->draw();
+	while (cin >> cmd)
+	{
+		if (cmd == "right")
+		{
+			this->move(Direction::LEFT);
+		}
+	}
+}
+
 void Level::print(string s) { cout << s << endl; }
 
 Player* Level::getCurrentPlayer()
@@ -50,7 +71,7 @@ void Level::spawnBlock()
 {
 	Player* currentPlayer = this->getCurrentPlayer();
 
-	//currentPlayer->spawnNewBlock();
+	currentPlayer->spawnNewBlock();
 }
 
 Grid* Level::currentGrid()
@@ -141,4 +162,11 @@ void Level::draw()
 	/*========= print next=========*/
 
 	cout << "Next: ";
+}
+
+void Level::move(Biquadris::Direction direction)
+{
+	Player* player = this->getCurrentPlayer();
+
+	player->grid->move(direction);
 }

@@ -7,80 +7,101 @@
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
 	//Initialization
 	Biquadris::init();
 
 	bool showWindow = true;
 	int startlevel = 0;
-	vector<string> sourcefiles {"media/sequence1.txt", "media/sequence2.txt"};
+	vector<string> sourcefiles{ "media/sequence1.txt", "media/sequence2.txt" };
 
-	for(int i = 1; i < argc; i++) {
+	for (int i = 1; i < argc; i++)
+	{
 		string arg(argv[i]);
-		if(arg == "-text") {
+		if (arg == "-text")
+		{
 			showWindow = false;
 		}
-		else if(arg == "-seed") {
+		else if (arg == "-seed")
+		{
 			//Ensure there are still enough paramaters to satsisfy seed option
-			if((i+1) < argc) {
+			if ((i + 1) < argc)
+			{
 				int tempSeed;
 				stringstream ss(argv[i]);
 
-				if(ss >> tempSeed) {
+				if (ss >> tempSeed)
+				{
 					Biquadris::seed = tempSeed;
 				}
-				else {
+				else
+				{
 					cout << "Warning: invalid seed provided, must be an integer" << endl;
 				}
 			}
-			else {
+			else
+			{
 				cout << "Warning: no seed provided" << endl;
 			}
 		}
-		else if(arg == "-startlevel") {
+		else if (arg == "-startlevel")
+		{
 			//Ensure there are still enough paramaters to satsisfy seed option
-			if((i+1) < argc) {
+			if ((i + 1) < argc)
+			{
 				int tempLevel;
 				stringstream ss(argv[i]);
 
-				if(ss >> tempLevel) {
+				if (ss >> tempLevel)
+				{
 					startlevel = tempLevel;
 				}
-				else {
+				else
+				{
 					cout << "Warning: invalid level provided, must be an integer" << endl;
 				}
 			}
-			else {
+			else
+			{
 				cout << "Warning: no level provided" << endl;
 			}
 		}
-		else if(arg == "-scriptfile1") {
+		else if (arg == "-scriptfile1")
+		{
 			string source;
-			if((i+1) < argc) {
+			if ((i + 1) < argc)
+			{
 				cin >> source;
 				sourcefiles[0] = source;
 			}
-			else {
+			else
+			{
 				cout << "Warning: no source provided" << endl;
 			}
 		}
-		else if(arg == "-scriptfile2") {
+		else if (arg == "-scriptfile2")
+		{
 			string source;
-			if((i+1) < argc) {
+			if ((i + 1) < argc)
+			{
 				cin >> source;
 				sourcefiles[1] = source;
 			}
-			else {
+			else
+			{
 				cout << "Warning: no source provided" << endl;
 			}
 		}
 	}
 
-	Level level (startlevel, 2, showWindow, sourcefiles);
-	level.draw();
+	Level level(startlevel, 2, showWindow, sourcefiles);
+
+	level.StartGame();
 
 	string command;
-	while(cin >> command) {
+	while (cin >> command)
+	{
 		int level;
 		cin >> level;
 	}

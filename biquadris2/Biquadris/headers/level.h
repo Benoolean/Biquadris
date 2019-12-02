@@ -47,6 +47,8 @@ public:
 		std::vector<std::string> source = std::vector<std::string>());
 	~Level();
 
+	void StartGame();
+
 	Player* getCurrentPlayer();
 	void spawnBlock();
 

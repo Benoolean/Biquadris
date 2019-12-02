@@ -18,5 +18,7 @@ public:
 	Player(std::string source, int level = 0);
 	~Player();
 
+	void spawnNewBlock();
+
 	friend class Level;
 };
