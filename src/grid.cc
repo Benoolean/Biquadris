@@ -6,8 +6,6 @@ using namespace Biquadris;
 
 Grid::Grid()
   : chunk(new Chunk()),
-    width(GridInfo::GRID_WIDTH),
-    height(GridInfo::GRID_HEIGHT),
     active(nullptr) { }
 
 Grid::~Grid() {
@@ -44,4 +42,15 @@ bool Grid::move(Direction direction) {
 
 void Grid::checkRowCompleteness() {
 
+}
+
+vector<Square> Grid::getGrid() {
+  vector<Square> grid;
+  const vector<Square*>& chunkSquares = chunk->getSquares();
+
+  for(int i = 0; i < chunkSquares.size(); i++) {
+    grid.push_back(*chunkSquares[i]);
+  }
+
+  return grid;
 }

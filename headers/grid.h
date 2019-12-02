@@ -2,6 +2,7 @@
 #define GRID_H
 
 #include <iostream>
+#include <vector>
 
 #include "block.h"
 #include "biquadris.h"
@@ -11,8 +12,6 @@ class Xwindow;
 class Grid {
   Chunk* chunk;
   bool gridcomplete;
-  const int width, height;
-
   Block* active;
 
 public:
@@ -30,6 +29,8 @@ public:
   virtual bool move(Biquadris::Direction direction);
 
   void checkRowCompleteness();
+
+  virtual std::vector<Square> getGrid();
 };
 
 #endif
