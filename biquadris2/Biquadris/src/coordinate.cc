@@ -2,8 +2,8 @@
 using namespace Biquadris;
 
 bool Coordinate::isValidCoord()	{
-  return (x >= 0 && x <= GridInfo::GRID_WIDTH
-          && y >= 0 && y <= GridInfo::GRID_HEIGHT);
+  return (x >= 0 && x < GridInfo::GRID_WIDTH
+          && y >= 0 && y < GridInfo::GRID_HEIGHT);
 }
 
 Coordinate Coordinate::getNeighbouringCoordinate(Direction direction) {
