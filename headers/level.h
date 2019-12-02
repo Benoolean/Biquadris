@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include "biquadris.h"
 #include "block.h"
 #include "player.h"
 #include "blockgrid.h"
@@ -18,8 +19,6 @@ class Level {
   int level;
 
   Xwindow* window;
-  bool enableGraphics;
-
   std::ostream* out;
 
   std::vector<Player*> players;
@@ -42,6 +41,8 @@ class Level {
   void checkFullLine(); //Used to determine if there is a full line (also updates players' score)
 
   void print(std::string s);
+
+  Grid* currentGrid();
 
 public:
   Level(const int level = 0,
@@ -66,13 +67,13 @@ public:
   void setRandom();
   void setNotRandom(std::string source);
 
-  void blind();  
+  void addEffect(Biquadris::Effect effect);
 
   bool isOver() const;
-
   int getWinner() const; //Returns -1 if isOver flag is not set
-
   static int getHighScore();
+
+  void draw();
 };
 
 #endif

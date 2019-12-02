@@ -5,7 +5,8 @@ Level::Level(const int level,
   const int numPlayers,
   std::vector<std::string> source,
   std::ostream* out, Xwindow* window)
-    : level(level), out(out), window(window) {
+    : level(level), out(out), window(window), currentPlayer(0),
+      over(false), winner(-1) {
 
   if(this->level > 4) {
     print("Warning: level too high, 4 is the highest level.");
@@ -21,6 +22,8 @@ Level::Level(const int level,
   for(int i = 0; i < numPlayers; i++) {
     players.push_back(new Player(source[i])); //Default initialize to "" src
   }
+
+  
 }
 
 Level::~Level() {
@@ -37,4 +40,13 @@ void Level::print(string s) {
   if(out) {
     (*out) << s << endl;
   }
+}
+
+Grid* Level::currentGrid() {
+  if(currentEffect) return currentEffect;
+  else return &(players[currentPlayer]->grid);
+}
+
+void Level::draw() {
+  currentGrid()->draw(out, window);
 }

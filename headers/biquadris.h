@@ -9,6 +9,10 @@ namespace Biquadris {
   extern std::map<char, Block*> defaults;
   extern int seed;
 
+  enum class Effect {
+    HEAVY, BLIND
+  };
+
   /*
    * Alternatively a file defining blocks could be created.
    * This, non-polymorphic, method makes the game much more
