@@ -76,19 +76,13 @@ void Level::StartGame()
 		else if(cmd == "down")
 		{
 			if(!this->move(Direction::DOWN)) { //Block died
-				Player* current = this->getCurrentPlayer();
-				int rowsRemoved = current->grid->checkRowCompleteness();
-				if(rowsRemoved) { //If any rows were cleared update players score
-					current->score += power(current->level + rowsRemoved, 2);
-					//When an entire block is removed, score += (levelatcreation + 1)^2
-				}
-
-				if(this->spawnBlock()) {
-						//Switch player
-				}
-				else { //Player 1 is out!
-					cout << "Player 1 is out!" << endl;
-				}
+				this->blockDropped();
+			}
+		}
+		else if(cmd == "drop") {
+			if(this->getCurrentPlayer()->grid->isActive()) {
+				while(this->move(Direction::DOWN)) {}
+				blockDropped();
 			}
 		}
 		this->draw();
@@ -100,6 +94,22 @@ void Level::print(string s) { cout << s << endl; }
 Player* Level::getCurrentPlayer()
 {
 	return this->players.at(this->currentPlayer);
+}
+
+void Level::blockDropped() {
+	Player* current = this->getCurrentPlayer();
+	int rowsRemoved = current->grid->checkRowCompleteness();
+	if(rowsRemoved) { //If any rows were cleared update players score
+		current->score += power(current->level + rowsRemoved, 2);
+		//When an entire block is removed, score += (levelatcreation + 1)^2
+	}
+
+	if(this->spawnBlock()) {
+			//Switch player
+	}
+	else { //Player 1 is out!
+		cout << "Player 1 is out!" << endl;
+	}
 }
 
 bool Level::spawnBlock()

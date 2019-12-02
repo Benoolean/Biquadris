@@ -50,6 +50,8 @@ public:
 	void StartGame();
 
 	Player* getCurrentPlayer();
+
+	void blockDropped();
 	bool spawnBlock();
 
 	void increaseLevel(); //Increases level by 1 up to 4
