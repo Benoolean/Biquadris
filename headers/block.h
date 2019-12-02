@@ -21,8 +21,6 @@ public:
   int getWidth() const;
   int getHeight() const;
 
-  char getCharacter() const;
-
   void addSquares(const Block& b);
 
   void addSquare(int x, int y); //Absolute coordinates

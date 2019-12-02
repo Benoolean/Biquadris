@@ -22,8 +22,6 @@ Level::Level(const int level,
   for(int i = 0; i < numPlayers; i++) {
     players.push_back(new Player(source[i])); //Default initialize to "" src
   }
-
-  
 }
 
 Level::~Level() {
