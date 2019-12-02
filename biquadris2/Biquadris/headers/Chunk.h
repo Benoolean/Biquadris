@@ -6,7 +6,7 @@
 #include "../headers/block.h"
 #include "../headers/biquadris.h"
 
-class Square;
+struct Square;
 
 class Chunk {
   std::vector<std::vector<Square*>> squares; // One dimensional array for improved efficiency

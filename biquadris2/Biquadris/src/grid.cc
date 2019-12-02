@@ -6,8 +6,7 @@ using namespace std;
 using namespace Biquadris;
 
 Grid::Grid()
-	: chunk(new Chunk()),
-	active(nullptr)
+	: chunk{ new Chunk() }, active{ nullptr }, gridcomplete{ false }
 {
 }
 

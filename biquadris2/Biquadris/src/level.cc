@@ -106,7 +106,7 @@ void Level::draw()
 	{
 		cout << "Level:"
 			<< "   " << players[i]->level;
-		if (i + 1 != this->players.size())
+		if (i + 1 != (int) this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}
@@ -117,7 +117,7 @@ void Level::draw()
 	{
 		cout << "Score:"
 			<< "   " << players[i]->points;
-		if (i + 1 != this->players.size())
+		if (i + 1 != (int) this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}
@@ -130,7 +130,7 @@ void Level::draw()
 	for (int i = 0; i < this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
-		if (i + 1 != this->players.size())
+		if (i + 1 != (int) this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}
@@ -167,7 +167,7 @@ void Level::draw()
 	for (int i = 0; i < this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
-		if (i + 1 != this->players.size())
+		if (i + 1 != (int) this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}

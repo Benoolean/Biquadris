@@ -6,7 +6,7 @@
 
 #include "biquadris.h"
 
-class Square;
+struct Square;
 class Chunk;
 
 class Block {
