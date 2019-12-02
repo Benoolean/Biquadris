@@ -11,6 +11,13 @@ Block::Block(std::vector<Square*> &&squares) {
   this->squares.swap(squares);
 }
 
+Block::Block(const Block& other) {
+  const vector<Square*>& otherSquares = other.getSquares();
+  for(int i = 0; i < otherSquares.size(); i++) {
+    this->squares.push_back(new Square(*otherSquares[i]));
+  }
+}
+
 Block::~Block() {
   for(auto square : squares) {
     delete square;
