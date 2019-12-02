@@ -1,7 +1,7 @@
-#include "Chunk.h"
-#include "square.h"
+#include "../headers/Chunk.h"
+#include "../headers/square.h"
 
-#include "biquadris.h"
+#include "../headers/biquadris.h"
 
 using namespace std;
 

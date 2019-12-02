@@ -1,4 +1,4 @@
-#include "square.h"
+#include "../headers/square.h"
 using namespace Biquadris;
 using namespace std;
 
