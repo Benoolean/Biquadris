@@ -1,5 +1,5 @@
 #include "player.h"
 using namespace std;
 
-Player::Player(string source)
-  : grid(BlockGrid()), source(source), points(0) { }
+Player::Player(string source, int level)
+  : grid(BlockGrid()), source(source), level(level), points(0) { }

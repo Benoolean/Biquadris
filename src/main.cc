@@ -37,6 +37,9 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
+	Level level;
+	level.draw();
+
 	string command;
 	while(cin >> command) {
 		int level;
