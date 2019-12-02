@@ -74,7 +74,7 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
 		}
 		else
 		{
-			if (newPosition.x >= GridInfo::GRID_HEIGHT)
+			if (newPosition.y >= GridInfo::GRID_HEIGHT)
 			{
 				contacts = true;
 				break;

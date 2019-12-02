@@ -145,7 +145,13 @@ void Level::draw()
 		{
 			for (int colcount = 0; colcount < GridInfo::GRID_WIDTH; colcount++)
 			{
-				cout << player->grid->getPlayerChunk().at(rowcount).at(colcount).symbol;
+				Square s = player->grid->getPlayerChunk().at(rowcount).at(colcount);
+				if(s.status == SquareStatus::DEAD) {
+					cout << (char)219;
+				}
+				else {
+					cout << s.symbol;
+				}
 
 				/*cout << playerSquares[playerNum][(rowcount * GridInfo::GRID_WIDTH) + i]
 					.symbol;*/
