@@ -2,8 +2,8 @@
 #include <string>
 #include <sstream>
 
-#include "biquadris.h"
-#include "level.h"
+#include "../headers/biquadris.h"
+#include "../headers/level.h"
 
 using namespace std;
 

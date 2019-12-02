@@ -1,7 +1,7 @@
-#include "coordinate.h"
-#include "block.h"
-#include "square.h"
-#include "Chunk.h"
+#include "../headers/coordinate.h"
+#include "../headers/block.h"
+#include "../headers/square.h"
+#include "../headers/Chunk.h"
 using namespace std;
 using namespace Biquadris;
 
@@ -29,7 +29,7 @@ bool Block::move(Biquadris::Direction direction, unsigned int shift, Chunk* chun
   int shiftX = 0, shiftY = 0;
 
   if (direction == Direction::LEFT) {
-    shiftX = -shift;
+    shiftX = - (int) shift;
   }
   else if (direction == Direction::RIGHT) {
     shiftX = shift;
