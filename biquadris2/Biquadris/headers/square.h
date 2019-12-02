@@ -22,6 +22,7 @@ struct Square {
   bool move(Biquadris::Direction direction, unsigned int shift = 1);
   bool move(Coordinate newPosition);
 
+  void kill();
   void deactivate();
   void mimic(const Square& s); //Copies the graphical info for this square
 };

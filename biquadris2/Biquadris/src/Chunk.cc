@@ -56,6 +56,15 @@ void Chunk::deactivateBlock(const Block& b)
 	}
 }
 
+void Chunk::killBlock(const Block& b)
+{
+	const vector<Square*>& blockSquares = b.getSquares();
+	for (auto square : blockSquares)
+	{
+		this->squares.at(square->position.y).at(square->position.x)->kill();
+	}
+}
+
 void Chunk::addSquare(const Square& square)
 {
 	this->squares.at(square.position.y).at(square.position.x)->mimic(square);
