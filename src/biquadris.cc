@@ -5,6 +5,10 @@ namespace Biquadris {
   std::map<char, Block*> defaults;
   int seed = 0;
 
+  enum class GridInfo { GRID_HEIGHT = 15, GRID_WIDTH = 11 };
+
+  enum class Direction { LEFT, RIGHT, DOWN };
+
   void init(int seed) {
     Biquadris::seed = seed;
 

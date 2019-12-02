@@ -15,6 +15,12 @@ Block::Block(Block &&other) noexcept {
   squares = other.getSquares();
 }
 
+Block::~Block() {
+  for(auto square : squares) {
+    delete square;
+  }
+}
+
 Block& Block::operator=(const Block& rhs) noexcept {
   squares = rhs.getSquares();
   return *this;

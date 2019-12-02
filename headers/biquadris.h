@@ -4,6 +4,7 @@
 #include <map>
 
 #include "block.h"
+#include "square.h"
 
 namespace Biquadris {
   extern std::map<char, Block*> defaults;

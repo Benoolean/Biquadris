@@ -1,12 +1,25 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
-struct Square {
-  Square(int x, int y, char symbol = ' ', bool active = false);
+#include <string>
+#include "coordinate.h"
+#include "biquadris.h"
 
-  int x, y; //(0: x, 1: y)
-  char symbol; //Character to represent the block on output
+struct Square {
+  const static emptySymbol = " ";
+
+  Square(int x, int y, string symbol = emptySymbol, bool active = false);
+
+  Coordinate position;
+  std::string symbol; //String to represent the block on  output
   bool active;
+
+  bool validPosition();
+
+  bool move(Biquadris::Direction direction, unsigned int shift = 1);
+  bool move(Coordinate newPosition);
+
+  void deactivate();
 };
 
 #endif

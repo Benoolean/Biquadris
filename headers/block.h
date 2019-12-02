@@ -7,13 +7,15 @@
 #include "square.h"
 
 class Block {
-  std::vector<std::vector<Square>> squares; //Column by row
+  std::vector<Square*> squares; //Column by row
 
 public:
   Block();
   Block(std::vector<std::vector<Square>> &&squares);
   Block(const Block& other) noexcept;
   Block(Block&& other) noexcept;
+
+  ~Block();
 
   Block& operator=(const Block& rhs) noexcept;
   Block& operator=(Block&& rhs) noexcept; //Use squares.swap() (?)
@@ -36,7 +38,7 @@ public:
 
   bool touching(const Block& other) const; //Check if the given block is touching another
 
-  const std::vector<std::vector<Square>>& getSquares() const;
+  const std::vector<Square*>& getSquares() const;
 
   friend std::ostream& operator<<(std::ostream& out, const Block& b);
 };
