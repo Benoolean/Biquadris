@@ -22,7 +22,7 @@ Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std
 
 	for (int i = 0; i < numPlayers; i++)
 	{
-		players.push_back(new Player(((source.size() > i) ? source[i] : ""),
+		players.push_back(new Player(((source.size() > (int) i) ? source[i] : ""),
 			level));  // Default initialize to "" src
 	}
 }
@@ -102,7 +102,7 @@ void Level::draw()
 
 	// todo dynanmic spacing based on score
 
-	for (int i = 0; i < this->players.size(); i++)
+	for (int i = 0; i < (int) this->players.size(); i++)
 	{
 		cout << "Level:"
 			<< "   " << players[i]->level;
@@ -113,7 +113,7 @@ void Level::draw()
 	}
 	cout << endl;
 
-	for (int i = 0; i < this->players.size(); i++)
+	for (int i = 0; i < (int) this->players.size(); i++)
 	{
 		cout << "Score:"
 			<< "   " << players[i]->points;
@@ -127,7 +127,7 @@ void Level::draw()
 	/*========= print grid =========*/
 
 	// grid bar
-	for (int i = 0; i < this->players.size(); i++)
+	for (int i = 0; i < (int) this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
 		if (i + 1 != (int) this->players.size())
@@ -164,7 +164,7 @@ void Level::draw()
 	}
 
 	// grid bar
-	for (int i = 0; i < this->players.size(); i++)
+	for (int i = 0; i < (int) this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
 		if (i + 1 != (int) this->players.size())
