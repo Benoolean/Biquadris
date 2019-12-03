@@ -70,6 +70,11 @@ void Chunk::deactivateSquare(const Square& square)
 	this->squares.at(square.position.y).at(square.position.x)->deactivate();
 }
 
+void Chunk::deactivateCoordinate(Coordinate coord)
+{
+	this->squares.at(coord.y).at(coord.x)->deactivate();
+}
+
 int Chunk::clearFullRows() {
 	int rowsCleared = 0;
 

@@ -27,6 +27,7 @@ public:
    * added to dead and then deleted.
    */
   virtual bool move(Biquadris::Direction direction);
+  virtual void rotateCClockwise();
 
   int checkRowCompleteness();
   int deadBlocksRemoved();

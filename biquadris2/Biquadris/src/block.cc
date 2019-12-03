@@ -36,7 +36,65 @@ void Block::rotateClockwise(Chunk* chunk)
 
 void Block::rotateCClockwise(Chunk* chunk)
 {
+	vector<Square*> squares = this->getSquares();
 
+	// algorithm
+	// multiply by matrix[ (0 -1) (1 0)] and offset it with pivital
+
+	vector<Coordinate> squareCoordinates;
+	for (auto square : squares)
+	{
+		squareCoordinates.push_back(Coordinate{ square->position.x, square->position.y });
+	}
+
+	vector<Coordinate> squareCoordinatesAfterOriginRotation;
+	for (auto square : squares)
+	{
+		Coordinate rotationFromOrigin = getCounterClockWiseRotationCoord(square);
+		squareCoordinatesAfterOriginRotation.push_back(rotationFromOrigin);
+	}
+
+	// get pivitol coords for both before and after transformation
+	Coordinate squarePivitol = getPivitolCoordinate(squareCoordinates);
+	Coordinate squarePivitolAfterOriginRotation = getPivitolCoordinate(squareCoordinatesAfterOriginRotation);
+
+	// find the shift value
+	int shiftx = squarePivitolAfterOriginRotation.x - squarePivitol.x;
+	int shifty = squarePivitolAfterOriginRotation.y - squarePivitolAfterOriginRotation.y;
+
+	// for each coord in the transformed coords, apply shift
+	for (auto coord : squareCoordinatesAfterOriginRotation)
+	{
+		coord.x = coord.x - shiftx;
+		coord.y = coord.y - shiftx;
+	}
+
+	// check if the rotation is valid -> hence all squares at chunk with squareCoordinatesAfterOriginRotation
+	// must be inactive and valid
+	for (auto coord : squareCoordinatesAfterOriginRotation)
+	{
+		if (!coord.isValidCoord())
+		{
+			return;
+		}
+	}
+
+	// deactive the current active block
+	for (auto coord : squareCoordinatesAfterOriginRotation)
+	{
+		chunk->deactivateCoordinate(coord);
+	}
+	
+	// for the current active block, update the square coordinates
+	// and the chunk squares
+	for (auto square : squares)
+	{
+		Coordinate newCoord = getCounterClockWiseRotationCoord(square);
+		square->position.x = newCoord.x;
+		square->position.y = newCoord.y;
+
+		chunk->addSquare(*square);
+	}
 }
 
 bool Block::move(Biquadris::Direction direction, int shift, Chunk* chunk)

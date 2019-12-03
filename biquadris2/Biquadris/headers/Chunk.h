@@ -3,8 +3,9 @@
 
 #include <vector>
 
-#include "../headers/block.h"
-#include "../headers/biquadris.h"
+#include "block.h"
+#include "biquadris.h"
+#include "coordinate.h"
 
 struct Square;
 
@@ -20,6 +21,7 @@ public:
 
   void addSquare(const Square& s);
   void deactivateSquare(const Square& s);
+  void deactivateCoordinate(Coordinate coord);
 
   int clearFullRows(); //Returns the number of full rows cleared and shifts upper dead content down
 

@@ -55,6 +55,14 @@ bool Grid::move(Direction direction)
 	return true;
 }
 
+void Grid::rotateCClockwise()
+{
+	if (this->active)
+	{
+		this->active->rotateCClockwise();
+	}
+}
+
 int Grid::checkRowCompleteness()
 {
 	return chunk->clearFullRows();

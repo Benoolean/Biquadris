@@ -2,6 +2,7 @@
 #define SQUARE_H
 
 #include <string>
+#include <vector>
 #include "coordinate.h"
 #include "biquadris.h"
 
@@ -26,5 +27,9 @@ struct Square {
   void deactivate();
   void mimic(const Square& s); //Copies the graphical info for this square
 };
+
+
+Coordinate getCounterClockWiseRotationCoord(Square* square);
+Coordinate getPivitolCoordinate(std::vector<Coordinate> squares);
 
 #endif

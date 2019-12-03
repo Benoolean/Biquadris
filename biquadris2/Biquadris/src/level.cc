@@ -41,10 +41,12 @@ Level::~Level()
 }
 
 //Helper function that returns x to the power of y
-int power(int x, unsigned int y) {
+int power(int x, unsigned int y)
+{
 	int current = ((y == 0) ? 1 : x);
 
-	for(int i = 0; i < (int)y; i++) {
+	for (int i = 0; i < (int)y; i++)
+	{
 		current *= x;
 	}
 
@@ -69,27 +71,35 @@ void Level::StartGame()
 		{
 			this->move(Direction::RIGHT);
 		}
-		else if(cmd == "left")
+		else if (cmd == "left")
 		{
 			this->move(Direction::LEFT);
 		}
-		else if(cmd == "down")
+		else if (cmd == "down")
 		{
-			if(!this->move(Direction::DOWN)) { //Block died
+			if (!this->move(Direction::DOWN))
+			{ //Block died
 				Player* current = this->getCurrentPlayer();
 				int rowsRemoved = current->grid->checkRowCompleteness();
-				if(rowsRemoved) { //If any rows were cleared update players score
+				if (rowsRemoved)
+				{ //If any rows were cleared update players score
 					current->score += power(current->level + rowsRemoved, 2);
 					//When an entire block is removed, score += (levelatcreation + 1)^2
 				}
 
-				if(this->spawnBlock()) {
-						//Switch player
+				if (this->spawnBlock())
+				{
+					//Switch player
 				}
-				else { //Player 1 is out!
+				else
+				{ //Player 1 is out!
 					cout << "Player 1 is out!" << endl;
 				}
 			}
+		}
+		else if (cmd == "counterclockwise")
+		{
+			this->rotateCClockwise();
 		}
 		this->draw();
 	}
@@ -126,22 +136,22 @@ void Level::draw()
 
 	// todo dynanmic spacing based on score
 
-	for (int i = 0; i < (int) this->players.size(); i++)
+	for (int i = 0; i < (int)this->players.size(); i++)
 	{
 		cout << "Level:"
 			<< "   " << players[i]->level;
-		if (i + 1 != (int) this->players.size())
+		if (i + 1 != (int)this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}
 	}
 	cout << endl;
 
-	for (int i = 0; i < (int) this->players.size(); i++)
+	for (int i = 0; i < (int)this->players.size(); i++)
 	{
 		cout << "Score:"
 			<< "   " << players[i]->score;
-		if (i + 1 != (int) this->players.size())
+		if (i + 1 != (int)this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}
@@ -151,10 +161,10 @@ void Level::draw()
 	/*========= print grid =========*/
 
 	// grid bar
-	for (int i = 0; i < (int) this->players.size(); i++)
+	for (int i = 0; i < (int)this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
-		if (i + 1 != (int) this->players.size())
+		if (i + 1 != (int)this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}
@@ -163,17 +173,19 @@ void Level::draw()
 
 	// print each row by player count
 
-	for (int rowcount = 0; rowcount < (int) GridInfo::GRID_HEIGHT; rowcount++)
+	for (int rowcount = 0; rowcount < (int)GridInfo::GRID_HEIGHT; rowcount++)
 	{
 		for (auto player : this->players)
 		{
 			for (int colcount = 0; colcount < GridInfo::GRID_WIDTH; colcount++)
 			{
 				Square s = player->grid->getPlayerChunk().at(rowcount).at(colcount);
-				if(s.status == SquareStatus::DEAD) {
+				if (s.status == SquareStatus::DEAD)
+				{
 					cout << (char)219;
 				}
-				else {
+				else
+				{
 					cout << s.symbol;
 				}
 
@@ -188,10 +200,10 @@ void Level::draw()
 	}
 
 	// grid bar
-	for (int i = 0; i < (int) this->players.size(); i++)
+	for (int i = 0; i < (int)this->players.size(); i++)
 	{
 		cout << GRID_BAR_SEPERATOR;
-		if (i + 1 != (int) this->players.size())
+		if (i + 1 != (int)this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
 		}
@@ -201,6 +213,12 @@ void Level::draw()
 	/*========= print next=========*/
 
 	cout << "Next: " << endl;
+}
+
+void Level::rotateCClockwise()
+{
+	Player* player = this->getCurrentPlayer();
+	return player->grid->rotateCClockwise();
 }
 
 bool Level::move(Biquadris::Direction direction)
