@@ -1,0 +1,9 @@
+I 1
+J 1
+L 1
+O 1
+S 2
+Z 2
+T 1
+
+EFFECT divider

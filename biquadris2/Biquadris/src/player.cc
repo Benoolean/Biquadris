@@ -124,7 +124,16 @@ bool Player::spawnNewBlock()
 {
 	Block* block = nullptr;
 
-	if (this->level == 0)
+	if (this->readcustomSequence) // check if we are currently not random and is reading from a different sequence
+	{
+		block = new Block(*Biquadris::defaults[this->customSequence[this->currentBlock]]);
+		bool valid = this->grid->setActive(block);
+
+		this->currentBlock = ((this->currentBlock + 1 >= (int)this->customSequence.size()) ? 0 : this->currentBlock + 1);
+
+		return valid;
+	}
+	else if (this->level == 0)
 	{
 		block = new Block(*Biquadris::defaults[this->sequence[this->currentBlock]]);
 		bool valid = this->grid->setActive(block);
@@ -191,6 +200,30 @@ void Player::addLevelEffect(Effect* e, int level) {
 	levelEffects.at(level).push_back(e);
 }
 
+void Player::setRandom()
+{
+	this->customSequence.clear();
+	this->readcustomSequence = false;
+}
+
+void Player::setNotRandom(std::string source)
+{
+	this->customSequence.clear();
+	this->currentBlock = 0;
+
+	this->source = "media/" + source;
+	ifstream filestream;
+	filestream.open(this->source);
+
+	string input;
+	while (filestream >> input)
+	{
+		customSequence.push_back(input);
+	}
+
+	this->readcustomSequence = true;
+}
+
 int Player::getCurrentLevel()
 {
 	return this->level;
@@ -199,7 +232,6 @@ int Player::getCurrentLevel()
 void Player::setNewLevel(int newLevel)
 {
 	this->level = newLevel;
-
 }
 
 Grid* Player::currentBaseGrid() {

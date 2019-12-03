@@ -111,6 +111,13 @@ void Level::StartGame()
 		{
 			this->decreaseLevel();
 		}
+		else if (cmd == "norandom")
+		{
+			string fileSource = "";
+			cin >> fileSource;
+
+			this->setNotRandom(fileSource);
+		}
 		else if (cmd == "restart")
 		{
 			this->restart();
@@ -118,6 +125,18 @@ void Level::StartGame()
 
 		this->draw();
 	}
+}
+
+void Level::setRandom()
+{
+	Player* player = this->getCurrentPlayer();
+	player->setRandom();
+}
+
+void Level::setNotRandom(std::string source)
+{
+	Player* player = this->getCurrentPlayer();
+	player->setNotRandom(source);
 }
 
 void Level::promptEffect()

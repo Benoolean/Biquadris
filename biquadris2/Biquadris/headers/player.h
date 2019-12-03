@@ -12,8 +12,11 @@ class Player
 	std::string source; //This allows a new stream to be opened once the end of either hase been reached
 	std::vector<std::string> sequence;
 	std::vector<std::vector<std::string>> sequenceProbabilities; // created with levelX.txt (custom chance drop)
+	std::vector<std::string> customSequence; // created with fileXXX.txt (custom sequence mid game)
 	int currentBlock;
 	unsigned int turnNumber = 0;
+
+	bool readcustomSequence = false;
 
 	int level;
 	int score;
@@ -41,7 +44,13 @@ public:
 
 	void addLevelEffect(Effect* e, int level);
 
+	void setRandom();
+	void setNotRandom(std::string source);
+
 	int getCurrentLevel();
+
+	void getNextBlock();
+
 	void setNewLevel(int newLevel);
 
 	Grid* currentBaseGrid(); //Ignores level effects
