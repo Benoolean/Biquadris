@@ -68,13 +68,13 @@ void Level::StartGame()
 		{
 			//Blocks can drop when moving horizontally if the heavy effect
 			//is in place
-			if(this->move(Direction::RIGHT)) {
+			if(!this->move(Direction::RIGHT)) {
 				this->blockDropped();
 			}
 		}
 		else if(cmd == "left")
 		{
-			if(this->move(Direction::LEFT)) {
+			if(!this->move(Direction::LEFT)) {
 				this->blockDropped();
 			}
 		}
@@ -89,6 +89,9 @@ void Level::StartGame()
 				while(this->move(Direction::DOWN)) {}
 				blockDropped();
 			}
+		}
+		else if(cmd == "counterclockwise") {
+			this->rotateCClockwise();
 		}
 		this->draw();
 	}
