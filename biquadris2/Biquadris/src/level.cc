@@ -225,7 +225,7 @@ void Level::draw()
 		}
 
 		cout << endl;
-	}cout << "Player is out!" << endl;
+	}
 
 	// grid bar
 	for (int i = 0; i < (int) this->players.size(); i++)
