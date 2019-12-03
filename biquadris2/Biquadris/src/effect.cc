@@ -2,7 +2,7 @@
 using namespace std;
 
 Effect::Effect(Grid* component, bool limited, int maxLife)
-  : Grid(), component(component), limited(limited), life(0), maxLife(life) { }
+  : Grid(), component(component), limited(limited), life(0), maxLife(maxLife) { }
 
 bool Effect::move(Biquadris::Direction direction) {
   bool valid = component->move(direction);
