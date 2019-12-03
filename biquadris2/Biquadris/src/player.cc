@@ -13,7 +13,7 @@ using namespace Biquadris;
 int MAX_LEVEL;
 
 Player::Player(string source, int level)
-	: grid(new BlockGrid()), source(source), currentBlock(0), level(3), score(0), currentEffect(nullptr)
+	: grid(new BlockGrid()), source(source), currentBlock(0), level(level), score(0), currentEffect(nullptr)
 {
 	// default level
 	ifstream sourcefile;
@@ -29,6 +29,10 @@ Player::Player(string source, int level)
 
 	// level random generator
 	this->blockSequenceProbabilitySetup();
+}
+
+void Player::setLevel(int level) {
+
 }
 
 void Player::blockSequenceProbabilitySetup()

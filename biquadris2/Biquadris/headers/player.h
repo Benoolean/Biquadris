@@ -10,7 +10,7 @@ class Player
 	BlockGrid* grid;
 
 	std::string source; //This allows a new stream to be opened once the end of either hase been reached
-	std::vector<std::string> sequence; // Pushed from specified fstream, and stack popped every drop
+	std::vector<std::string> sequence;
 	std::vector<std::vector<std::string>> sequenceProbabilities; // created with levelX.txt (custom chance drop)
 	int currentBlock;
 	unsigned int turnNumber = 0;
@@ -23,15 +23,19 @@ class Player
 	//grid. The current effect is set to the topmost effect, otherwise nullptr.
 	//After every turn the effects are deleted.
 	std::vector<Effect*> effects;
+	std::vector<Effect*> levelEffects;
 	Effect* currentEffect; // The topmost effect, default is grid if no effect was created last turn
 
 public:
 	Player(std::string source, int level = 0);
 	~Player();
+
+	void setLevel(int level);
 	void blockSequenceProbabilitySetup();
 
 	bool spawnNewBlock();
 	bool setBlock(Block* newBlock);
+
 	void addEffect(Biquadris::EffectType type);
 	void addEffect(Effect* e);
 
