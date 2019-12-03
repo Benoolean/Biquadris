@@ -129,7 +129,7 @@ bool Player::spawnNewBlock()
 
 	if (this->readcustomSequence) // check if we are currently not random and is reading from a different sequence
 	{
-		block = new Block(*Biquadris::defaults[this->customSequence[this->currentBlock]]);
+		block = new Block(*Biquadris::defaults[this->customSequence[this->currentBlock]], this->level);
 		bool valid = this->grid->setActive(block);
 
 		this->currentBlock = ((this->currentBlock + 1 >= (int)this->customSequence.size()) ? 0 : this->currentBlock + 1);
