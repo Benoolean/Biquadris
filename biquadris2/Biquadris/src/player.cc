@@ -54,18 +54,38 @@ void Player::blockSequenceProbabilitySetup()
 		while (getline(levelFile, levelDetail))
 		{
 			istringstream ss(levelDetail);
-			string blockType = "";
+			string stringInput = "";
 			int blockChances = 0;
 
-			ss >> blockType;
-			ss >> blockChances;
+			ss >> stringInput;
 
-			for (int i = 0; i < blockChances; i++)
+			if (stringInput == "EFFECT")
 			{
-				levelSpawnRate.push_back(blockType);
+				string effect = "";
+				ss >> effect;
+
+				if (effect == "heavy")
+				{
+					int heavyMagnitude;
+					ss >> heavyMagnitude;
+					//this->addEffect(Effect{})
+				}
+				else if (effect == "blind")
+				{
+					this->addEffect(EffectType::BLIND);
+				}
+			}
+			else
+			{
+				ss >> blockChances;
+
+				for (int i = 0; i < blockChances; i++)
+				{
+					levelSpawnRate.push_back(stringInput);
+				}
 			}
 		}
-		
+
 		this->sequenceProbabilities.push_back(levelSpawnRate);
 
 		levelFile.close();
@@ -103,11 +123,11 @@ bool Player::spawnNewBlock()
 	{
 		int sequenceIndex = this->level - 1;
 		vector<string> levelSequence = this->sequenceProbabilities.at(sequenceIndex);
-		
+
 		int lower = 0;
 		int upper = levelSequence.size() - 1;
 
-		srand((unsigned) Biquadris::seed + this->turnNumber);
+		srand((unsigned)Biquadris::seed + this->turnNumber);
 
 		int random = rand() % (upper + 1 - lower) + lower;
 		string test = levelSequence.at(random);
@@ -121,14 +141,17 @@ bool Player::spawnNewBlock()
 
 }
 
-bool Player::setBlock(Block* newBlock) {
+bool Player::setBlock(Block* newBlock)
+{
 	bool valid = this->grid->setActive(newBlock);
 	return valid;
 }
 
-void Player::addEffect(EffectType type) {
+void Player::addEffect(EffectType type)
+{
 	Effect* newEffect = nullptr;
-	switch(type) {
+	switch (type)
+	{
 	case EffectType::HEAVY:
 		newEffect = new Heavy(this->currentGrid());
 		break;
@@ -140,7 +163,8 @@ void Player::addEffect(EffectType type) {
 	currentEffect = newEffect;
 }
 
-Grid* Player::currentGrid() {
+Grid* Player::currentGrid()
+{
 	if (currentEffect)
 		return currentEffect;
 	else
