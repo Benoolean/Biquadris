@@ -13,7 +13,8 @@ using namespace Biquadris;
 int MAX_LEVEL;
 
 Player::Player(string source, int level)
-	: grid(new BlockGrid()), source(source), currentBlock(0), level(3), score(0), currentEffect(nullptr)
+	: grid(new BlockGrid()), source(source), currentBlock(0), level(3), score(0),
+	currentEffect(nullptr), levelEffects(4)
 {
 	// default level
 	ifstream sourcefile;
@@ -40,6 +41,8 @@ void Player::blockSequenceProbabilitySetup()
 	infoFile.open(this->source);
 
 	string input;
+
+	int levelIndex = 1;
 
 	while (infoFile >> input)
 	{
@@ -68,11 +71,11 @@ void Player::blockSequenceProbabilitySetup()
 				{
 					int heavyMagnitude;
 					ss >> heavyMagnitude;
-					this->addEffect(new Heavy{ this->currentGrid(), heavyMagnitude });
+					this->addLevelEffect(new Heavy{ nullptr, heavyMagnitude }, levelIndex);
 				}
 				else if (effect == "blind")
 				{
-					this->addEffect(EffectType::BLIND);
+					this->addLevelEffect(new Blind(nullptr), levelIndex);
 				}
 			}
 			else
@@ -87,6 +90,8 @@ void Player::blockSequenceProbabilitySetup()
 		}
 
 		this->sequenceProbabilities.push_back(levelSpawnRate);
+
+		++levelIndex;
 
 		levelFile.close();
 	}
@@ -103,6 +108,14 @@ Player::~Player()
 	for (auto effect : effects)
 	{
 		delete effect;
+	}
+
+	for (auto effects : levelEffects)
+	{
+		for (auto effect : effects)
+		{
+			delete effect;
+		}
 	}
 }
 
@@ -153,10 +166,10 @@ void Player::addEffect(EffectType type)
 	switch (type)
 	{
 	case EffectType::HEAVY:
-		newEffect = new Heavy(this->currentGrid());
+		newEffect = new Heavy(this->currentBaseGrid());
 		break;
 	case EffectType::BLIND:
-		newEffect = new Blind(this->currentGrid());
+		newEffect = new Blind(this->currentBaseGrid());
 		break;
 	}
 	effects.push_back(newEffect);
@@ -168,9 +181,28 @@ void Player::addEffect(Effect* e) {
 	currentEffect = e;
 }
 
-Grid* Player::currentGrid() {
+#include <iostream>
+
+void Player::addLevelEffect(Effect* e, int level) {
+	if(levelEffects.at(level).size()) {
+		e->setComponent(levelEffects.at(level).at(levelEffects[level].size()-1)); //Set the component to the topmost level effect
+	}
+	levelEffects.at(level).push_back(e);
+}
+
+Grid* Player::currentBaseGrid() {
 	if (currentEffect)
 		return currentEffect;
 	else
 		return grid;
+}
+
+Grid* Player::currentGrid() {
+	Grid* base = this->currentBaseGrid();
+	Grid* top = base;
+	if(levelEffects.at(level).size()) {
+		levelEffects[level][0]->setComponent(base);
+		top = levelEffects.at(level).at(levelEffects[level].size()-1); //Get the topmost level effect
+	}
+	return top;
 }

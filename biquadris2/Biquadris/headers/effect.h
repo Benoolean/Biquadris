@@ -18,6 +18,8 @@ protected:
 public:
   Effect(Grid* component, bool limited = false, int maxLife = 0);
 
+  void setComponent(Grid* component);
+
   virtual bool move(Biquadris::Direction direction) override;
   virtual std::vector<std::vector<Square>> getPlayerChunk() override;
 };

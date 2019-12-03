@@ -25,6 +25,8 @@ class Player
 	std::vector<Effect*> effects;
 	Effect* currentEffect; // The topmost effect, default is grid if no effect was created last turn
 
+	std::vector<std::vector<Effect*>> levelEffects;
+
 public:
 	Player(std::string source, int level = 0);
 	~Player();
@@ -32,9 +34,13 @@ public:
 
 	bool spawnNewBlock();
 	bool setBlock(Block* newBlock);
+
 	void addEffect(Biquadris::EffectType type);
 	void addEffect(Effect* e);
 
+	void addLevelEffect(Effect* e, int level);
+
+	Grid* currentBaseGrid(); //Ignores level effects
 	Grid* currentGrid();
 
 	friend class Level;
