@@ -51,6 +51,16 @@ void Chunk::deactivateBlock(const Block& b)
 	}
 }
 
+void Chunk::deactivateLiveBlock(const Block& b)
+{
+	const vector<Square*>& blockSquares = b.getSquares();
+	for (auto square : blockSquares)
+	{
+		Square* s = this->squares.at(square->position.y).at(square->position.x);
+		if(s->status == SquareStatus::ACTIVE) s->deactivate();
+	}
+}
+
 void Chunk::killBlock(const Block& b)
 {
 	const vector<Square*>& blockSquares = b.getSquares();
@@ -89,8 +99,9 @@ int Chunk::clearFullRows() {
 		}
 
 		if(fullRow) {
+			++rowsCleared;
 			vector<Square> lastRow;
-			for(int i = 0; i < rowIndex; i++) {
+			for(int i = 0; i <= rowIndex; i++) {
 				vector<Square> tempRow;
 				for(auto square : squares[i]) {
 					 tempRow.push_back(*square);
@@ -98,8 +109,8 @@ int Chunk::clearFullRows() {
 				}
 
 				if(i) { //If not the first row
-					for(auto square : squares[i]) {
-						square->mimic(*square);
+					for(int j = 0; j < (int) squares[i].size(); j++) {
+						squares[i][j]->mimic(lastRow[j]);
 					}
 				}
 

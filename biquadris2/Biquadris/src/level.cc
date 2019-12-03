@@ -4,8 +4,10 @@
 using namespace std;
 using namespace Biquadris;
 
+int Level::highScore = 0;
+
 Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std::string> source)
-	: currentPlayer(0), currentEffect(nullptr), over(false), winner(-1)
+	: currentPlayer(0), over(false), winner(-1)
 {
 	if (level > 4)
 	{
@@ -29,11 +31,6 @@ Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std
 
 Level::~Level()
 {
-	for (auto effect : effects)
-	{
-		delete effect;
-	}
-
 	for (auto player : players)
 	{
 		delete player;
@@ -69,39 +66,53 @@ void Level::StartGame()
 	{
 		if (cmd == "right")
 		{
-			this->move(Direction::RIGHT);
+			//Blocks can drop when moving horizontally if the heavy effect
+			//is in place
+			if(this->move(Direction::RIGHT)) {
+				this->blockDropped();
+			}
 		}
-		else if (cmd == "left")
+		else if(cmd == "left")
 		{
-			this->move(Direction::LEFT);
+			if(this->move(Direction::LEFT)) {
+				this->blockDropped();
+			}
 		}
-		else if (cmd == "down")
+		else if(cmd == "down")
 		{
-			if (!this->move(Direction::DOWN))
-			{ //Block died
-				Player* current = this->getCurrentPlayer();
-				int rowsRemoved = current->grid->checkRowCompleteness();
-				if (rowsRemoved)
-				{ //If any rows were cleared update players score
-					current->score += power(current->level + rowsRemoved, 2);
-					//When an entire block is removed, score += (levelatcreation + 1)^2
-				}
+			if(!this->move(Direction::DOWN)) { //Block died
+				this->blockDropped();
+			}
+		}
+		else if(cmd == "drop") {
+			if(this->getCurrentPlayer()->grid->isActive()) {
+				while(this->move(Direction::DOWN)) {}
+				blockDropped();
+			}
+		}
+		this->draw();
+	}
+}
 
-				if (this->spawnBlock())
-				{
-					//Switch player
-				}
-				else
-				{ //Player 1 is out!
-					cout << "Player 1 is out!" << endl;
+void Level::promptEffect() {
+	string in;
+	while(cin >> in) {
+		cout << "Choose debuff: blind, heavy, or force [block]" << endl;
+		if(in == "blind") {
+			this->getNextPlayer()->addEffect(EffectType::BLIND);
+		}
+		else if(in == "heavy") {
+			this->getNextPlayer()->addEffect(EffectType::HEAVY);
+		}
+		else if(in == "force") {
+			cin >> in;
+			if(defaults.find(in) != defaults.end()) {
+				if(!this->getNextPlayer()->setBlock(new Block(*defaults[in]))) {
+					playerDone();
 				}
 			}
 		}
-		else if (cmd == "counterclockwise")
-		{
-			this->rotateCClockwise();
-		}
-		this->draw();
+		cout << "Invalid input. Try again." << endl;
 	}
 }
 
@@ -112,18 +123,39 @@ Player* Level::getCurrentPlayer()
 	return this->players.at(this->currentPlayer);
 }
 
+Player* Level::getNextPlayer()
+{
+	int nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
+	return this->players.at(nextPlayer);
+}
+
+void Level::blockDropped() {
+	Player* current = this->getCurrentPlayer();
+	int rowsRemoved = current->grid->checkRowCompleteness();
+	if(rowsRemoved) { //If any rows were cleared update players score
+		current->score += power(current->level + rowsRemoved, 2);
+		if(current->score > highScore) highScore = current->score;
+
+		if(rowsRemoved >= 2) this->promptEffect();
+		//When an entire block is removed, score += (levelatcreation + 1)^2
+	}
+
+	if(this->spawnBlock()) {
+			//Switch player
+	}
+	else { //Player 1 is out!
+		this->playerDone();
+	}
+}
+
+void Level::playerDone() {
+	cout << "Player is out!" << endl;
+}
+
 bool Level::spawnBlock()
 {
 	Player* currentPlayer = this->getCurrentPlayer();
 	return currentPlayer->spawnNewBlock();
-}
-
-Grid* Level::currentGrid()
-{
-	if (currentEffect)
-		return currentEffect;
-	else
-		return players[currentPlayer]->grid;
 }
 
 // constants

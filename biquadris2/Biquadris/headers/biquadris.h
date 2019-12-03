@@ -13,7 +13,7 @@ namespace Biquadris {
   enum GridInfo { GRID_HEIGHT = 18, GRID_WIDTH = 11 }; //Height = 15 + 3 safety rows
   enum class Direction { LEFT, RIGHT, DOWN };
 
-  enum class Effect {
+  enum class EffectType {
     HEAVY, BLIND
   };
 

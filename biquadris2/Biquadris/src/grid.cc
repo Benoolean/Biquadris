@@ -31,15 +31,21 @@ bool Grid::setActive(Block* newActive)
 		if (this->chunk->getSquares().at(square->position.y).at(square->position.x)->status == SquareStatus::DEAD)
 		{
 			this->gridcomplete = true;
+
+			delete this->active;
 			return false;
 		}
 	}
 
-	delete active;
-	active = newActive;
-	chunk->addBlock(*active);
+	if(this->active) {
+		this->chunk->deactivateLiveBlock(*this->active);
+		delete this->active;
+	}
 
-	return false;
+	this->active = newActive;
+	this->chunk->addBlock(*this->active);
+
+	return true;
 }
 
 bool Grid::move(Direction direction)

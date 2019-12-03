@@ -21,7 +21,6 @@ struct Square {
   bool validPosition();
 
   bool move(Biquadris::Direction direction, unsigned int shift = 1);
-  bool move(Coordinate newPosition);
 
   void kill();
   void deactivate();

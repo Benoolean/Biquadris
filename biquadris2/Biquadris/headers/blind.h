@@ -2,9 +2,6 @@
 #define BLIND_H
 
 #include "effect.h"
-
-class Xwindow;
-
 /*
  * Overrides draw to hide columns 3-9 and rows 3-12
  */
