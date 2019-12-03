@@ -139,7 +139,7 @@ Player* Level::getNextPlayer()
 
 void Level::nextPlayer() {
 	int nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
-	int i = 1;
+	int i = 0;
 	while(players[nextPlayer]->currentGrid()->isComplete()) {
 			//If there has been a full rotation of characters
 			//and all of them are complete, end the game.
