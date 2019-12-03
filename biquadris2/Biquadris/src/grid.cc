@@ -2,6 +2,8 @@
 #include "../headers/square.h"
 #include "../headers/Chunk.h"
 
+#include <cmath>
+
 using namespace std;
 using namespace Biquadris;
 
@@ -14,6 +16,10 @@ Grid::~Grid()
 {
 	delete active;
 	delete chunk;
+
+	for(auto block : deadBlocks) {
+		delete block;
+	}
 }
 
 Chunk* Grid::getChunk() {
@@ -58,6 +64,7 @@ bool Grid::move(Direction direction)
 	{
 		if (!active->move(direction, 1, chunk))
 		{ //block made a dying movement
+			deadBlocks.push_back(active);
 			active = nullptr;
 			return false;
 		}
@@ -76,6 +83,31 @@ void Grid::rotateCClockwise()
 int Grid::checkRowCompleteness()
 {
 	return chunk->clearFullRows();
+}
+
+int Grid::deadBlocksRemoved() {
+	const vector<vector<Square*>>& squares = chunk->getSquares();
+	int blocksRemoved = 0;
+
+	for(int i = 0; i < (int)deadBlocks.size();) {
+		for(auto row : squares) {
+			for(auto square : row) {
+				cout << square->uid << " : " << deadBlocks[i]->getUID() << endl;
+				if(square->uid == deadBlocks[i]->getUID()) {
+					++i;
+					continue; //There are still squares left
+				}
+			}
+		}
+
+		//Dead block has been completely removed
+		blocksRemoved += pow(deadBlocks[i]->getCreationLevel() + 1, 2);
+
+		delete deadBlocks[i];
+		deadBlocks.erase(deadBlocks.begin()+i);
+	}
+
+	return blocksRemoved;
 }
 
 bool Grid::isComplete() {

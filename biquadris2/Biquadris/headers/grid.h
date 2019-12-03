@@ -13,6 +13,8 @@ protected:
   bool gridcomplete;
   Block* active;
 
+  std::vector<Block*> deadBlocks;
+
   virtual Chunk* getChunk();
 
 public:
@@ -31,7 +33,7 @@ public:
   virtual void rotateCClockwise();
 
   virtual int checkRowCompleteness();
-  int deadBlocksRemoved();
+  int deadBlocksRemoved(); //Returns the points gained from removal
 
   bool isComplete();
 

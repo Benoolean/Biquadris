@@ -11,16 +11,24 @@ class Chunk;
 
 class Block
 {
+	static int masterUID;
+
 	std::vector<Square*> squares; //Column by row
+
+	int creationLevel;
+
+	int uid;
+	void generateUID();
 
 public:
 	Block();
-	Block(std::vector<Square*>&& squares);
-	Block(const Block& other);
+	Block(std::vector<Square*>&& squares, int creationLevel = -1);
+	Block(const Block& other, int creationLevel = -1);
 
 	~Block();
 
-
+	void setCreationLevel(int creationLevel);
+	int getCreationLevel() const;
 	/*
 	 * Any movement functions that returns a boolean
 	 * indicates whether they contact the provided Chunk
@@ -28,6 +36,8 @@ public:
 	 * Furthermore, any movement requested that is invalid
 	 * is not performed.
 	 */
+
+	int getUID() const;
 
 	void rotateClockwise(Chunk* chunk = nullptr);
 	void rotateCClockwise(Chunk* chunk = nullptr);

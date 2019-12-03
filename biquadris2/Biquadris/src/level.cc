@@ -208,6 +208,7 @@ void Level::blockDropped()
 {
 	Player* current = this->getCurrentPlayer();
 	int rowsRemoved = current->currentGrid()->checkRowCompleteness();
+	current->score += current->grid->deadBlocksRemoved();
 	if (rowsRemoved)
 	{ //If any rows were cleared update players score
 		current->score += power(current->level + rowsRemoved, 2);
