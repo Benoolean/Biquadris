@@ -103,6 +103,10 @@ void Level::StartGame()
 		{
 			this->rotateCClockwise();
 		}
+		else if (cmd == "restart")
+		{
+			this->restart();
+		}
 
 		this->draw();
 	}
@@ -177,6 +181,16 @@ void Level::setGameOver()
 {
 	this->over = true;
 	cout << "Game over!" << endl;
+}
+
+void Level::restart()
+{
+	cout << "Restarting Game" << endl;
+	for (int i = 0; i < (int)this->players.size(); i++)
+	{
+		players[i]->score = 0;
+	}
+
 }
 
 void Level::blockDropped()

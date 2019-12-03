@@ -96,14 +96,5 @@ int main(int argc, char* argv[])
 	Level level(startlevel, 2, showWindow, sourcefiles);
 
 	level.StartGame();
-
-	string command;
-	while (cin >> command)
-	{
-		int level;
-		cin >> level;
-	}
-	// ^ Are we getting input for level?
-
 	return 0;
 }

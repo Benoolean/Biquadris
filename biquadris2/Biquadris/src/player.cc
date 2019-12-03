@@ -15,6 +15,7 @@ int MAX_LEVEL;
 Player::Player(string source, int level)
 	: grid(new BlockGrid()), source(source), currentBlock(0), level(3), score(0),
 	currentEffect(nullptr), levelEffects(4)
+
 {
 	// default level
 	ifstream sourcefile;
@@ -30,6 +31,10 @@ Player::Player(string source, int level)
 
 	// level random generator
 	this->blockSequenceProbabilitySetup();
+}
+
+void Player::setLevel(int level) {
+
 }
 
 void Player::blockSequenceProbabilitySetup()

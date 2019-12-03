@@ -45,6 +45,7 @@ public:
 	void nextPlayer();
 
 	void setGameOver();
+	void restart();
 
 	void blockDropped();
 	void playerDone();
