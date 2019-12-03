@@ -85,7 +85,7 @@ void Level::StartGame()
 			}
 		}
 		else if(cmd == "drop") {
-			if(this->getCurrentPlayer()->grid->isActive()) {
+			if(this->getCurrentPlayer()->currentGrid()->isActive()) {
 				while(this->move(Direction::DOWN)) {}
 				blockDropped();
 			}
@@ -99,13 +99,16 @@ void Level::StartGame()
 
 void Level::promptEffect() {
 	string in;
+	cout << "Choose debuff: blind, heavy, or force [block]" << endl;
+
 	while(cin >> in) {
-		cout << "Choose debuff: blind, heavy, or force [block]" << endl;
 		if(in == "blind") {
 			this->getNextPlayer()->addEffect(EffectType::BLIND);
+			return;
 		}
 		else if(in == "heavy") {
 			this->getNextPlayer()->addEffect(EffectType::HEAVY);
+			return;
 		}
 		else if(in == "force") {
 			cin >> in;
@@ -114,7 +117,9 @@ void Level::promptEffect() {
 					playerDone();
 				}
 			}
+			return;
 		}
+		cout << "Choose debuff: blind, heavy, or force [block]" << endl;
 		cout << "Invalid input. Try again." << endl;
 	}
 }
@@ -134,7 +139,7 @@ Player* Level::getNextPlayer()
 
 void Level::blockDropped() {
 	Player* current = this->getCurrentPlayer();
-	int rowsRemoved = current->grid->checkRowCompleteness();
+	int rowsRemoved = current->currentGrid()->checkRowCompleteness();
 	if(rowsRemoved) { //If any rows were cleared update players score
 		current->score += power(current->level + rowsRemoved, 2);
 		if(current->score > highScore) highScore = current->score;
@@ -206,15 +211,22 @@ void Level::draw()
 	}
 	cout << endl;
 
-	// print each row by player count
+	// Get all copies of player chunks now, to avoid
+	// unnecessary copying
+	vector<vector<vector<Square>>> playersSquares;
+	for (auto player : this->players)
+	{
+		playersSquares.push_back(player->currentGrid()->getPlayerChunk());
+	}
 
+	// print each row by player count
 	for (int rowcount = 0; rowcount < (int)GridInfo::GRID_HEIGHT; rowcount++)
 	{
-		for (auto player : this->players)
+		for (int numPlayer = 0; numPlayer < (int) players.size(); numPlayer++)
 		{
 			for (int colcount = 0; colcount < GridInfo::GRID_WIDTH; colcount++)
 			{
-				Square s = player->grid->getPlayerChunk().at(rowcount).at(colcount);
+				Square s = playersSquares[numPlayer].at(rowcount).at(colcount);
 				if (s.status == SquareStatus::DEAD)
 				{
 					cout << (char)219;
@@ -253,11 +265,11 @@ void Level::draw()
 void Level::rotateCClockwise()
 {
 	Player* player = this->getCurrentPlayer();
-	return player->grid->rotateCClockwise();
+	return player->currentGrid()->rotateCClockwise();
 }
 
 bool Level::move(Biquadris::Direction direction)
 {
 	Player* player = this->getCurrentPlayer();
-	return player->grid->move(direction);
+	return player->currentGrid()->move(direction);
 }

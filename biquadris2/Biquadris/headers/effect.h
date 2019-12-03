@@ -1,7 +1,11 @@
 #ifndef EFFECT_H
 #define EFFECT_H
 
-#include "grid.h"
+#include "../headers/biquadris.h"
+#include "../headers/grid.h"
+#include "../headers/square.h"
+
+#include <vector>
 
 class Effect : public Grid {
 protected:
@@ -12,6 +16,9 @@ protected:
   int life;
 public:
   Effect(Grid* component, bool limited = false, int life = 0);
+
+  virtual bool move(Biquadris::Direction direction) override;
+  virtual std::vector<std::vector<Square>> getPlayerChunk() override;
 };
 
 #endif
