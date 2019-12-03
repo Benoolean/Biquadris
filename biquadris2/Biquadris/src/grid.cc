@@ -16,6 +16,10 @@ Grid::~Grid()
 	delete chunk;
 }
 
+Chunk* Grid::getChunk() {
+	return this->chunk;
+}
+
 bool Grid::isActive()
 {
 	return active != nullptr;
@@ -38,7 +42,7 @@ bool Grid::setActive(Block* newActive)
 	}
 
 	if(this->active) {
-		this->chunk->deactivateLiveBlock(*this->active);
+		this->chunk->deactivateBlock(*this->active);
 		delete this->active;
 	}
 

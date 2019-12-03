@@ -1,16 +1,18 @@
 #include "../headers/divider.h"
 using namespace Biquadris;
 
-Divider::Divider(Grid* component) : Effect(component) { }
+Divider::Divider(Grid* component) : Effect(component), turnsSinceRowsRemoved(0) { }
 
-bool Heavy::move(Direction direction) {
-  bool moved = component->move(direction);
-
-  //Shift down twice if horizontal movement
-  if(direction != Direction::DOWN && moved) {
-    moved = component->move(Direction::DOWN);
-    if(moved) moved = component->move(Direction::DOWN);
+int Divider::checkRowCompleteness() {
+  int removed = component->checkRowCompleteness();
+  if(removed) {
+    this->turnsSinceRowsRemoved = 0;
   }
-
-  return moved;
+  else {
+    ++(this->turnsSinceRowsRemoved);
+    if(this->turnsSinceRowsRemoved >= 5) {
+      Block square = Block({ new Square(6, 0, "*", 9, SquareStatus::ACTIVE) });
+      while(square->move(Direction::DOWN, 1, this->getChunk())) {}
+    }
+  }
 }

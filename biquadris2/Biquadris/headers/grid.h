@@ -8,9 +8,12 @@
 #include "biquadris.h"
 
 class Grid {
+protected:
   Chunk* chunk;
   bool gridcomplete;
   Block* active;
+
+  virtual Chunk* getChunk();
 
 public:
   Grid();
@@ -27,12 +30,14 @@ public:
   virtual bool move(Biquadris::Direction direction);
   virtual void rotateCClockwise();
 
-  int checkRowCompleteness();
+  virtual int checkRowCompleteness();
   int deadBlocksRemoved();
 
   bool isComplete();
 
   virtual std::vector<std::vector<Square>> getPlayerChunk();
+
+  friend class Effect;
 };
 
 #endif

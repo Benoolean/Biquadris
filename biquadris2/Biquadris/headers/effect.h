@@ -15,12 +15,16 @@ protected:
   bool limited;
   int maxLife;
   int life;
+
+  virtual Chunk* getChunk() override;
+
 public:
   Effect(Grid* component, bool limited = false, int maxLife = 0);
 
   void setComponent(Grid* component);
 
   virtual bool move(Biquadris::Direction direction) override;
+  virtual int checkRowCompleteness() override;
   virtual std::vector<std::vector<Square>> getPlayerChunk() override;
 };
 

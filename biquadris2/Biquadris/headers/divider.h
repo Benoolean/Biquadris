@@ -4,9 +4,10 @@
 #include "effect.h"
 
 class Divider : public Effect {
+  int turnsSinceRowsRemoved;
 public:
   Divider(Grid* component);
-  virtual bool move(Biquadris::Direction direction) override;
+  virtual int checkRowCompleteness() override;
 };
 
 #endif
