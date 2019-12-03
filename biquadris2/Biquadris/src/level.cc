@@ -89,7 +89,7 @@ void Level::StartGame()
 		}
 		else if (cmd == "drop")
 		{
-			if (this->getCurrentPlayer()->currentGrid()->isActive())
+			if (this->getCurrentPlayer()->grid->isActive())
 			{
 				while (this->move(Direction::DOWN)) {}
 				blockDropped();

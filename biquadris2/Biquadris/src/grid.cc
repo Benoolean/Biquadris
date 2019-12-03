@@ -18,7 +18,7 @@ Grid::~Grid()
 
 bool Grid::isActive()
 {
-	return active;
+	return active != nullptr;
 }
 
 bool Grid::setActive(Block* newActive)
