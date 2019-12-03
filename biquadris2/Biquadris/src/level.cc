@@ -7,7 +7,7 @@ using namespace Biquadris;
 int Level::highScore = 0;
 
 Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std::string> source)
-	: currentPlayer(0), over(false), winner(-1)
+	: currentPlayer(0), over(false), tie(false), winner(-1)
 {
 	if (level > 4)
 	{
@@ -204,26 +204,11 @@ void Level::nextPlayer() {
 	currentPlayer = nextPlayer;
 }
 
-void Level::setGameOver()
-{
-	this->over = true;
-	cout << "Game over!" << endl;
-}
-
-void Level::restart()
-{
-	cout << "Restarting Game" << endl;
-	for (int i = 0; i < (int)this->players.size(); i++)
-	{
-		players[i]->score = 0;
-	}
-
-}
-
 void Level::blockDropped()
 {
 	Player* current = this->getCurrentPlayer();
 	int rowsRemoved = current->currentGrid()->checkRowCompleteness();
+	current->score += current->grid->deadBlocksRemoved();
 	if (rowsRemoved)
 	{ //If any rows were cleared update players score
 		current->score += power(current->level + rowsRemoved, 2);
@@ -395,6 +380,86 @@ void Level::draw()
 		cout << c;
 	}
 	cout << endl << "Enter next command: ";
+}
+
+void Level::decideWinner() {
+	int winner = 0;
+	vector<int> tiedWith({0});
+	for(int i = 1; i < players.size(); i++) {
+		int scoreI = players[i]->score, scoreW = players[winner]->score;
+		if(scoreI == scoreW) {
+			tiedWith.push_back(i);
+		}
+		else if(scoreI > scoreW) {
+			winner = i;
+
+			tiedWith.clear();
+			tiedWith.push_back(winner);
+		}
+	}
+
+	if((int)tiedWith.size() > 1) {
+		this->tie = true;
+		this->tiedWith.swap(tiedWith);
+	}
+	this->winner = winner;
+}
+
+bool Level::isTie() const {
+	return this->tie;
+}
+
+void Level::setGameOver()
+{
+	this->over = true;
+	this->decideWinner();
+
+	cout << endl << endl << endl;
+	cout << GRID_BAR_SEPERATOR << endl;
+
+	cout << "Game over!" << endl;
+	cout << "The high score is: " << highScore << endl;
+
+	if(this->isTie()) {
+		cout << "It was a tie! The winners are: ";
+		for(int i = 0; i < (int)tiedWith.size(); i++) {
+			cout << "Player " << tiedWith[i]+1;
+			if(i+1 < tiedWith.size()) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+	else {
+		cout << "The winner is: Player " << winner << endl;
+	}
+
+	cout << GRID_BAR_SEPERATOR << endl;
+
+	for(int i = 0 ; i < players.size(); i++) {
+		cout << "Player " << i+1 << " finished with: " <<  players[i]->score << endl;
+	}
+
+	cout << GRID_BAR_SEPERATOR << endl;
+
+	cout << "Type 'restart' to start a new game: " << endl;
+
+	string in = "";
+	while(in != "restart") {
+		cin >> in;
+	}
+
+	this->restart();
+}
+
+void Level::restart()
+{
+	cout << "Restarting Game" << endl;
+	for (int i = 0; i < (int)this->players.size(); i++)
+	{
+		players[i]->score = 0;
+	}
+
 }
 
 void Level::rotateCClockwise()

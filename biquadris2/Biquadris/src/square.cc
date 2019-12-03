@@ -7,7 +7,7 @@ using namespace std;
 const string Square::emptySymbol = " ";
 
 Square::Square(int x, int y, string symbol, int colour, SquareStatus status)
-	: position({ x, y }), symbol(symbol), colour(colour), status(status)
+	: position({ x, y }), symbol(symbol), colour(colour), status(status), uid(-1)
 {
 }
 
@@ -44,6 +44,7 @@ void Square::deactivate()
 {
 	symbol = emptySymbol;
 	this->status = SquareStatus::INACTIVE;
+	this->uid = -1;
 }
 
 void Square::mimic(const Square& s)
@@ -51,6 +52,7 @@ void Square::mimic(const Square& s)
 	this->symbol = s.symbol;
 	this->colour = s.colour;
 	this->status = s.status;
+	this->uid = s.uid;
 }
 
 Coordinate getCounterClockWiseRotationCoord(Square* square)

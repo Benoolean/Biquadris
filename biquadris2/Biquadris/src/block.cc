@@ -5,20 +5,27 @@
 using namespace std;
 using namespace Biquadris;
 
-Block::Block() {}
+int Block::masterUID = 0;
 
-Block::Block(std::vector<Square*>&& squares)
+Block::Block() : creationLevel(-1) { }
+
+Block::Block(std::vector<Square*>&& squares, int creationLevel)
+	: creationLevel(creationLevel)
 {
 	this->squares.swap(squares);
+	generateUID();
 }
 
-Block::Block(const Block& other)
+Block::Block(const Block& other, int creationLevel)
+	: creationLevel(creationLevel)
 {
 	const vector<Square*>& otherSquares = other.getSquares();
 	for (int i = 0; i < otherSquares.size(); i++)
 	{
 		this->squares.push_back(new Square(*otherSquares[i]));
 	}
+
+	generateUID();
 }
 
 Block::~Block()
@@ -27,6 +34,25 @@ Block::~Block()
 	{
 		delete square;
 	}
+}
+
+void Block::generateUID() {
+	for(auto square : this->squares) {
+		square->uid = masterUID;
+	}
+	++masterUID;
+}
+
+void Block::setCreationLevel(int creationLevel) {
+	this->creationLevel = creationLevel;
+}
+
+int Block::getCreationLevel() const {
+	return this->creationLevel;
+}
+
+int Block::getUID() const {
+	return this->uid;
 }
 
 void Block::rotateClockwise(Chunk* chunk)

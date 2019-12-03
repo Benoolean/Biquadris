@@ -51,16 +51,6 @@ void Chunk::deactivateBlock(const Block& b)
 	}
 }
 
-void Chunk::deactivateLiveBlock(const Block& b)
-{
-	const vector<Square*>& blockSquares = b.getSquares();
-	for (auto square : blockSquares)
-	{
-		Square* s = this->squares.at(square->position.y).at(square->position.x);
-		if (s->status == SquareStatus::ACTIVE) s->deactivate();
-	}
-}
-
 void Chunk::killBlock(const Block& b)
 {
 	const vector<Square*>& blockSquares = b.getSquares();

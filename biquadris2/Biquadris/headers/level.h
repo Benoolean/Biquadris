@@ -23,6 +23,8 @@ class Level {
 	static int highScore;
 
 	bool over; //True for over, false for not over
+	bool tie;
+	std::vector<int> tiedWith;
 	unsigned int winner; // Undefined behaviour unless isOver flag is set
 
 	void changePlayer(int player);
@@ -43,6 +45,9 @@ public:
 	Player* getCurrentPlayer();
 	Player* getNextPlayer();
 	void nextPlayer();
+
+	void decideWinner();
+	bool isTie() const;
 
 	void setGameOver();
 	void restart();

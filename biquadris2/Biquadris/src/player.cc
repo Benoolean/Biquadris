@@ -138,7 +138,7 @@ bool Player::spawnNewBlock()
 	}
 	else if (this->level == 0)
 	{
-		block = new Block(*Biquadris::defaults[this->sequence[this->currentBlock]]);
+		block = new Block(*Biquadris::defaults[this->sequence[this->currentBlock]], this->level);
 		bool valid = this->grid->setActive(block);
 
 		this->currentBlock = ((this->currentBlock + 1 >= (int)this->sequence.size()) ? 0 : this->currentBlock + 1);
@@ -157,7 +157,7 @@ bool Player::spawnNewBlock()
 
 		int random = rand() % (upper + 1 - lower) + lower;
 		string test = levelSequence.at(random);
-		block = new Block(*Biquadris::defaults[levelSequence.at(random)]);
+		block = new Block(*Biquadris::defaults[levelSequence.at(random)], this->level);
 
 		bool valid = this->grid->setActive(block);
 
@@ -170,6 +170,7 @@ bool Player::spawnNewBlock()
 
 bool Player::setBlock(Block* newBlock)
 {
+	newBlock->setCreationLevel(this->level);
 	bool valid = this->grid->setActive(newBlock);
 	return valid;
 }

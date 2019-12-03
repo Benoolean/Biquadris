@@ -18,6 +18,8 @@ struct Square {
   int colour;
   SquareStatus status;
 
+  int uid;
+
   bool validPosition();
 
   bool move(Biquadris::Direction direction, unsigned int shift = 1);
