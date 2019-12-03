@@ -60,13 +60,15 @@ void Block::rotateCClockwise(Chunk* chunk)
 
 	// find the shift value
 	int shiftx = squarePivitolAfterOriginRotation.x - squarePivitol.x;
-	int shifty = squarePivitolAfterOriginRotation.y - squarePivitolAfterOriginRotation.y;
+	int shifty = squarePivitolAfterOriginRotation.y - squarePivitol.y;
 
 	// for each coord in the transformed coords, apply shift
-	for (auto coord : squareCoordinatesAfterOriginRotation)
+	for (auto & coord : squareCoordinatesAfterOriginRotation)
 	{
 		coord.x = coord.x - shiftx;
-		coord.y = coord.y - shiftx;
+		coord.y = coord.y - shifty;
+
+		//coord = Coordinate{ coord.x , coord.y };
 	}
 
 	// check if the rotation is valid -> hence all squares at chunk with squareCoordinatesAfterOriginRotation
@@ -80,20 +82,20 @@ void Block::rotateCClockwise(Chunk* chunk)
 	}
 
 	// deactive the current active block
-	for (auto coord : squareCoordinatesAfterOriginRotation)
+	for (auto coord : squareCoordinates)
 	{
 		chunk->deactivateCoordinate(coord);
 	}
 	
 	// for the current active block, update the square coordinates
 	// and the chunk squares
-	for (auto square : squares)
+	for (int squarecount = 0; squarecount < squares.size(); squarecount++)
 	{
-		Coordinate newCoord = getCounterClockWiseRotationCoord(square);
-		square->position.x = newCoord.x;
-		square->position.y = newCoord.y;
+		Coordinate newCoord = squareCoordinatesAfterOriginRotation.at(squarecount);
+		squares.at(squarecount)->position.x = newCoord.x;
+		squares.at(squarecount)->position.y = newCoord.y;
 
-		chunk->addSquare(*square);
+		chunk->addSquare(*squares.at(squarecount));
 	}
 }
 

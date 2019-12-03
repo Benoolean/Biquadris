@@ -65,7 +65,7 @@ void Grid::rotateCClockwise()
 {
 	if (this->active)
 	{
-		this->active->rotateCClockwise();
+		this->active->rotateCClockwise(this->chunk);
 	}
 }
 
