@@ -7,8 +7,6 @@
 #include "block.h"
 #include "biquadris.h"
 
-class Xwindow;
-
 class Grid {
   Chunk* chunk;
   bool gridcomplete;
@@ -31,6 +29,8 @@ public:
 
   int checkRowCompleteness();
   int deadBlocksRemoved();
+
+  bool isComplete();
 
   virtual std::vector<std::vector<Square>> getPlayerChunk();
 };

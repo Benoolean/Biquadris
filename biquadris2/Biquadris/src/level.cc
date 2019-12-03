@@ -137,6 +137,28 @@ Player* Level::getNextPlayer()
 	return this->players.at(nextPlayer);
 }
 
+void Level::nextPlayer() {
+	int nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
+	int i = 1;
+	while(players[nextPlayer]->currentGrid()->isComplete()) {
+			//If there has been a full rotation of characters
+			//and all of them are complete, end the game.
+			if(i > players.size()) {
+				this->setGameOver(); //***Set the game to over
+				break;
+			}
+
+			nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
+			++i;
+	}
+	currentPlayer = nextPlayer;
+}
+
+void Level::setGameOver() {
+	this->over = true;
+	cout << "Game over!" << endl;
+}
+
 void Level::blockDropped() {
 	Player* current = this->getCurrentPlayer();
 	int rowsRemoved = current->currentGrid()->checkRowCompleteness();
@@ -149,7 +171,7 @@ void Level::blockDropped() {
 	}
 
 	if(this->spawnBlock()) {
-			//Switch player
+		this->nextPlayer();
 	}
 	else { //Player 1 is out!
 		this->playerDone();

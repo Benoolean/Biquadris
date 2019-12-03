@@ -74,6 +74,10 @@ int Grid::checkRowCompleteness()
 	return chunk->clearFullRows();
 }
 
+bool Grid::isComplete() {
+	return gridcomplete;
+}
+
 vector<vector<Square>> Grid::getPlayerChunk()
 {
 	vector<vector<Square>> gridcpy = vector<vector<Square>>(Biquadris::GRID_WIDTH * Biquadris::GRID_HEIGHT);

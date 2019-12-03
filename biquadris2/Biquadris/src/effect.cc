@@ -6,7 +6,7 @@ Effect::Effect(Grid* component, bool limited, int life)
 
 bool Effect::move(Biquadris::Direction direction) {
   bool valid = component->move(direction);
-  if(!valid) --this->life;
+  if(!valid) life = ((life > 0) ? life-1 : 0);
 
   return valid;
 }

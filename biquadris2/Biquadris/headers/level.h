@@ -42,6 +42,9 @@ public:
 
 	Player* getCurrentPlayer();
 	Player* getNextPlayer();
+	void nextPlayer();
+
+	void setGameOver();
 
 	void blockDropped();
 	void playerDone();
