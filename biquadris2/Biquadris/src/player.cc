@@ -140,6 +140,11 @@ void Player::addEffect(EffectType type) {
 	currentEffect = newEffect;
 }
 
+void Player::addEffect(Effect* e) {
+	effects.push_back(e);
+	currentEffect = e;
+}
+
 Grid* Player::currentGrid() {
 	if (currentEffect)
 		return currentEffect;

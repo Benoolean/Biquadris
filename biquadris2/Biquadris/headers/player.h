@@ -33,6 +33,7 @@ public:
 	bool spawnNewBlock();
 	bool setBlock(Block* newBlock);
 	void addEffect(Biquadris::EffectType type);
+	void addEffect(Effect* e);
 
 	Grid* currentGrid();
 
