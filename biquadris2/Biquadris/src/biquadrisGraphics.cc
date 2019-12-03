@@ -16,14 +16,13 @@ int main() {
 
   w.drawString(50, 150, "Hello!", Xwindow::Blue);
 
-  Xwindow w2(199, 199);
-  w2.drawBigString(50, 100, "ABCD", Xwindow::Black);
-
-
   //w.showAvailableFonts();
 
   char c;
   cin >> c;
 
-}
+  if(c == "done"){
+    exit 0;
+  }
 
+}
