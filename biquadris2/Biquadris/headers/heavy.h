@@ -12,7 +12,7 @@ class Xwindow;
 
 class Heavy : public Effect {
 public:
-  Blind(Grid* component);
+  Heavy(Grid* component);
 };
 
 #endif
