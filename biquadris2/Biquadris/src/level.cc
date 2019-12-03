@@ -103,6 +103,10 @@ void Level::StartGame()
 		{
 			this->rotateCClockwise();
 		}
+		else if (cmd == "restart")
+		{
+			this->restart();
+		}
 
 		this->draw();
 	}
@@ -178,6 +182,36 @@ void Level::setGameOver()
 	this->over = true;
 	cout << "Game over!" << endl;
 }
+////////////////////////////////////////////////////////////////////////////////*
+void Level::restart()
+{
+	cout << "Restarting Game" << endl;
+	for (int i = 0; i < (int)this->players.size(); i++)
+	{
+		players[i]->score = 0;
+	}
+
+	vector<vector<vector<Square>>> playersSquares;
+
+
+	for (int rowcount = 0; rowcount < (int)GridInfo::GRID_HEIGHT; rowcount++)
+	{
+		for (int numPlayer = 0; numPlayer < (int)players.size(); numPlayer++)
+		{
+			for (int colcount = 0; colcount < GridInfo::GRID_WIDTH; colcount++)
+			{
+				Square s = playersSquares[numPlayer].at(rowcount).at(colcount);
+				s.status = SquareStatus::ACTIVE;
+			}
+		}
+	}
+	for (auto player : this->players)
+	{
+		playersSquares.push_back(player->currentGrid()->getPlayerChunk());
+	}
+
+}
+*/////////////////////////////////////////
 
 void Level::blockDropped()
 {
