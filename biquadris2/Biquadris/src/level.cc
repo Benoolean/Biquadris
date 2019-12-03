@@ -68,52 +68,70 @@ void Level::StartGame()
 		{
 			//Blocks can drop when moving horizontally if the heavy effect
 			//is in place
-			if(!this->move(Direction::RIGHT)) {
+			if (!this->move(Direction::RIGHT))
+			{
 				this->blockDropped();
 			}
 		}
-		else if(cmd == "left")
+		else if (cmd == "left")
 		{
-			if(!this->move(Direction::LEFT)) {
+			if (!this->move(Direction::LEFT))
+			{
 				this->blockDropped();
 			}
 		}
-		else if(cmd == "down")
+		else if (cmd == "down")
 		{
-			if(!this->move(Direction::DOWN)) { //Block died
+			if (!this->move(Direction::DOWN))
+			{ //Block died
 				this->blockDropped();
 			}
 		}
-		else if(cmd == "drop") {
-			if(this->getCurrentPlayer()->currentGrid()->isActive()) {
-				while(this->move(Direction::DOWN)) {}
+		else if (cmd == "drop")
+		{
+			if (this->getCurrentPlayer()->currentGrid()->isActive())
+			{
+				while (this->move(Direction::DOWN)) {}
 				blockDropped();
 			}
 		}
-		else if(cmd == "counterclockwise") {
+		else if (cmd == "counterclockwise")
+		{
 			this->rotateCClockwise();
 		}
+		else if (cmd == "clockwise")
+		{
+			this->rotateCClockwise();
+		}
+
 		this->draw();
 	}
 }
 
-void Level::promptEffect() {
+void Level::promptEffect()
+{
 	string in;
 	cout << "Choose debuff: blind, heavy, or force [block]" << endl;
 
-	while(cin >> in) {
-		if(in == "blind") {
+	while (cin >> in)
+	{
+		if (in == "blind")
+		{
 			this->getNextPlayer()->addEffect(EffectType::BLIND);
 			return;
 		}
-		else if(in == "heavy") {
+		else if (in == "heavy")
+		{
 			this->getNextPlayer()->addEffect(EffectType::HEAVY);
 			return;
 		}
-		else if(in == "force") {
+		else if (in == "force")
+		{
 			cin >> in;
-			if(defaults.find(in) != defaults.end()) {
-				if(!this->getNextPlayer()->setBlock(new Block(*defaults[in]))) {
+			if (defaults.find(in) != defaults.end())
+			{
+				if (!this->getNextPlayer()->setBlock(new Block(*defaults[in])))
+				{
 					playerDone();
 				}
 			}
@@ -133,51 +151,59 @@ Player* Level::getCurrentPlayer()
 
 Player* Level::getNextPlayer()
 {
-	int nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
+	int nextPlayer = ((currentPlayer + 1 >= (int)players.size()) ? 0 : currentPlayer + 1);
 	return this->players.at(nextPlayer);
 }
 
-void Level::nextPlayer() {
-	int nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
+void Level::nextPlayer()
+{
+	int nextPlayer = ((currentPlayer + 1 >= (int)players.size()) ? 0 : currentPlayer + 1);
 	int i = 1;
-	while(players[nextPlayer]->currentGrid()->isComplete()) {
-			//If there has been a full rotation of characters
-			//and all of them are complete, end the game.
-			if(i > players.size()) {
-				this->setGameOver(); //***Set the game to over
-				break;
-			}
+	while (players[nextPlayer]->currentGrid()->isComplete())
+	{
+		//If there has been a full rotation of characters
+		//and all of them are complete, end the game.
+		if (i > players.size())
+		{
+			this->setGameOver(); //***Set the game to over
+			break;
+		}
 
-			nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
-			++i;
+		nextPlayer = ((currentPlayer + 1 >= (int)players.size()) ? 0 : currentPlayer + 1);
+		++i;
 	}
 	currentPlayer = nextPlayer;
 }
 
-void Level::setGameOver() {
+void Level::setGameOver()
+{
 	this->over = true;
 	cout << "Game over!" << endl;
 }
 
-void Level::blockDropped() {
+void Level::blockDropped()
+{
 	Player* current = this->getCurrentPlayer();
 	int rowsRemoved = current->currentGrid()->checkRowCompleteness();
-	if(rowsRemoved) { //If any rows were cleared update players score
+	if (rowsRemoved)
+	{ //If any rows were cleared update players score
 		current->score += power(current->level + rowsRemoved, 2);
-		if(current->score > highScore) highScore = current->score;
+		if (current->score > highScore) highScore = current->score;
 
-		if(rowsRemoved >= 2) this->promptEffect();
+		if (rowsRemoved >= 2) this->promptEffect();
 		//When an entire block is removed, score += (levelatcreation + 1)^2
 	}
 
-	if(!this->spawnBlock()) {
+	if (!this->spawnBlock())
+	{
 		this->playerDone();
 	}
 
 	this->nextPlayer();
 }
 
-void Level::playerDone() {
+void Level::playerDone()
+{
 	cout << "Player is out!" << endl;
 }
 
@@ -243,7 +269,7 @@ void Level::draw()
 	// print each row by player count
 	for (int rowcount = 0; rowcount < (int)GridInfo::GRID_HEIGHT; rowcount++)
 	{
-		for (int numPlayer = 0; numPlayer < (int) players.size(); numPlayer++)
+		for (int numPlayer = 0; numPlayer < (int)players.size(); numPlayer++)
 		{
 			for (int colcount = 0; colcount < GridInfo::GRID_WIDTH; colcount++)
 			{

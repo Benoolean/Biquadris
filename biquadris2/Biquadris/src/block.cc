@@ -31,7 +31,9 @@ Block::~Block()
 
 void Block::rotateClockwise(Chunk* chunk)
 {
-
+	this->rotateCClockwise();
+	this->rotateCClockwise();
+	this->rotateCClockwise();
 }
 
 void Block::rotateCClockwise(Chunk* chunk)
