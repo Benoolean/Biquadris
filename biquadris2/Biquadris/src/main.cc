@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 			if ((i + 1) < argc)
 			{
 				int tempLevel;
-				stringstream ss(argv[i]);
+				stringstream ss(argv[i+1]);
 
 				if (ss >> tempLevel)
 				{
