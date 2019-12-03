@@ -72,8 +72,7 @@ int main(int argc, char* argv[])
 			string source;
 			if ((i + 1) < argc)
 			{
-				cin >> source;
-				sourcefiles[0] = source;
+				sourcefiles[0] = argv[i + 1];
 			}
 			else
 			{
@@ -85,8 +84,7 @@ int main(int argc, char* argv[])
 			string source;
 			if ((i + 1) < argc)
 			{
-				cin >> source;
-				sourcefiles[1] = source;
+				sourcefiles[1] = argv[i + 1];
 			}
 			else
 			{

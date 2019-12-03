@@ -129,14 +129,15 @@ void Level::promptEffect()
 		else if (in == "force")
 		{
 			cin >> in;
-			if (defaults.find(in) != defaults.end())
+			if (defaults.count(in))
 			{
-				if (!this->getNextPlayer()->setBlock(new Block(*defaults[in])))
+				Player* next = this->getNextPlayer();
+				if (!next->grid->isComplete() && !next->setBlock(new Block(*defaults[in])))
 				{
 					playerDone();
 				}
+				return;
 			}
-			return;
 		}
 		cout << "Choose debuff: blind, heavy, or force [block]" << endl;
 		cout << "Invalid input. Try again." << endl;
