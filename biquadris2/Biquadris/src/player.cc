@@ -4,7 +4,7 @@
 #include "../headers/blind.h"
 
 #include <fstream>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <sstream>
 
 using namespace std;
@@ -65,7 +65,7 @@ void Player::blockSequenceProbabilitySetup()
 				levelSpawnRate.push_back(blockType);
 			}
 		}
-		
+
 		this->sequenceProbabilities.push_back(levelSpawnRate);
 
 		levelFile.close();
@@ -103,7 +103,7 @@ bool Player::spawnNewBlock()
 	{
 		int sequenceIndex = this->level - 1;
 		vector<string> levelSequence = this->sequenceProbabilities.at(sequenceIndex);
-		
+
 		int lower = 0;
 		int upper = levelSequence.size() - 1;
 

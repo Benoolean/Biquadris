@@ -1,7 +1,7 @@
-#include "../headers/heavy.h"
+#include "../headers/divider.h"
 using namespace Biquadris;
 
-Heavy::Heavy(Grid* component) : Effect(component) { }
+Divider::Divider(Grid* component) : Effect(component) { }
 
 bool Heavy::move(Direction direction) {
   bool moved = component->move(direction);
@@ -11,8 +11,6 @@ bool Heavy::move(Direction direction) {
     moved = component->move(Direction::DOWN);
     if(moved) moved = component->move(Direction::DOWN);
   }
-
-  if(!moved) ++life;
 
   return moved;
 }

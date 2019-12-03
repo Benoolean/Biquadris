@@ -4,7 +4,8 @@ using namespace std;
 Blind::Blind(Grid* component) : Effect(component, true, 1) { }
 
 vector<vector<Square>> Blind::getPlayerChunk() {
-  if(life > 0) {
+  cout << this->life << " : " << this->maxLife << endl;
+  if(life < maxLife) {
     std::vector<std::vector<Square>> chunk = component->getPlayerChunk();
     for(int i = 0; i < (int)chunk.size(); i++) {
       for(int j = 0; j < (int)chunk[i].size(); j++) {
