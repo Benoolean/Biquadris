@@ -233,7 +233,7 @@ void Level::increaseLevel()
 {
 	Player* currentPlayer = this->getCurrentPlayer();
 	int currentPlayerLevel = currentPlayer->getCurrentLevel();
-	this->getCurrentPlayer()->setNewLevel(currentPlayerLevel++);
+	this->getCurrentPlayer()->setNewLevel(++currentPlayerLevel);
 }
 
 // constants
