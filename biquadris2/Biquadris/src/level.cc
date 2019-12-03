@@ -271,10 +271,26 @@ void Level::decreaseLevel() {
 
 // constants
 string GRID_SEPERATION_SPACE = "     ";
+string NEXT_SEPERATION_SPACE = "          ";
+string NEXTBLOCK_SEPERATION_SPACE = "            ";
 string GRID_BAR_SEPERATOR = "-----------";
+int GRIDBORDERWIDTH = 11 + 5 + 11;
+int GRIDCMDCLEAR = 10;
 
 void Level::draw()
 {
+	for (int i = 0; i < GRIDCMDCLEAR; i++)
+	{
+		cout << endl;
+	}
+
+	for (int i = 0; i < GRIDBORDERWIDTH; i++)
+	{
+		char c = 177;
+		cout << c;
+	}
+	cout << endl;
+
 	/*========= print level and score =========*/
 
 	// todo dynanmic spacing based on score
@@ -362,7 +378,23 @@ void Level::draw()
 
 	/*========= print next=========*/
 
-	cout << "Next: " << endl;
+	cout << "Next: "  << NEXT_SEPERATION_SPACE << "Next: "<< endl;
+	for (int i = 0; i < 4; i++)
+	{
+		for (auto player : this->players)
+		{
+			player->nextGrid->printRow(i);
+			cout << NEXTBLOCK_SEPERATION_SPACE;
+		}
+		cout << endl;
+	}
+
+	for (int i = 0; i < GRIDBORDERWIDTH; i++)
+	{
+		char c = 177;
+		cout << c;
+	}
+	cout << endl << "Enter next command: ";
 }
 
 void Level::rotateCClockwise()

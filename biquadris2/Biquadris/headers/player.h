@@ -8,6 +8,7 @@
 class Player
 {
 	BlockGrid* grid;
+	NextGrid* nextGrid;
 
 	std::string source; //This allows a new stream to be opened once the end of either hase been reached
 	std::vector<std::string> sequence;
@@ -49,7 +50,9 @@ public:
 
 	int getCurrentLevel();
 
-	void getNextBlock();
+	std::vector<std::string> getCurrentSequence();
+
+	std::string getNextBlock();
 
 	void setNewLevel(int newLevel);
 

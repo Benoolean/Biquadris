@@ -179,3 +179,142 @@ const std::vector<Square*>& Block::getSquares() const
 {
 	return squares;
 }
+
+Square* Block::getSquareFromCoordinate(Coordinate coord)
+{
+	vector<Square*> squares = this->getSquares();
+
+	for (auto square : squares)
+	{
+		if (square->position.x == coord.x && square->position.y == coord.y)
+		{
+			return square;
+		}
+	}
+
+	return nullptr;
+}
+
+std::vector<Coordinate> Block::getCoordinates()
+{
+	vector<Square*> squares = this->getSquares();
+	vector<Coordinate> coordinates;
+
+	for (auto square : squares)
+	{
+		coordinates.push_back(Coordinate{ square->position.x, square->position.y });
+	}
+
+	return coordinates;
+}
+
+std::vector<Coordinate> Block::getNormalizedCoordinates()
+{
+	vector<Coordinate> coords = this->getCoordinates();
+
+	Coordinate topleftCorner = this->getTopLeftCornerWwithPadding();
+
+	int shiftx = topleftCorner.x;
+	int shifty = topleftCorner.y;
+
+	for (auto& coord : coords)
+	{
+		coord.x = coord.x - shiftx;
+		coord.y = coord.y - shifty;
+	}
+
+	return coords;
+}
+
+Coordinate Block::getTopLeftCornerWwithPadding()
+{
+	try
+	{
+		vector<Square*> squares = this->getSquares();
+
+		int posx = squares.at(0)->position.x;
+		int posy = squares.at(0)->position.y;
+
+		for (auto square : squares)
+		{
+			posx = (square->position.x <= posx) ? square->position.x : posx;
+			posy = (square->position.y <= posy) ? square->position.y : posy;
+		}
+
+		return Coordinate{ posx, posy };
+	}
+	catch (exception const& expect)
+	{
+		cout << "Unable to obtain block top left corner with padding!" << endl;
+		cout << "Error: " << expect.what() << endl;
+	}
+}
+
+Coordinate Block::getBottomRightCornerWwithPadding()
+{
+	try
+	{
+		vector<Square*> squares = this->getSquares();
+
+		int posx = squares.at(0)->position.x;
+		int posy = squares.at(0)->position.y;
+
+		for (auto square : squares)
+		{
+			posx = (square->position.x >= posx) ? square->position.x : posx;
+			posy = (square->position.y >= posy) ? square->position.y : posy;
+		}
+
+		return Coordinate{ posx, posy };
+	}
+	catch (exception const& expect)
+	{
+		cout << "Unable to obtain block bottom right corner with padding!" << endl;
+		cout << "Error: " << expect.what() << endl;
+	}
+}
+
+//void Block::draw()
+//{
+//	Coordinate topleftCorner = this->getTopLeftCornerWwithPadding();
+//	Coordinate bottomRightCorner = this->getBottomRightCornerWwithPadding();
+//
+//	vector<Coordinate> coordsNormalized = this->getNormalizedCoordinates();
+//
+//	int width = (int) (bottomRightCorner.x - topleftCorner.x) + 1;
+//	int height = (int) (bottomRightCorner.y - topleftCorner.y) + 1;
+//
+//	int shiftx = topleftCorner.x;
+//	int shifty = topleftCorner.y;
+//
+//	vector<vector<string>> nextBlockGrid;
+//
+//	// init the grid
+//	for (int rowcount = 0; rowcount < height; rowcount++)
+//	{
+//		vector<string> row = vector<string>(width);
+//		nextBlockGrid.push_back(row);
+//
+//		for (int colcount = 0; colcount < width; colcount++)
+//		{
+//			int squareposx = colcount + shiftx;
+//			int squareposy = rowcount + shifty;
+//			Square* square = this->getSquareFromCoordinate(Coordinate{ squareposx, squareposy });
+//			
+//			string symbol = (square != nullptr) ? square->symbol : " ";
+//			nextBlockGrid.at(rowcount).push_back(symbol);
+//		}
+//	}
+//
+//	
+//	// print
+//	// fill grid
+//	for (auto row : nextBlockGrid)
+//	{
+//		for (auto col : row)
+//		{
+//			cout << col;
+//		}
+//		cout << endl;
+//	}
+//}

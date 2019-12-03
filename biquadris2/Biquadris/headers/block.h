@@ -4,7 +4,9 @@
 #include <vector>
 #include <iostream>
 
+#include <vector>
 #include "biquadris.h"
+#include "coordinate.h"
 
 struct Square;
 class Chunk;
@@ -35,6 +37,15 @@ public:
 	bool move(Biquadris::Direction direction, int shift = 1, Chunk * chunk = nullptr);
 
 	const std::vector<Square*>& getSquares() const;
+
+	Square* getSquareFromCoordinate(Coordinate coord);
+
+	std::vector<Coordinate> getCoordinates();
+	std::vector<Coordinate> getNormalizedCoordinates();
+	Coordinate getTopLeftCornerWwithPadding();
+	Coordinate getBottomRightCornerWwithPadding();
+	//void draw();
 };
+
 
 #endif

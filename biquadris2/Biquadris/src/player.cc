@@ -29,6 +29,9 @@ Player::Player(string source, int level)
 
 	sourcefile.close();
 
+	// next grid setup
+	this->nextGrid = new NextGrid{ this->getNextBlock() };
+
 	// level random generator
 	this->blockSequenceProbabilitySetup();
 }
@@ -130,7 +133,7 @@ bool Player::spawnNewBlock()
 		bool valid = this->grid->setActive(block);
 
 		this->currentBlock = ((this->currentBlock + 1 >= (int)this->customSequence.size()) ? 0 : this->currentBlock + 1);
-
+		this->nextGrid->update(this->getNextBlock());
 		return valid;
 	}
 	else if (this->level == 0)
@@ -139,7 +142,7 @@ bool Player::spawnNewBlock()
 		bool valid = this->grid->setActive(block);
 
 		this->currentBlock = ((this->currentBlock + 1 >= (int)this->sequence.size()) ? 0 : this->currentBlock + 1);
-
+		this->nextGrid->update(this->getNextBlock());
 		return valid;
 	}
 	else
@@ -159,9 +162,10 @@ bool Player::spawnNewBlock()
 		bool valid = this->grid->setActive(block);
 
 		turnNumber++;
+
+		this->nextGrid->update(this->getNextBlock());
 		return valid;
 	}
-
 }
 
 bool Player::setBlock(Block* newBlock)
@@ -227,6 +231,30 @@ void Player::setNotRandom(std::string source)
 int Player::getCurrentLevel()
 {
 	return this->level;
+}
+
+std::vector<std::string> Player::getCurrentSequence()
+{
+	return (this->readcustomSequence) ? this->customSequence : ((this->level == 0) ? this->sequence : this->sequenceProbabilities.at(this->level));
+}
+
+string Player::getNextBlock()
+{
+	vector<string> currentSquence;
+	
+	// get the current sequence;
+	currentSquence = (this->readcustomSequence) ? this->customSequence : ((this->level == 0) ? this->sequence : this->sequenceProbabilities.at(this->level));
+
+	int sequenceSize = currentSquence.size();
+	
+	if (this->currentBlock >= sequenceSize)
+	{
+		return currentSquence.at(0);
+	}
+	else
+	{
+		return currentSquence.at(currentBlock);
+	}
 }
 
 void Player::setNewLevel(int newLevel)
