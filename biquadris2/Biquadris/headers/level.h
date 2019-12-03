@@ -52,7 +52,7 @@ public:
 	bool spawnBlock();
 
 	void increaseLevel(); //Increases level by 1 up to 4
-	void lowerLevel(); //Decreases level by 1 down to 0
+	void decreaseLevel(); //Decreases level by 1 down to 0
 
 	bool changeActive(Block* newActive); //Will be used for force and after each drop
 

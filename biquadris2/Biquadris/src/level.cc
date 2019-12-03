@@ -107,6 +107,10 @@ void Level::StartGame()
 		{
 			this->increaseLevel();
 		}
+		else if (cmd == "leveldown")
+		{
+			this->decreaseLevel();
+		}
 		else if (cmd == "restart")
 		{
 			this->restart();
@@ -233,7 +237,17 @@ void Level::increaseLevel()
 {
 	Player* currentPlayer = this->getCurrentPlayer();
 	int currentPlayerLevel = currentPlayer->getCurrentLevel();
-	this->getCurrentPlayer()->setNewLevel(++currentPlayerLevel);
+	if(currentPlayerLevel < 4) {
+		this->getCurrentPlayer()->setNewLevel(++currentPlayerLevel);
+	}
+}
+
+void Level::decreaseLevel() {
+	Player* currentPlayer = this->getCurrentPlayer();
+	int currentPlayerLevel = currentPlayer->getCurrentLevel();
+	if(currentPlayerLevel > 0) {
+		this->getCurrentPlayer()->setNewLevel(--currentPlayerLevel);
+	}
 }
 
 // constants
