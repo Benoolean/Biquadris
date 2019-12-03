@@ -170,12 +170,11 @@ void Level::blockDropped() {
 		//When an entire block is removed, score += (levelatcreation + 1)^2
 	}
 
-	if(this->spawnBlock()) {
-		this->nextPlayer();
-	}
-	else { //Player 1 is out!
+	if(!this->spawnBlock()) {
 		this->playerDone();
 	}
+
+	this->nextPlayer();
 }
 
 void Level::playerDone() {
