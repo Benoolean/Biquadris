@@ -103,6 +103,10 @@ void Level::StartGame()
 		{
 			this->rotateCClockwise();
 		}
+		else if (cmd == "levelup")
+		{
+			this->increaseLevel();
+		}
 		else if (cmd == "restart")
 		{
 			this->restart();
@@ -223,6 +227,13 @@ bool Level::spawnBlock()
 {
 	Player* currentPlayer = this->getCurrentPlayer();
 	return currentPlayer->spawnNewBlock();
+}
+
+void Level::increaseLevel()
+{
+	Player* currentPlayer = this->getCurrentPlayer();
+	int currentPlayerLevel = currentPlayer->getCurrentLevel();
+	this->getCurrentPlayer()->setNewLevel(currentPlayerLevel++);
 }
 
 // constants

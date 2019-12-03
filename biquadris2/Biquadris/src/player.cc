@@ -13,7 +13,7 @@ using namespace Biquadris;
 int MAX_LEVEL;
 
 Player::Player(string source, int level)
-	: grid(new BlockGrid()), source(source), currentBlock(0), level(3), score(0),
+	: grid(new BlockGrid()), source(source), currentBlock(0), level(level), score(0),
 	currentEffect(nullptr), levelEffects(4)
 
 {
@@ -31,10 +31,6 @@ Player::Player(string source, int level)
 
 	// level random generator
 	this->blockSequenceProbabilitySetup();
-}
-
-void Player::setLevel(int level) {
-
 }
 
 void Player::blockSequenceProbabilitySetup()
@@ -193,6 +189,17 @@ void Player::addLevelEffect(Effect* e, int level) {
 		e->setComponent(levelEffects.at(level).at(levelEffects[level].size()-1)); //Set the component to the topmost level effect
 	}
 	levelEffects.at(level).push_back(e);
+}
+
+int Player::getCurrentLevel()
+{
+	return this->level;
+}
+
+void Player::setNewLevel(int newLevel)
+{
+	this->level = newLevel;
+
 }
 
 Grid* Player::currentBaseGrid() {

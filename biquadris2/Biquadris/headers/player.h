@@ -31,7 +31,6 @@ public:
 	Player(std::string source, int level = 0);
 	~Player();
 
-	void setLevel(int level);
 	void blockSequenceProbabilitySetup();
 
 	bool spawnNewBlock();
@@ -41,6 +40,9 @@ public:
 	void addEffect(Effect* e);
 
 	void addLevelEffect(Effect* e, int level);
+
+	int getCurrentLevel();
+	void setNewLevel(int newLevel);
 
 	Grid* currentBaseGrid(); //Ignores level effects
 	Grid* currentGrid();
