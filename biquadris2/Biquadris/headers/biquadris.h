@@ -14,7 +14,7 @@ namespace Biquadris {
   enum class Direction { LEFT, RIGHT, DOWN };
 
   enum class EffectType {
-    HEAVY, BLIND
+    HEAVY, BLIND, DIVIDER
   };
 
   /*

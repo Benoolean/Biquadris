@@ -4,7 +4,7 @@
 #include "../headers/blind.h"
 
 #include <fstream>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <sstream>
 
 using namespace std;
@@ -163,8 +163,12 @@ void Player::addEffect(EffectType type)
 	currentEffect = newEffect;
 }
 
-Grid* Player::currentGrid()
-{
+void Player::addEffect(Effect* e) {
+	effects.push_back(e);
+	currentEffect = e;
+}
+
+Grid* Player::currentGrid() {
 	if (currentEffect)
 		return currentEffect;
 	else

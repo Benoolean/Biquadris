@@ -13,9 +13,10 @@ protected:
 
   //Determines the life of an effect
   bool limited;
+  int maxLife;
   int life;
 public:
-  Effect(Grid* component, bool limited = false, int life = 0);
+  Effect(Grid* component, bool limited = false, int maxLife = 0);
 
   virtual bool move(Biquadris::Direction direction) override;
   virtual std::vector<std::vector<Square>> getPlayerChunk() override;

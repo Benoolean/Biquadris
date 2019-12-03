@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 			if ((i + 1) < argc)
 			{
 				int tempSeed;
-				stringstream ss(argv[i]);
+				stringstream ss(argv[i+1]);
 
 				if (ss >> tempSeed)
 				{

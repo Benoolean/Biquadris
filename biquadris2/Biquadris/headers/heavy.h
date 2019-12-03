@@ -10,8 +10,9 @@
  */
 
 class Heavy : public Effect {
+  int gravity;
 public:
-  Heavy(Grid* component);
+  Heavy(Grid* component, int gravity=2);
   virtual bool move(Biquadris::Direction direction) override;
 };
 
