@@ -6,5 +6,4 @@ S 2
 Z 2
 T 1
 
-EFFECT 
-heavy 1
+EFFECT heavy 1
