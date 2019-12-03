@@ -155,19 +155,16 @@ Player* Level::getNextPlayer()
 	return this->players.at(nextPlayer);
 }
 
-void Level::nextPlayer()
-{
-	int nextPlayer = ((currentPlayer + 1 >= (int)players.size()) ? 0 : currentPlayer + 1);
-	int i = 1;
-	while (players[nextPlayer]->currentGrid()->isComplete())
-	{
-		//If there has been a full rotation of characters
-		//and all of them are complete, end the game.
-		if (i > players.size())
-		{
-			this->setGameOver(); //***Set the game to over
-			break;
-		}
+void Level::nextPlayer() {
+	int nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
+	int i = 0;
+	while(players[nextPlayer]->currentGrid()->isComplete()) {
+			//If there has been a full rotation of characters
+			//and all of them are complete, end the game.
+			if(i > players.size()) {
+				this->setGameOver(); //***Set the game to over
+				break;
+			}
 
 		nextPlayer = ((currentPlayer + 1 >= (int)players.size()) ? 0 : currentPlayer + 1);
 		++i;
