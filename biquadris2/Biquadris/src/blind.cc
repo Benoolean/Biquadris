@@ -11,6 +11,7 @@ vector<vector<Square>> Blind::getPlayerChunk() {
         if(i >= 2 && i <= 11 && j >= 2 && j <= 8) {
           chunk[i][j].symbol = '?';
           chunk[i][j].colour = 1;
+          chunk[i][j].status = SquareStatus::INACTIVE;
         }
       }
     }

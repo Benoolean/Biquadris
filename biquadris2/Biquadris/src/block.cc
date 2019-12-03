@@ -88,7 +88,7 @@ void Block::rotateCClockwise(Chunk* chunk)
 	{
 		chunk->deactivateCoordinate(coord);
 	}
-	
+
 	// for the current active block, update the square coordinates
 	// and the chunk squares
 	for (int squarecount = 0; squarecount < squares.size(); squarecount++)
@@ -153,8 +153,8 @@ bool Block::move(Biquadris::Direction direction, int shift, Chunk* chunk)
 		chunk->killBlock(*this);
 		return false;
 	}
-	else
-	{ 
+	else if(!contacts)
+	{
 		//If there is no contact, then move the Block
 		if(chunk) {
 			chunk->deactivateBlock(*this);
