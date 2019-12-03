@@ -51,6 +51,9 @@
     <ClCompile Include="src\player.cc" />
     <ClCompile Include="src\square.cc" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="media\levelinfo.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{DA82C00F-FD14-4864-9F8D-8C87D09AFAFE}</ProjectGuid>

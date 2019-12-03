@@ -11,7 +11,9 @@ class Player
 
 	std::string source; //This allows a new stream to be opened once the end of either hase been reached
 	std::vector<std::string> sequence; // Pushed from specified fstream, and stack popped every drop
+	std::vector<std::vector<std::string>> sequenceProbabilities; // created with levelX.txt (custom chance drop)
 	int currentBlock;
+	unsigned int turnNumber = 0;
 
 	int level;
 	int score;
@@ -26,6 +28,7 @@ class Player
 public:
 	Player(std::string source, int level = 0);
 	~Player();
+	void blockSequenceProbabilitySetup();
 
 	bool spawnNewBlock();
 	bool setBlock(Block* newBlock);

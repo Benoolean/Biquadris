@@ -68,6 +68,7 @@ public:
 	static int getHighScore();
 
 	void draw();
+
 };
 
 #endif

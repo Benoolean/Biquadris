@@ -4,13 +4,18 @@
 #include "../headers/blind.h"
 
 #include <fstream>
+#include <stdlib.h> 
+#include <sstream>
 
 using namespace std;
 using namespace Biquadris;
 
+int MAX_LEVEL;
+
 Player::Player(string source, int level)
 	: grid(new BlockGrid()), source(source), currentBlock(0), level(level), score(0), currentEffect(nullptr)
 {
+	// default level
 	ifstream sourcefile;
 	sourcefile.open(source);
 
@@ -21,6 +26,54 @@ Player::Player(string source, int level)
 	}
 
 	sourcefile.close();
+
+	// level random generator
+	this->blockSequenceProbabilitySetup();
+}
+
+void Player::blockSequenceProbabilitySetup()
+{
+	this->sequenceProbabilities.clear();
+
+	this->source = "media/levelinfo.txt";
+	ifstream infoFile;
+	infoFile.open(this->source);
+
+	string input;
+
+	while (infoFile >> input)
+	{
+		ifstream levelFile;
+
+		string levelFileSource = "media/" + input;
+		levelFile.open(levelFileSource);
+
+		string levelDetail = "";
+		vector<string> levelSpawnRate;
+
+		while (getline(levelFile, levelDetail))
+		{
+			istringstream ss(levelDetail);
+			string blockType = "";
+			int blockChances = 0;
+
+			ss >> blockType;
+			ss >> blockChances;
+
+			for (int i = 0; i < blockChances; i++)
+			{
+				levelSpawnRate.push_back(blockType);
+			}
+		}
+		
+		this->sequenceProbabilities.push_back(levelSpawnRate);
+
+		levelFile.close();
+	}
+
+	infoFile.close();
+
+	return;
 }
 
 Player::~Player()
@@ -35,12 +88,37 @@ Player::~Player()
 
 bool Player::spawnNewBlock()
 {
-	Block* block = new Block(*Biquadris::defaults[this->sequence[this->currentBlock]]);
-	bool valid = this->grid->setActive(block);
+	Block* block = nullptr;
 
-	this->currentBlock = ((this->currentBlock + 1 >= (int)this->sequence.size()) ? 0 : this->currentBlock + 1);
+	if (this->level == 0)
+	{
+		block = new Block(*Biquadris::defaults[this->sequence[this->currentBlock]]);
+		bool valid = this->grid->setActive(block);
 
-	return valid;
+		this->currentBlock = ((this->currentBlock + 1 >= (int)this->sequence.size()) ? 0 : this->currentBlock + 1);
+
+		return valid;
+	}
+	else
+	{
+		int sequenceIndex = this->level - 1;
+		vector<string> levelSequence = this->sequenceProbabilities.at(sequenceIndex);
+		
+		int lower = 0;
+		int upper = levelSequence.size() - 1;
+
+		srand((unsigned) Biquadris::seed + this->turnNumber);
+
+		int random = rand() % (upper + 1 - lower) + lower;
+		string test = levelSequence.at(random);
+		block = new Block(*Biquadris::defaults[levelSequence.at(random)]);
+
+		bool valid = this->grid->setActive(block);
+
+		turnNumber++;
+		return valid;
+	}
+
 }
 
 bool Player::setBlock(Block* newBlock) {

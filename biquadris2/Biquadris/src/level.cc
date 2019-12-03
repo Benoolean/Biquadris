@@ -1,6 +1,5 @@
 #include "../headers/level.h"
 #include "../headers/square.h"
-#include "../headers/window.h"
 
 using namespace std;
 using namespace Biquadris;
