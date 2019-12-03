@@ -1,5 +1,6 @@
 #include "../headers/level.h"
 #include "../headers/square.h"
+#include "../headers/window.h"
 
 using namespace std;
 using namespace Biquadris;
@@ -89,7 +90,7 @@ void Level::StartGame()
 		}
 		else if (cmd == "drop")
 		{
-			if (this->getCurrentPlayer()->grid->isActive())
+			if (this->getCurrentPlayer()->currentGrid()->isActive())
 			{
 				while (this->move(Direction::DOWN)) {}
 				blockDropped();
