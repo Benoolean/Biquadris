@@ -3,16 +3,16 @@
 
 #include "effect.h"
 
-class Xwindow;
-
 /*
  * Overrides shiftX to also shift down twice
- * Note: the horizontal shift occurs and thne
+ * Note: the horizontal shift occurs and then
+ * the vertical shift
  */
 
 class Heavy : public Effect {
 public:
   Heavy(Grid* component);
+  virtual bool move(Biquadris::Direction direction) override;
 };
 
 #endif

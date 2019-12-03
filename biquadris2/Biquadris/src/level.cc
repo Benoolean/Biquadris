@@ -128,14 +128,15 @@ void Level::promptEffect()
 		else if (in == "force")
 		{
 			cin >> in;
-			if (defaults.find(in) != defaults.end())
+			if (defaults.count(in))
 			{
-				if (!this->getNextPlayer()->setBlock(new Block(*defaults[in])))
+				Player* next = this->getNextPlayer();
+				if (!next->grid->isComplete() && !next->setBlock(new Block(*defaults[in])))
 				{
 					playerDone();
 				}
+				return;
 			}
-			return;
 		}
 		cout << "Choose debuff: blind, heavy, or force [block]" << endl;
 		cout << "Invalid input. Try again." << endl;
@@ -156,17 +157,17 @@ Player* Level::getNextPlayer()
 }
 
 void Level::nextPlayer() {
-	int nextPlayer = ((currentPlayer+1 >= (int) players.size()) ? 0 : currentPlayer+1);
-	int i = 0;
-	while(players[nextPlayer]->currentGrid()->isComplete()) {
-			//If there has been a full rotation of characters
-			//and all of them are complete, end the game.
-			if(i > players.size()) {
-				this->setGameOver(); //***Set the game to over
-				break;
-			}
+	int nextPlayer = ((currentPlayer + 1 >= (int)players.size()) ? 0 : currentPlayer + 1);
+	int i = 1;
+	while(players[nextPlayer]->grid->isComplete()) {
+		//If there has been a full rotation of characters
+		//and all of them are complete, end the game.
+		if(i >= players.size()) {
+			this->setGameOver(); //***Set the game to over
+			break;
+		}
 
-		nextPlayer = ((currentPlayer + 1 >= (int)players.size()) ? 0 : currentPlayer + 1);
+		nextPlayer = ((nextPlayer + 1 >= (int)players.size()) ? 0 : nextPlayer + 1);
 		++i;
 	}
 	currentPlayer = nextPlayer;
