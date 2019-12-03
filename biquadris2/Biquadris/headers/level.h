@@ -53,6 +53,7 @@ public:
 	bool changeActive(Block* newActive); //Will be used for force and after each drop
 
 	bool move(Biquadris::Direction direction);
+	void rotateCClockwise();
 
 	void setRandom();
 	void setNotRandom(std::string source);
