@@ -211,7 +211,7 @@ bool Level::spawnBlock()
 }
 
 // constants
-string GRID_SEPERATION_SPACE = "    ";
+string GRID_SEPERATION_SPACE = "     ";
 string GRID_BAR_SEPERATOR = "-----------";
 
 void Level::draw()
@@ -223,7 +223,7 @@ void Level::draw()
 	for (int i = 0; i < (int)this->players.size(); i++)
 	{
 		cout << "Level:"
-			<< "   " << players[i]->level;
+			<< "    " << players[i]->level;
 		if (i + 1 != (int)this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
@@ -234,7 +234,7 @@ void Level::draw()
 	for (int i = 0; i < (int)this->players.size(); i++)
 	{
 		cout << "Score:"
-			<< "   " << players[i]->score;
+			<< "    " << players[i]->score;
 		if (i + 1 != (int)this->players.size())
 		{
 			cout << GRID_SEPERATION_SPACE;
