@@ -1,10 +1,16 @@
 #include "../headers/level.h"
 #include "../headers/square.h"
 
+#include "../headers/window.h"
+
 using namespace std;
 using namespace Biquadris;
 
 int Level::highScore = 0;
+
+const int WINDOW_WIDTH = 720,
+					WINDOW_HEIGHT = 720,
+					GRID_WIDTH_PX = 300;
 
 Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std::string> source)
 	: currentPlayer(0), over(false), tie(false), winner(-1)
@@ -27,10 +33,16 @@ Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std
 		players.push_back(new Player(((source.size() > (int) i) ? source[i] : ""),
 			level));  // Default initialize to "" src
 	}
+
+	if(withGraphics) {
+		window = new Xwindow(WINDOW_WIDTH, WINDOW_HEIGHT);
+	}
 }
 
 Level::~Level()
 {
+	delete window;
+
 	for (auto player : players)
 	{
 		delete player;
@@ -380,6 +392,12 @@ void Level::draw()
 		cout << c;
 	}
 	cout << endl << "Enter next command: ";
+
+	if(this->window) {
+		int separationPixels = (WINDOW_WIDTH - (this->players.size() * GRID_WIDTH_PX)) / (this->players.size() + 1);
+		window->fillRectangle(separationPixels, 0, GRID_WIDTH_PX, WINDOW_HEIGHT);
+		window->fillRectangle((separationPixels*2) + GRID_WIDTH_PX, 0, GRID_WIDTH_PX, WINDOW_HEIGHT);
+	}
 }
 
 void Level::decideWinner() {
