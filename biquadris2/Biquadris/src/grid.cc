@@ -90,20 +90,25 @@ int Grid::deadBlocksRemoved() {
 	int blocksRemoved = 0;
 
 	for(int i = 0; i < (int)deadBlocks.size();) {
+		bool blockExists = false;
 		for(auto row : squares) {
 			for(auto square : row) {
 				if(square->uid == deadBlocks[i]->getUID()) {
 					++i;
-					continue; //There are still squares left
+					blockExists = true; //There are still squares left
+					break;
 				}
 			}
+			if(blockExists) break;
 		}
 
-		//Dead block has been completely removed
-		blocksRemoved += pow(deadBlocks[i]->getCreationLevel() + 1, 2);
+		if(!blockExists) {
+			//Dead block has been completely removed
+			blocksRemoved += pow(deadBlocks[i]->getCreationLevel() + 1, 2);
 
-		delete deadBlocks[i];
-		deadBlocks.erase(deadBlocks.begin()+i);
+			delete deadBlocks[i];
+			deadBlocks.erase(deadBlocks.begin()+i);
+		}
 	}
 
 	return blocksRemoved;
