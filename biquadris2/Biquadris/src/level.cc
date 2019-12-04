@@ -374,7 +374,7 @@ void Level::draw()
 	cout << endl;
 
 	/*========= print next=========*/
-
+	
 	cout << "Next: "  << NEXT_SEPERATION_SPACE << "Next: "<< endl;
 	for (int i = 0; i < 4; i++)
 	{
@@ -407,8 +407,30 @@ void Level::draw()
 
 	if(this->window) {
 		int separationPixels = (WINDOW_WIDTH - (this->players.size() * GRID_WIDTH_PX)) / (this->players.size() + 1);
-		window->fillRectangle(separationPixels, 0, GRID_WIDTH_PX, WINDOW_HEIGHT);
-		window->fillRectangle((separationPixels*2) + GRID_WIDTH_PX, 0, GRID_WIDTH_PX, WINDOW_HEIGHT);
+		float squareWidth = GRID_WIDTH_PX / GridInfo::GRID_WIDTH;
+		int GRID_HEIGHT_PX = squareWidth * GridInfo::GRID_HEIGHT;
+
+		for(int i = 0; i < (int)players.size(); i++) {
+			int paddingLeft = ((i+1) * separationPixels) + (i*GRID_WIDTH_PX);
+			window->fillRectangle(paddingLeft-1, 0, GRID_WIDTH_PX+2, WINDOW_HEIGHT);
+			window->fillRectangle(paddingLeft, 1, GRID_WIDTH_PX, WINDOW_HEIGHT-2, 0);
+
+			window->drawBigString(paddingLeft + 10, 20, "Level: " + to_string(players[i]->level));
+			window->drawBigString(paddingLeft + 10, 39, "Score: " + to_string(players[i]->score));
+
+			window->fillRectangle(paddingLeft, 49, GRID_WIDTH_PX, GRID_HEIGHT_PX+1); //Create top and bottom border
+
+			vector<vector<Square>> chunk = players[i]->currentGrid()->getPlayerChunk();
+			for(auto row : chunk) {
+				for(auto square : row) {
+					if(square.status != SquareStatus::INACTIVE) {
+						window->fillRectangle(paddingLeft + (square.position.x * squareWidth),
+																50 + (square.position.y * squareWidth),
+																squareWidth, squareWidth, square.colour);
+					}
+				}
+			}
+		}
 	}
 }
 

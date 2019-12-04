@@ -2,7 +2,7 @@
 #include "../headers/block.h"
 #include "../headers/square.h"
 
-namespace Biquadris 
+namespace Biquadris
 {
 	std::map<std::string, Block*> defaults;
 	int seed = 0;
@@ -12,10 +12,10 @@ namespace Biquadris
 		Biquadris::seed = seed;
 
 		defaults["I"] = new Block({
-		  new Square(0, 3, "I", 1, SquareStatus::ACTIVE),
-		  new Square(1, 3, "I", 1, SquareStatus::ACTIVE),
-		  new Square(2, 3, "I", 1, SquareStatus::ACTIVE),
-		  new Square(3, 3, "I", 1, SquareStatus::ACTIVE)
+		  new Square(0, 3, "I", 0, SquareStatus::ACTIVE),
+		  new Square(1, 3, "I", 0, SquareStatus::ACTIVE),
+		  new Square(2, 3, "I", 0, SquareStatus::ACTIVE),
+		  new Square(3, 3, "I", 0, SquareStatus::ACTIVE)
 			});
 
 		defaults["J"] = new Block({
