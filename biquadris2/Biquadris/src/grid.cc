@@ -92,7 +92,6 @@ int Grid::deadBlocksRemoved() {
 	for(int i = 0; i < (int)deadBlocks.size();) {
 		for(auto row : squares) {
 			for(auto square : row) {
-				cout << square->uid << " : " << deadBlocks[i]->getUID() << endl;
 				if(square->uid == deadBlocks[i]->getUID()) {
 					++i;
 					continue; //There are still squares left

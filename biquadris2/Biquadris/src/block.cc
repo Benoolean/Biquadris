@@ -40,6 +40,7 @@ void Block::generateUID() {
 	for(auto square : this->squares) {
 		square->uid = masterUID;
 	}
+	this->uid = masterUID;
 	++masterUID;
 }
 
@@ -326,13 +327,13 @@ Coordinate Block::getBottomRightCornerWwithPadding()
 //			int squareposx = colcount + shiftx;
 //			int squareposy = rowcount + shifty;
 //			Square* square = this->getSquareFromCoordinate(Coordinate{ squareposx, squareposy });
-//			
+//
 //			string symbol = (square != nullptr) ? square->symbol : " ";
 //			nextBlockGrid.at(rowcount).push_back(symbol);
 //		}
 //	}
 //
-//	
+//
 //	// print
 //	// fill grid
 //	for (auto row : nextBlockGrid)
