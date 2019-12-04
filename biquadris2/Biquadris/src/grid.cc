@@ -80,6 +80,14 @@ void Grid::rotateCClockwise()
 	}
 }
 
+void Grid::rotateClockwise()
+{
+	if (this->active)
+	{
+		this->active->rotateClockwise(this->chunk);
+	}
+}
+
 int Grid::checkRowCompleteness()
 {
 	return chunk->clearFullRows();

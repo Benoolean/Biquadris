@@ -31,6 +31,7 @@ public:
    */
   virtual bool move(Biquadris::Direction direction);
   virtual void rotateCClockwise();
+  virtual void rotateClockwise();
 
   virtual int checkRowCompleteness();
   int deadBlocksRemoved(); //Returns the points gained from removal

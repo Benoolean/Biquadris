@@ -63,6 +63,7 @@ public:
 
 	bool move(Biquadris::Direction direction);
 	void rotateCClockwise();
+	void rotateClockwise();
 
 	void setRandom();
 	void setNotRandom(std::string source);

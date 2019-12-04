@@ -113,7 +113,7 @@ void Level::StartGame()
 		}
 		else if (cmd == "clockwise")
 		{
-			this->rotateCClockwise();
+			this->rotateClockwise();
 		}
 		else if (cmd == "levelup")
 		{
@@ -374,7 +374,7 @@ void Level::draw()
 	cout << endl;
 
 	/*========= print next=========*/
-	
+
 	cout << "Next: "  << NEXT_SEPERATION_SPACE << "Next: "<< endl;
 	for (int i = 0; i < 4; i++)
 	{
@@ -418,7 +418,7 @@ void Level::draw()
 			window->drawBigString(paddingLeft + 10, 20, "Level: " + to_string(players[i]->level));
 			window->drawBigString(paddingLeft + 10, 39, "Score: " + to_string(players[i]->score));
 
-			window->fillRectangle(paddingLeft, 49, GRID_WIDTH_PX, GRID_HEIGHT_PX+1); //Create top and bottom border
+			window->fillRectangle(paddingLeft, 49, GRID_WIDTH_PX, GRID_HEIGHT_PX+2); //Create top and bottom border
 
 			vector<vector<Square>> chunk = players[i]->currentGrid()->getPlayerChunk();
 			for(auto row : chunk) {
@@ -430,6 +430,8 @@ void Level::draw()
 					}
 				}
 			}
+
+			window->drawBigString(paddingLeft + 10, 70 + GRID_HEIGHT_PX, "Next:");
 		}
 	}
 }
@@ -519,6 +521,12 @@ void Level::rotateCClockwise()
 {
 	Player* player = this->getCurrentPlayer();
 	return player->currentGrid()->rotateCClockwise();
+}
+
+void Level::rotateClockwise()
+{
+	Player* player = this->getCurrentPlayer();
+	return player->currentGrid()->rotateClockwise();
 }
 
 bool Level::move(Biquadris::Direction direction)
