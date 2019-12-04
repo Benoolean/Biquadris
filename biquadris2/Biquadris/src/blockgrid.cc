@@ -30,12 +30,14 @@ NextGrid::~NextGrid()
 {
 }
 
-void NextGrid::reset()
+void NextGrid::reset() 
 {
 	for (auto block : this->blockStorage)
 	{
 		delete block;
 	}
+
+	this->blockStorage.clear();
 
 	for (auto& row : this->nextGrid)
 	{
