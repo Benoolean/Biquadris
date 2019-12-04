@@ -14,7 +14,7 @@ using namespace Biquadris;
 int MAX_LEVEL;
 
 Player::Player(string source, int level)
-	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(0), score(0),
+	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(level), score(0),
 	currentEffect(nullptr), levelEffects(6)
 
 {
@@ -67,20 +67,20 @@ void Player::blockSequenceProbabilitySetup()
 			if (stringInput == "EFFECT")
 			{
 				string effect = "";
-				ss >> effect;
-
-				if (effect == "heavy")
-				{
-					int heavyMagnitude;
-					ss >> heavyMagnitude;
-					this->addLevelEffect(new Heavy{ nullptr, heavyMagnitude }, levelIndex);
-				}
-				else if (effect == "blind")
-				{
-					this->addLevelEffect(new Blind(nullptr), levelIndex);
-				}
-				else if(effect == "divider") {
-					this->addLevelEffect(new Divider(nullptr), levelIndex);
+				while(ss >> effect) {
+					if (effect == "heavy")
+					{
+						int heavyMagnitude;
+						ss >> heavyMagnitude;
+						this->addLevelEffect(new Heavy{ nullptr, heavyMagnitude }, levelIndex);
+					}
+					else if (effect == "blind")
+					{
+						this->addLevelEffect(new Blind(nullptr, false), levelIndex);
+					}
+					else if(effect == "divider") {
+						this->addLevelEffect(new Divider(nullptr), levelIndex);
+					}
 				}
 			}
 			else

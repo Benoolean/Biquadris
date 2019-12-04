@@ -8,7 +8,7 @@
 
 class Blind : public Effect {
 public:
-  Blind(Grid* component);
+  Blind(Grid* component, bool limited = true);
   std::vector<std::vector<Square>> getPlayerChunk() override;
 };
 

@@ -1,10 +1,10 @@
 #include "../headers/blind.h"
 using namespace std;
 
-Blind::Blind(Grid* component) : Effect(component, true, 1) { }
+Blind::Blind(Grid* component, bool limited) : Effect(component, limited, 1) { }
 
 vector<vector<Square>> Blind::getPlayerChunk() {
-  if(life < maxLife) {
+  if(life < maxLife || !limited) {
     std::vector<std::vector<Square>> chunk = component->getPlayerChunk();
     for(int i = 0; i < (int)chunk.size(); i++) {
       for(int j = 0; j < (int)chunk[i].size(); j++) {
