@@ -431,9 +431,13 @@ void Level::draw()
 	//			}
 	//		}
 
-	//		window->drawBigString(paddingLeft + 10, 70 + GRID_HEIGHT_PX, "Next:");
-	//	}
-	//}
+			window->drawBigString(paddingLeft + 10, 70 + GRID_HEIGHT_PX, "Next:");
+
+			vector<vector<Square*>> next = players[i]->nextGrid->getSquares();
+
+			// window->fillRectangle(paddingLett, 90 + squareWidth);
+		}
+	}
 }
 
 void Level::decideWinner() {
@@ -520,13 +524,13 @@ void Level::restart()
 void Level::rotateCClockwise()
 {
 	Player* player = this->getCurrentPlayer();
-	return player->currentGrid()->rotateCClockwise();
+	return player->grid->rotateCClockwise();
 }
 
 void Level::rotateClockwise()
 {
 	Player* player = this->getCurrentPlayer();
-	return player->currentGrid()->rotateClockwise();
+	return player->grid->rotateClockwise();
 }
 
 bool Level::move(Biquadris::Direction direction)

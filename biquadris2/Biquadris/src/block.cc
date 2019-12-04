@@ -58,9 +58,9 @@ int Block::getUID() const {
 
 void Block::rotateClockwise(Chunk* chunk)
 {
-	this->rotateCClockwise();
-	this->rotateCClockwise();
-	this->rotateCClockwise();
+	this->rotateCClockwise(chunk);
+	this->rotateCClockwise(chunk);
+	this->rotateCClockwise(chunk);
 }
 
 void Block::rotateCClockwise(Chunk* chunk)
