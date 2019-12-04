@@ -1,6 +1,6 @@
 #include "../headers/level.h"
 #include "../headers/square.h"
-
+#include <fstream>
 //#include "../headers/window.h"
 
 using namespace std;
@@ -134,7 +134,13 @@ void Level::StartGame()
 		{
 			this->restart();
 		}
+		else if (cmd == "sequence")
+		{
+			string fileSource = "";
+			cin >> fileSource;
 
+			this->sequenceCommands(fileSource);
+		}
 		this->draw();
 	}
 }
@@ -431,13 +437,13 @@ void Level::draw()
 	//			}
 	//		}
 
-			window->drawBigString(paddingLeft + 10, 70 + GRID_HEIGHT_PX, "Next:");
+	//		window->drawBigString(paddingLeft + 10, 70 + GRID_HEIGHT_PX, "Next:");
 
-			vector<vector<Square*>> next = players[i]->nextGrid->getSquares();
+	//		vector<vector<Square*>> next = players[i]->nextGrid->getSquares();
 
-			// window->fillRectangle(paddingLett, 90 + squareWidth);
-		}
-	}
+	//		// window->fillRectangle(paddingLett, 90 + squareWidth);
+	//	}
+	//}
 }
 
 void Level::decideWinner() {
@@ -538,3 +544,85 @@ bool Level::move(Biquadris::Direction direction)
 	Player* player = this->getCurrentPlayer();
 	return player->currentGrid()->move(direction);
 }
+
+void Level::sequenceCommands(string source)
+{
+	//Player* player = this->getCurrentPlayer();
+	
+	string filesource = "media/" + source;
+	ifstream filestream;
+	filestream.open(filesource);
+
+	string cmd;
+	while (filestream >> cmd)
+	{
+		if (cmd == "right")
+		{
+			//Blocks can drop when moving horizontally if the heavy effect
+			//is in place
+			if (!this->move(Direction::RIGHT))
+			{
+				this->blockDropped();
+			}
+		}
+		else if (cmd == "left")
+		{
+			if (!this->move(Direction::LEFT))
+			{
+				this->blockDropped();
+			}
+		}
+		else if (cmd == "down")
+		{
+			if (!this->move(Direction::DOWN))
+			{ //Block died
+				this->blockDropped();
+			}
+		}
+		else if (cmd == "drop")
+		{
+			if (this->getCurrentPlayer()->grid->isActive())
+			{
+				while (this->move(Direction::DOWN)) {}
+				blockDropped();
+			}
+		}
+		else if (cmd == "counterclockwise")
+		{
+			this->rotateCClockwise();
+		}
+		else if (cmd == "clockwise")
+		{
+			this->rotateClockwise();
+		}
+		else if (cmd == "levelup")
+		{
+			this->increaseLevel();
+		}
+		else if (cmd == "leveldown")
+		{
+			this->decreaseLevel();
+		}
+		else if (cmd == "norandom")
+		{
+			string fileSource = "";
+			cin >> fileSource;
+
+			this->setNotRandom(fileSource);
+		}
+		else if (cmd == "restart")
+		{
+			this->restart();
+		}
+		else if (cmd == "sequence")
+		{
+			string fileSource = "";
+			cin >> fileSource;
+
+			this->sequenceCommands(fileSource);
+		}
+	}
+
+	this->draw();
+}
+

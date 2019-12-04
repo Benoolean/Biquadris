@@ -61,6 +61,8 @@ public:
 
 	bool changeActive(Block* newActive); //Will be used for force and after each drop
 
+	void sequenceCommands(std::string source);
+
 	bool move(Biquadris::Direction direction);
 	void rotateCClockwise();
 	void rotateClockwise();
