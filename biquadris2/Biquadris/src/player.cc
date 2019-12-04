@@ -13,7 +13,7 @@ using namespace Biquadris;
 int MAX_LEVEL;
 
 Player::Player(string source, int level)
-	: grid(new BlockGrid()), source(source), currentBlock(0), level(level), score(0),
+	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(level), score(0),
 	currentEffect(nullptr), levelEffects(4)
 
 {
@@ -28,9 +28,6 @@ Player::Player(string source, int level)
 	}
 
 	sourcefile.close();
-
-	// next grid setup
-	this->nextGrid = new NextGrid{ this->getNextBlock() };
 
 	// level random generator
 	this->blockSequenceProbabilitySetup();
@@ -191,16 +188,19 @@ void Player::addEffect(EffectType type)
 	currentEffect = newEffect;
 }
 
-void Player::addEffect(Effect* e) {
+void Player::addEffect(Effect* e)
+{
 	effects.push_back(e);
 	currentEffect = e;
 }
 
 #include <iostream>
 
-void Player::addLevelEffect(Effect* e, int level) {
-	if(levelEffects.at(level).size()) {
-		e->setComponent(levelEffects.at(level).at(levelEffects[level].size()-1)); //Set the component to the topmost level effect
+void Player::addLevelEffect(Effect* e, int level)
+{
+	if (levelEffects.at(level).size())
+	{
+		e->setComponent(levelEffects.at(level).at(levelEffects[level].size() - 1)); //Set the component to the topmost level effect
 	}
 	levelEffects.at(level).push_back(e);
 }
@@ -263,23 +263,61 @@ void Player::setNewLevel(int newLevel)
 	this->level = newLevel;
 }
 
-Grid* Player::currentBaseGrid() {
+Grid* Player::currentBaseGrid()
+{
 	if (currentEffect)
 		return currentEffect;
 	else
 		return grid;
 }
 
-Grid* Player::currentGrid() {
+Grid* Player::currentGrid()
+{
 	Grid* base = this->currentBaseGrid();
 	Grid* top = base;
-	if(levelEffects.at(level).size()) {
+	if (levelEffects.at(level).size())
+	{
 		levelEffects[level][0]->setComponent(base);
-		top = levelEffects.at(level).at(levelEffects[level].size()-1); //Get the topmost level effect
+		top = levelEffects.at(level).at(levelEffects[level].size() - 1); //Get the topmost level effect
 	}
 	return top;
 }
 
-void Player::reset() {
+void Player::reset()
+{
+	// delete
+	delete this->grid;
+	delete this->nextGrid;
+
+	/*this->sequence.clear();
+	this->sequenceProbabilities.clear();
+	this->customSequence.clear();*/
+	this->currentBlock = 0;
+	this->turnNumber = 0;
+
+	this->readcustomSequence = false;
+	this->score = 0;
 	
+	vector<Effect*> effects = this->effects;
+	for (auto effect : effects)
+	{
+		delete effect;
+	}
+
+	currentEffect = nullptr;
+
+	//vector<vector<Effect*>> lvlEffect = this->levelEffects;
+	//for (auto row : lvlEffect)
+	//{
+	//	for (auto col : row)
+	//	{
+	//		delete col;
+	//	}
+	//}
+
+	// renew
+	this->grid = new BlockGrid{};
+	this->nextGrid = new NextGrid{ };
+
+	this->spawnNewBlock();
 }

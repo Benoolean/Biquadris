@@ -7,29 +7,54 @@ BlockGrid::BlockGrid() : Grid() { }
 
 BlockGrid::~BlockGrid() { }
 
-NextGrid::NextGrid(string block)
+NextGrid::NextGrid()
 {
+	//this->nextGrid = vector<vector<Square*>> (4);
 	// 4 x 4 grid
-	this->update(block);
+	////this->update(block);
+
+	for (int rowcount = 0; rowcount < 4; rowcount++)
+	{
+		vector<Square*> row;
+
+		for (int colcount = 0; colcount < 4; colcount++)
+		{
+			row.push_back(nullptr);
+		}
+
+		this->nextGrid.push_back(row);
+	}
 }
 
 NextGrid::~NextGrid()
 {
 }
 
-void NextGrid::clear()
+void NextGrid::reset()
 {
-	this->nextGrid.clear();
+	for (auto block : this->blockStorage)
+	{
+		delete block;
+	}
+
+	for (auto& row : this->nextGrid)
+	{
+		for (auto& col : row)
+		{
+			col = nullptr;
+		}
+	}
 }
 
 void NextGrid::update(std::string block)
 {
-	this->nextGrid.clear();
+	this->reset();
 
-	Block nextblock = Block(*Biquadris::defaults[block]);
+	Block* nextblock = new Block(*Biquadris::defaults[block]);
+	this->blockStorage.push_back(nextblock);
 
-	Coordinate topleftCorner = nextblock.getTopLeftCornerWwithPadding();
-	Coordinate bottomRightCorner = nextblock.getBottomRightCornerWwithPadding();
+	Coordinate topleftCorner = nextblock->getTopLeftCornerWwithPadding();
+	Coordinate bottomRightCorner = nextblock->getBottomRightCornerWwithPadding();
 
 	int width = (int)(bottomRightCorner.x - topleftCorner.x) + 1;
 	int height = (int)(bottomRightCorner.y - topleftCorner.y) + 1;
@@ -39,18 +64,14 @@ void NextGrid::update(std::string block)
 
 	for (int rowcount = 0; rowcount < 4; rowcount++)
 	{
-		vector<string> row;
-		this->nextGrid.push_back(row);
-
 		for (int colcount = 0; colcount < 4; colcount++)
 		{
 			int squareposx = colcount + shiftx;
 			int squareposy = rowcount + shifty;
-			Square* square = nextblock.getSquareFromCoordinate(Coordinate{ squareposx, squareposy });
+			Square* square = nextblock->getSquareFromCoordinate(Coordinate{ squareposx, squareposy });
 
-			string symbol = (square != nullptr) ? square->symbol : " ";
-
-			this->nextGrid.at(rowcount).push_back(symbol);
+			//string symbol = (square != nullptr) ? square->symbol : " ";
+			this->nextGrid.at(rowcount).at(colcount)= square;
 		}
 	}
 
@@ -63,27 +84,19 @@ void NextGrid::update(std::string block)
 
 bool NextGrid::isRowEmpty(int rowcount)
 {
-	vector<string> row = this->nextGrid.at(rowcount);
+	vector<Square*> row = this->nextGrid.at(rowcount);
 
 	bool isEmpty = true;
 
 	for (auto col : row)
 	{
-		isEmpty = isEmpty && (col == " ");
+		isEmpty = isEmpty && (col == nullptr);
 	}
 
 	return isEmpty;
 }
 
-void NextGrid::printRow(int rowcount)
+vector<vector<Square*>> NextGrid::getSquares()
 {
-	vector<string> row = this->nextGrid.at(rowcount);
-	
-	if (!this->isRowEmpty(rowcount))
-	{
-		for (auto col : row)
-		{
-			cout << col;
-		}
-	}
+	return this->nextGrid;
 }
