@@ -15,7 +15,7 @@ int MAX_LEVEL;
 
 Player::Player(string source, int level)
 	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(level), score(0),
-	currentEffect(nullptr), levelEffects(4)
+	currentEffect(nullptr), levelEffects(5)
 
 {
 	// default level
