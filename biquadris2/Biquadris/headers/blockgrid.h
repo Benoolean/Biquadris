@@ -24,6 +24,7 @@ public:
 	
 	void clear();
 	void update(std::string block);
+	bool isRowEmpty(int rowcount);
 	void printRow(int rowcount);
 };
 #endif

@@ -61,12 +61,29 @@ void NextGrid::update(std::string block)
 	//}
 }
 
-void NextGrid::printRow(int rowcount)
+bool NextGrid::isRowEmpty(int rowcount)
 {
 	vector<string> row = this->nextGrid.at(rowcount);
 
+	bool isEmpty = true;
+
 	for (auto col : row)
 	{
-		cout << col;
+		isEmpty = isEmpty && (col == " ");
+	}
+
+	return isEmpty;
+}
+
+void NextGrid::printRow(int rowcount)
+{
+	vector<string> row = this->nextGrid.at(rowcount);
+	
+	if (!this->isRowEmpty(rowcount))
+	{
+		for (auto col : row)
+		{
+			cout << col;
+		}
 	}
 }
