@@ -1,7 +1,7 @@
 #include "../headers/level.h"
 #include "../headers/square.h"
 #include <fstream>
-//#include "../headers/window.h"
+#include "../headers/window.h"
 
 using namespace std;
 using namespace Biquadris;
@@ -34,9 +34,9 @@ Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std
 			level));  // Default initialize to "" src
 	}
 
-	//if(withGraphics) {
-	//	window = new Xwindow(WINDOW_WIDTH, WINDOW_HEIGHT);
-	//}
+	if(withGraphics) {
+		window = new Xwindow(WINDOW_WIDTH, WINDOW_HEIGHT);
+	}
 }
 
 Level::~Level()
@@ -593,7 +593,7 @@ bool Level::move(Biquadris::Direction direction)
 void Level::sequenceCommands(string source)
 {
 	//Player* player = this->getCurrentPlayer();
-	
+
 	string filesource = "media/" + source;
 	ifstream filestream;
 	filestream.open(filesource);
@@ -670,4 +670,3 @@ void Level::sequenceCommands(string source)
 
 	this->draw();
 }
-
