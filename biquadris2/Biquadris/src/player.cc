@@ -2,6 +2,7 @@
 
 #include "../headers/heavy.h"
 #include "../headers/blind.h"
+#include "../headers/divider.h"
 
 #include <fstream>
 #include <stdlib.h>
@@ -77,6 +78,9 @@ void Player::blockSequenceProbabilitySetup()
 				else if (effect == "blind")
 				{
 					this->addLevelEffect(new Blind(nullptr), levelIndex);
+				}
+				else if(effect == "divider") {
+					this->addLevelEffect(new Divider(nullptr), levelIndex);
 				}
 			}
 			else
@@ -297,7 +301,7 @@ void Player::reset()
 
 	this->readcustomSequence = false;
 	this->score = 0;
-	
+
 	vector<Effect*> effects = this->effects;
 	for (auto effect : effects)
 	{

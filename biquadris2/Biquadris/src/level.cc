@@ -289,14 +289,14 @@ void Level::draw()
 
 	for (int i = 0; i < GRIDBORDERWIDTH; i++)
 	{
-		char c = 177;
+		char c = '#';
 		cout << c;
 	}
 	cout << endl;
 
 	/*========= print level and score =========*/
 
-	// todo dynanmic spacing based on score
+	// todo dynamic spacing based on score
 
 	for (int i = 0; i < (int)this->players.size(); i++)
 	{
@@ -349,17 +349,7 @@ void Level::draw()
 			for (int colcount = 0; colcount < GridInfo::GRID_WIDTH; colcount++)
 			{
 				Square s = playersSquares[numPlayer].at(rowcount).at(colcount);
-				if (s.status == SquareStatus::DEAD)
-				{
-					cout << (char)219;
-				}
-				else
-				{
-					cout << s.symbol;
-				}
-
-				/*cout << playerSquares[playerNum][(rowcount * GridInfo::GRID_WIDTH) + i]
-					.symbol;*/
+				cout << s.symbol;
 			}
 
 			cout << GRID_SEPERATION_SPACE;
@@ -406,7 +396,7 @@ void Level::draw()
 
 	for (int i = 0; i < GRIDBORDERWIDTH; i++)
 	{
-		char c = 177;
+		char c = '#';
 		cout << c;
 	}
 	cout << endl << "Enter next command: ";
