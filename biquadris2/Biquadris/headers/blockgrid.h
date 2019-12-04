@@ -15,16 +15,18 @@ public:
 };
 
 
-class NextGrid : public Grid
+class NextGrid
 {
-	std::vector<std::vector<std::string>> nextGrid;
+	std::vector<std::vector<Square*>> nextGrid;
+	std::vector<Block*> blockStorage;
+
 public:
-	NextGrid(std::string block);
+	NextGrid();
 	~NextGrid();
 	
-	void clear();
+	void reset();
 	void update(std::string block);
 	bool isRowEmpty(int rowcount);
-	void printRow(int rowcount);
+	std::vector<std::vector<Square*>> getSquares();
 };
 #endif

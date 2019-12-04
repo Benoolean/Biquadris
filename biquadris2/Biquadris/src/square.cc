@@ -11,6 +11,11 @@ Square::Square(int x, int y, string symbol, int colour, SquareStatus status)
 {
 }
 
+Square::~Square()
+{
+	
+}
+
 bool Square::validPosition()
 {
 	return position.isValidCoord();

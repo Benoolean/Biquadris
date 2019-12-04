@@ -368,7 +368,19 @@ void Level::draw()
 	{
 		for (auto player : this->players)
 		{
-			player->nextGrid->printRow(i);
+			vector<Square*> row = player->nextGrid->getSquares().at(i);
+
+			for (auto col : row)
+			{
+				if (col == nullptr)
+				{
+					cout << " ";
+				}
+				else
+				{
+					cout << col->symbol;
+				}
+			}
 			cout << NEXTBLOCK_SEPERATION_SPACE;
 		}
 		cout << endl;

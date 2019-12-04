@@ -12,7 +12,7 @@ struct Square {
   static const std::string emptySymbol;
 
   Square(int x, int y, std::string symbol = emptySymbol, int colour = 0, SquareStatus status = SquareStatus::INACTIVE);
-
+  ~Square();
   Coordinate position;
   std::string symbol; //String to represent the block on output
   int colour;
