@@ -14,8 +14,8 @@ using namespace Biquadris;
 int MAX_LEVEL;
 
 Player::Player(string source, int level)
-	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(4), score(0),
-	currentEffect(nullptr), levelEffects(5)
+	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(0), score(0),
+	currentEffect(nullptr), levelEffects(6)
 
 {
 	// default level
