@@ -15,11 +15,11 @@ const int WINDOW_WIDTH = 720,
 Level::Level(int level, const int numPlayers, bool withGraphics, std::vector<std::string> source)
 	: currentPlayer(0), over(false), tie(false), winner(-1)
 {
-	if (level > 4)
+	if (level > MAX_LEVEL)
 	{
 		print("Warning: level too high, 4 is the highest level.");
 		print("Setting level to 4.");
-		level = 4;
+		level = MAX_LEVEL;
 	}
 	else if (level < 0)
 	{
@@ -259,7 +259,7 @@ void Level::increaseLevel()
 {
 	Player* currentPlayer = this->getCurrentPlayer();
 	int currentPlayerLevel = currentPlayer->getCurrentLevel();
-	if(currentPlayerLevel < 4) {
+	if(currentPlayerLevel < MAX_LEVEL) {
 		this->getCurrentPlayer()->setNewLevel(++currentPlayerLevel);
 	}
 }

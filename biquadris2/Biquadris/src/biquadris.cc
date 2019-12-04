@@ -7,6 +7,8 @@ namespace Biquadris
 	std::map<std::string, Block*> defaults;
 	int seed = 0;
 
+	const int MAX_LEVEL = 5;
+
 	void init(int seed)
 	{
 		Biquadris::seed = seed;
