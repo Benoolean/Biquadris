@@ -14,7 +14,7 @@ using namespace Biquadris;
 int MAX_LEVEL;
 
 Player::Player(string source, int level)
-	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(level), score(0),
+	: grid(new BlockGrid()), nextGrid(new NextGrid()), source(source), currentBlock(0), level(4), score(0),
 	currentEffect(nullptr), levelEffects(5)
 
 {
@@ -157,7 +157,7 @@ bool Player::spawnNewBlock()
 		srand((unsigned)Biquadris::seed + this->turnNumber);
 
 		int random = rand() % (upper + 1 - lower) + lower;
-		string test = levelSequence.at(random);
+		//string test = levelSequence.at(random);
 		block = new Block(*Biquadris::defaults[levelSequence.at(random)], this->level);
 
 		bool valid = this->grid->setActive(block);
@@ -245,10 +245,26 @@ std::vector<std::string> Player::getCurrentSequence()
 
 string Player::getNextBlock()
 {
-	vector<string> currentSquence;
+	// if level have random gen
+	if (this->level > 0)
+	{
+		int sequenceIndex = this->level - 1;
+		vector<string> levelSequence = this->sequenceProbabilities.at(sequenceIndex);
+
+		int lower = 0;
+
+		int upper = levelSequence.size() - 1;
+		srand((unsigned)Biquadris::seed + (this->turnNumber));
+
+		int random = rand() % (upper + 1 - lower) + lower;
+		string blockstring = levelSequence.at(random);
+		return blockstring;
+	}
 
 	// get the current sequence;
+	vector<string> currentSquence;
 	currentSquence = (this->readcustomSequence) ? this->customSequence : ((this->level == 0) ? this->sequence : this->sequenceProbabilities.at(this->level));
+
 
 	int sequenceSize = currentSquence.size();
 
