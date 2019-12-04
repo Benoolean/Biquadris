@@ -659,13 +659,13 @@ void Level::sequenceCommands(string source)
 		{
 			this->restart();
 		}
-		else if (cmd == "sequence")
-		{
-			string fileSource = "";
-			cin >> fileSource;
+		//else if (cmd == "sequence")
+		//{
+		//	string fileSource = "";
+		//	cin >> fileSource;
 
-			this->sequenceCommands(fileSource);
-		}
+		//	this->sequenceCommands(fileSource);
+		//}
 	}
 
 	this->draw();
