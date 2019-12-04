@@ -411,39 +411,52 @@ void Level::draw()
 	}
 	cout << endl << "Enter next command: ";
 
-	//if(this->window) {
-	//	int separationPixels = (WINDOW_WIDTH - (this->players.size() * GRID_WIDTH_PX)) / (this->players.size() + 1);
-	//	float squareWidth = GRID_WIDTH_PX / GridInfo::GRID_WIDTH;
-	//	int GRID_HEIGHT_PX = squareWidth * GridInfo::GRID_HEIGHT;
+	if(this->window) {
+		int separationPixels = (WINDOW_WIDTH - (this->players.size() * GRID_WIDTH_PX)) / (this->players.size() + 1);
+		float squareWidth = GRID_WIDTH_PX / GridInfo::GRID_WIDTH;
+		int GRID_HEIGHT_PX = squareWidth * GridInfo::GRID_HEIGHT;
 
-	//	for(int i = 0; i < (int)players.size(); i++) {
-	//		int paddingLeft = ((i+1) * separationPixels) + (i*GRID_WIDTH_PX);
-	//		window->fillRectangle(paddingLeft-1, 0, GRID_WIDTH_PX+2, WINDOW_HEIGHT);
-	//		window->fillRectangle(paddingLeft, 1, GRID_WIDTH_PX, WINDOW_HEIGHT-2, 0);
+		window->fillRectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
-	//		window->drawBigString(paddingLeft + 10, 20, "Level: " + to_string(players[i]->level));
-	//		window->drawBigString(paddingLeft + 10, 39, "Score: " + to_string(players[i]->score));
+		for(int i = 0; i < (int)players.size(); i++) {
+			int paddingLeft = ((i+1) * separationPixels) + (i*GRID_WIDTH_PX);
+			window->fillRectangle(paddingLeft-1, 0, GRID_WIDTH_PX+2, WINDOW_HEIGHT);
+			window->fillRectangle(paddingLeft, 1, GRID_WIDTH_PX, WINDOW_HEIGHT-2, 0);
 
-	//		window->fillRectangle(paddingLeft, 49, GRID_WIDTH_PX, GRID_HEIGHT_PX+2); //Create top and bottom border
+			window->drawBigString(paddingLeft + 10, 20, "Level: " + to_string(players[i]->level));
+			window->drawBigString(paddingLeft + 10, 39, "Score: " + to_string(players[i]->score));
 
-	//		vector<vector<Square>> chunk = players[i]->currentGrid()->getPlayerChunk();
-	//		for(auto row : chunk) {
-	//			for(auto square : row) {
-	//				if(square.status != SquareStatus::INACTIVE) {
-	//					window->fillRectangle(paddingLeft + (square.position.x * squareWidth),
-	//															50 + (square.position.y * squareWidth),
-	//															squareWidth, squareWidth, square.colour);
-	//				}
-	//			}
-	//		}
+			window->fillRectangle(paddingLeft, 49, GRID_WIDTH_PX, GRID_HEIGHT_PX+2); //Create top and bottom border
 
-	//		window->drawBigString(paddingLeft + 10, 70 + GRID_HEIGHT_PX, "Next:");
+			vector<vector<Square>> chunk = players[i]->currentGrid()->getPlayerChunk();
+			for(auto row : chunk) {
+				for(auto square : row) {
+					if(square.status != SquareStatus::INACTIVE) {
+						window->fillRectangle(paddingLeft + (square.position.x * squareWidth),
+																50 + (square.position.y * squareWidth),
+																squareWidth, squareWidth, square.colour);
+					}
+				}
+			}
 
-	//		vector<vector<Square*>> next = players[i]->nextGrid->getSquares();
+			window->drawBigString(paddingLeft + 10, 75 + GRID_HEIGHT_PX, "Next:");
 
-	//		// window->fillRectangle(paddingLett, 90 + squareWidth);
-	//	}
-	//}
+			vector<vector<Square*>> next = players[i]->nextGrid->getSquares();
+			window->fillRectangle(paddingLeft, 89 + GRID_HEIGHT_PX, (squareWidth * next[0].size()), (squareWidth * next.size()) + 2);
+
+			for(auto row : next) {
+				for(auto square : row) {
+					if(square) {
+						if(square->status != SquareStatus::INACTIVE) {
+							window->fillRectangle(paddingLeft + (square->position.x * squareWidth),
+																	90 + GRID_HEIGHT_PX + (square->position.y * squareWidth),
+																	squareWidth, squareWidth, square->colour);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void Level::decideWinner() {
@@ -477,6 +490,38 @@ void Level::setGameOver()
 {
 	this->over = true;
 	this->decideWinner();
+
+	if(this->window) {
+		window->fillRectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+		window->fillRectangle(20, 20, WINDOW_WIDTH-40, WINDOW_HEIGHT-40);
+
+		window->drawBigString(30, 40, "Game over!", 0);
+		window->drawBigString(30, 60, "The high score is: " + to_string(highScore), 0);
+
+		int nextY = 100;
+
+		if(this->isTie()) {
+			window->drawBigString(30, 80, "It was a tie! The winners are: ", 0);
+			for(int i = 0; i < (int)tiedWith.size(); i++) {
+				nextY += 15;
+				window->drawBigString(30, 95 + i*15, "Player " + to_string(tiedWith[i] + 1), 0);
+			}
+			nextY += 5;
+		}
+		else {
+			window->drawBigString(30, 80, "The winner is: Player " + to_string(winner+1), 0);
+		}
+
+		int _nextY = nextY;
+
+		for(int i = 0 ; i < players.size(); i++) {
+			window->drawBigString(30, nextY + i*15, "Player " + to_string(i+1) + " finished with: " + to_string(players[i]->score), 0);
+			_nextY += 15;
+		}
+		_nextY += 20;
+
+		window->drawBigString(30, _nextY, "Type 'restart' to start a new game", 0);
+	}
 
 	cout << endl << endl << endl;
 	cout << GRID_BAR_SEPERATOR << endl;
