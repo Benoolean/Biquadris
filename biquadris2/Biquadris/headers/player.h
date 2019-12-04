@@ -59,5 +59,7 @@ public:
 	Grid* currentBaseGrid(); //Ignores level effects
 	Grid* currentGrid();
 
+	void reset();
+
 	friend class Level;
 };

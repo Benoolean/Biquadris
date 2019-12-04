@@ -242,12 +242,12 @@ std::vector<std::string> Player::getCurrentSequence()
 string Player::getNextBlock()
 {
 	vector<string> currentSquence;
-	
+
 	// get the current sequence;
 	currentSquence = (this->readcustomSequence) ? this->customSequence : ((this->level == 0) ? this->sequence : this->sequenceProbabilities.at(this->level));
 
 	int sequenceSize = currentSquence.size();
-	
+
 	if (this->currentBlock >= sequenceSize)
 	{
 		return currentSquence.at(0);
@@ -278,4 +278,8 @@ Grid* Player::currentGrid() {
 		top = levelEffects.at(level).at(levelEffects[level].size()-1); //Get the topmost level effect
 	}
 	return top;
+}
+
+void Player::reset() {
+	
 }
